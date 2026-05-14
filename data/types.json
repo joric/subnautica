@@ -1,0 +1,36 @@
+{
+  "icon": "misc",
+  "group": "misc",
+  "match": {
+    "type": {
+      "BP_StaticLifepod_Surface_C": {"icon": "lifepod", "group": "base", "title": "Lifepod" },
+
+      "BP_EdgeOfWorldVolume_C": {"icon": "eow_volume", "group": "misc", "title": "EOW Volume" },
+
+      "BP_Nrtv_QuartzChip_C": { "icon": "audio_log", "group": "collectible", "title":"Audio Log"},
+
+      "BP_Black[bB]ox_Clickable_*": { "icon": "blackbox", "group": "collectible", "title":"Blackbox", "weight": -10000 },
+
+      "BP_CrabFeces_C": { "icon": "poop", "group": "items", "title":"Crab Feces"},
+      "BP_WaterSlugWorldPopProxy_C": { "icon": "water_slug", "group": "items", "title":"Water Slug"},
+
+      ".*Fragment*": {"icon": "fragment", "group": "collectible", "category": "fragment"},
+
+      ".*(Flower|Petal|Anemone|Coral).*": {"icon": "flower", "group": "items", "category": "vegetation"},
+
+      ".*(Fish).*": {"icon": "fish", "group": "items", "category": "fish"},
+
+      ".*Titanium_C": { "icon": "titanium", "group": "resources", "category": "titanium", "title":"Titanium"},
+      ".*Copper_C": { "icon": "copper", "group": "resources",  "category": "copper", "title":"Copper"},
+      ".*Silver_C": { "icon": "silver", "group": "resources",  "category": "silver", "title":"Silver"},
+      ".*Gold_C": { "icon": "gold", "group": "resources",  "category": "gold", "title":"Gold"},
+      ".*Salt_C": { "icon": "salt", "group": "resources",  "category": "salt", "title":"Salt"},
+      ".*Quartz_C": { "icon": "quartz", "group": "resources",  "category": "quartz", "title":"Quartz"},
+
+      "BP_WorldPopSpawned_*": { "icon": "spawn", "group": "resources", "category": "unsorted" },
+      "BP_ResourceNode_*": { "icon": "nodes", "group": "resources", "category": "unsorted" },
+      "BP_ResourceDeposit_*": { "icon": "deposit", "group": "resources", "category": "unsorted"}
+
+    }
+  }
+}
