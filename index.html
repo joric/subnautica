@@ -110,20 +110,8 @@ let counters = {};
 //let theme = 'retro';
 let theme = '';
 
-//{left: -337193.4375, top: 433406.34375, alt:100}, // lifepod
-// lower left -639344.625 819918.4375 -4015.710693359375
-// upper right 0 0 10000 , 0 0 -5000000
-
-// left -374270.875 419897.96875 10000
-// top -272460 305180 -31120
-// right -92088.9765625 408405.34375 -39106.94921875
-// bottom -282516.5 492094.625 -26437.189453125
-
 let bb = {left: -400000.0, top: 250000.0, right: -80000.0, bottom: 500000.0};
-
 let cc = { left: bb.left + (bb.right-bb.left)/2, top: 300000 + (bb.bottom-bb.top)/2, alt: 0};
-
-//let cc = {left: -243165.078125, top: 407363.0625, alt: 10000};
 
 let maps = {
   sn2:  { 
@@ -132,8 +120,10 @@ let maps = {
     center: cc,
     tileSize: 512,
     maxZoom: 2,
+    tiles: 'tiles/sn2/{z}/{x}/{y}.jpg',
     versions: {
-      '112084': { date: '2026-05-02', tiles: 'tiles/sn2/{z}/{x}/{y}.jpg', data: 'data/markers.json'},
+      '112084': { date: '2026-05-02', data: 'data/Subnautica2.113109.json.gz'}, //same data as 112084, no changes
+      '113109': { date: '2026-05-14', data: 'data/Subnautica2.113109.json.gz'},
     },
    },
 };
@@ -1138,6 +1128,14 @@ function loadMap(mapId) {
     })
     return;
   }
+
+  console.log('loading gzip...');
+  loadGzip(filename, buffer => {
+    console.log(`parsing buffer (${buffer.length} bytes)...`);
+    parseLargeJSONArray(buffer).then(data => {
+      loadMarkers(data, mapId, true);
+    });
+  });
 }
 
 function renderFAIconToImageURL(fa_class, bg, fg='white', size=48) {
