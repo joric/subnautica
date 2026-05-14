@@ -7,6 +7,7 @@
       "BP_EdgeOfWorldVolume_C": {"icon": "eow_volume", "group": "misc", "title": "EOW Volume" },
       "BP_Nrtv_QuartzChip_C": { "icon": "audio_log", "group": "collectible", "title":"Audio Log"},
       "BP_ComputerTextInterface_Terminal_C": { "icon": "terminal", "group": "base", "title":"NOA Terminal"},
+      "BP_BioBed_C": { "icon": "bed", "group": "base", "title":"Reprint Point"},
       "BP_Black[bB]ox_Clickable_*": { "icon": "blackbox", "group": "collectible", "title":"Blackbox", "weight": -10000 },
       "BP_CrabFeces_C": { "icon": "poop", "group": "items", "title":"Crab Feces"},
       "BP_WaterSlugWorldPopProxy_C": { "icon": "water_slug", "group": "items", "title":"Water Slug"},
