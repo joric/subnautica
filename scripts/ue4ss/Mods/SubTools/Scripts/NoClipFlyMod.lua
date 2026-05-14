@@ -78,9 +78,9 @@ end
 -- Bind keys - override default WASD with custom camera-relative movement
 RegisterKeyBind(Key.C, toggleNoclip)
 RegisterKeyBind(Key.SPACE, moveUp)
-RegisterKeyBind(Key.X, moveDown)
+RegisterKeyBind(Key.Z, moveDown)
 
 
 print("[NoclipFlyMod] Press C to toggle noclip")
 print("[NoclipFlyMod] WASD moves relative to camera direction")
-print("[NoclipFlyMod] Space = up, X = down")
+print("[NoclipFlyMod] Space = up, Z = down")
