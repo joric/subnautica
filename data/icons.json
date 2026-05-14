@@ -2,6 +2,7 @@
   "blackbox": { "class": "fa fa-pills", "color": "tan" },
   "lifepod": { "class": "fa fa-house", "color": "dodgerblue"},
   "audio_log": { "class": "fa fa-compact-disc", "color": "darkcyan"},
+  "terminal": { "class": "fa fa-display", "color": "slategrey"},
   "eow_volume": { "class": "fa fa-cube", "color": "red" },
   "poop": { "class": "fa fa-poop", "color": "chocolate" },
   "fragment": { "class": "fa fa-gear", "color": "darkslategray" },
