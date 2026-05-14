@@ -122,7 +122,7 @@ let maps = {
     maxZoom: 2,
     tiles: 'tiles/sn2/{z}/{x}/{y}.jpg',
     versions: {
-      '112084': { date: '2026-05-02', data: 'data/Subnautica2.113109.json.gz'}, //same data as 112084, no changes
+      //'112084': { date: '2026-05-02', data: 'data/Subnautica2.113109.json.gz'}, //same data as 112084, no changes
       '113109': { date: '2026-05-14', data: 'data/Subnautica2.113109.json.gz'},
     },
    },
@@ -1120,6 +1120,11 @@ function loadMap(mapId) {
   }
 
   searchControl._input.setAttribute('placeholder', gameTitle);
+
+  if (!config.versions?.[settings.version]) {
+    console.log('version data not found, setting to the last one');
+    settings.version = config.versions && Object.keys(config.versions)[Object.keys(config.versions).length-1];
+  }
 
   let filename = config.versions?.[settings.version]?.data||config.data;
   if (filename.endsWith('.json')) {
