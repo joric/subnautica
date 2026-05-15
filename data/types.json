@@ -14,14 +14,20 @@
       "BP_Black[bB]ox_Clickable_*": { "icon": "blackbox", "group": "collectible", "title":"Blackbox", "weight": -10000 },
       "BP_CrabFeces_C": { "icon": "poop", "group": "misc", "title":"Crab Feces"},
       "BP_WaterSlugWorldPopProxy_C": { "icon": "water_slug", "group": "misc", "title":"Water Slug"},
-      "BP_SonicResonatorV2_Scannable_C": { "icon": "gun", "group": "collectible", "title":"Feedback Resonator"},
       "BP_BlightNode_C": { "icon": "canker", "group": "collectible", "title":"Bloom Node"},
 
       "BP_ActivateConsoleButton_C": { "icon": "button", "group": "items", "title":"Alien Console"},
 
       "BP_WorldBuildable_C": { "icon": "turbine", "group": "items", "title":"Turbine"},
 
-      ".*Fragment*": {"icon": "fragment", "group": "collectible", "category": "fragment"},
+      "BP_SonicResonatorV2_Scannable_C": { "icon": "gun", "group": "fragments", "title":"Feedback Resonator"},
+      "BP_Tadpole_.*Fragment*": {"icon": "tadpole", "group": "fragments", "category": "Tadpole Fragment"},
+      "BP_BiobedFragment*": {"icon": "fragment", "group": "fragments", "category": "Biobed Fragment"},
+      "BP_BioLab_Fragment*": {"icon": "fragment", "group": "fragments", "category": "Biolab Fragment"},
+
+      ".*Fragment*": {"icon": "fragment", "group": "fragments", "category": "fragment"},
+
+
       ".*(Flower|Petal|Anemone|Coral).*": {"icon": "flower", "group": "misc", "category": "vegetation"},
       ".*(Fish).*": {"icon": "fish", "group": "misc", "category": "fish"},
       ".*Titanium_C": { "icon": "titanium", "group": "resources", "category": "titanium", "title":"Titanium"},

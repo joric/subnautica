@@ -5,19 +5,19 @@
   "databox": { "class": "fa fa-inbox", "color": "steelblue"},
   "supply_crate": { "class": "fa fa-box-open", "color": "darkcyan"},
 
+  "fragment": { "class": "fa fa-gear", "color": "darkslategray" },
+  "tadpole": { "class": "fa fa-helicopter", "color": "darkslategray" },
+
   "terminal": { "class": "fa fa-display", "color": "slategrey"},
   "bed": { "class": "fa fa-bed", "color": "slateblue"},
   "eow_volume": { "class": "fa fa-cube", "color": "red" },
   "poop": { "class": "fa fa-poop", "color": "chocolate" },
-  "fragment": { "class": "fa fa-gear", "color": "darkslategray" },
   "water_slug": { "class": "fa fa-shrimp", "color": "pink" },
   "vegetation": { "class": "fa fa-flower", "color": "green" },
   "fish": { "class": "fa fa-fish-fins", "color": "slategrey" },
 
   "gun": { "class": "fa fa-gun", "color": "slategrey" },
-
   "canker": { "class": "fa fa-biohazard", "color": "magenta" },
-
   "turbine": { "class": "fa fa-fan", "color": "red" },
 
   "titanium": { "class": "fa fa-cubes", "color": "grey" },
