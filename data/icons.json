@@ -11,6 +11,8 @@
   "vegetation": { "class": "fa fa-flower", "color": "green" },
   "fish": { "class": "fa fa-fish-fins", "color": "slategrey" },
 
+  "gun": { "class": "fa fa-gun", "color": "slategrey" },
+
   "titanium": { "class": "fa fa-cubes", "color": "grey" },
   "silver": { "class": "fa fa-cubes", "color": "lightgrey" },
   "gold": { "class": "fa fa-cubes", "color": "orange" },

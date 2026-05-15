@@ -11,6 +11,11 @@
       "BP_Black[bB]ox_Clickable_*": { "icon": "blackbox", "group": "collectible", "title":"Blackbox", "weight": -10000 },
       "BP_CrabFeces_C": { "icon": "poop", "group": "items", "title":"Crab Feces"},
       "BP_WaterSlugWorldPopProxy_C": { "icon": "water_slug", "group": "items", "title":"Water Slug"},
+
+
+      "BP_SonicResonatorV2_Scannable_C": { "icon": "gun", "group": "items", "title":"Feedback Resonator"},
+
+
       ".*Fragment*": {"icon": "fragment", "group": "collectible", "category": "fragment"},
       ".*(Flower|Petal|Anemone|Coral).*": {"icon": "flower", "group": "items", "category": "vegetation"},
       ".*(Fish).*": {"icon": "fish", "group": "items", "category": "fish"},
