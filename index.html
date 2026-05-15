@@ -97,6 +97,9 @@ document.head.appendChild(document.getElementById(location.protocol === 'file:' 
 
 <div id="alert" class="closed" tabindex="-1">Copied To Clipboard</div>
 
+<div id="map-tooltip" class="arrow-left"></div>
+
+
 <script>
 
 let gameTitle = 'subnautica';
@@ -139,7 +142,7 @@ let iconData = null;
 let mapParam = {};
 
 function capitalize(s) {
-  return s[0].toUpperCase()+s.slice(1);
+  return s ? s[0].toUpperCase()+s.slice(1) : '';
 }
 
 function splitCamelCase(s) {
@@ -351,8 +354,6 @@ function getSubtitle(feature) {
     if (o.progression) title += ' (' + o.progression.replace('subnautica.Story.','') + ')';
   }
 
-  if (title) title += '&nbsp;' + formatZ(feature.geometry.coordinates);
-
   if (o.abilities) {
     let obj = o.abilities;
     if (typeof obj === 'string') {
@@ -364,6 +365,8 @@ function getSubtitle(feature) {
   if (o.color) title += ' (' + (o.color+'').split('::').pop() +')';
 
   if (o.hidden===true || o.exists===false) title +=' (Hidden)';
+
+  title = (title||'').replace('BP_','');
 
   return title
 }
@@ -394,10 +397,127 @@ function compassOnClick(e) {
   }
 }
 
+let tooltipShowTimer = null;
+let tooltipHideTimer = null;
+let tooltipHideDelay = 1;
+let tooltipShowDelay = 1;
+
+function clearSelection() {
+  if (window.getSelection) {
+    // Modern browsers
+    const selection = window.getSelection();
+    if (selection.removeAllRanges) {
+      selection.removeAllRanges();
+    } else if (selection.collapseToEnd) {
+      // For older WebKit browsers
+      selection.collapseToEnd();
+    }
+  } else if (document.selection) {
+    // Older versions of Internet Explorer
+    document.selection.empty();
+  }
+}
+
+function showTooltip(e) {
+  var tooltip = document.getElementById('map-tooltip');
+
+  clearTimeout(tooltipHideTimer);
+
+  tooltip.onmouseover = function(e) {
+    clearTimeout(tooltipHideTimer);
+  };
+
+  tooltip.onmouseout = function(e) {
+    tooltipHideTimer = setTimeout(hideTooltip, tooltipHideDelay);
+  };
+
+
+  // Show the tooltip to calculate the size
+  // Since browsers do not repaint the screen during synchronous JavaScript execution,
+  // temporarily changing the display property within a script will not cause the element to flash visibly on the screen.
+
+  if (tooltip.style.display == 'block') return;
+
+  tooltip.style.display = 'block';
+  let marker = e.target;
+  let o = marker.feature.properties;
+
+  let info = getType2(o);
+
+  let subtitle = getSubtitle(marker.feature);
+
+  let h1=capitalize(info.title||'undefined');
+  let h2=capitalize(info.group||'');
+  let h3=capitalize(subtitle||'');
+
+  let cc = marker.feature.geometry.coordinates;
+
+  let content = `<b title="${o.name}">${h1 + '&nbsp;'+ formatZ(cc)}</b>`;
+
+  if (h2)
+    content += `<br>${h2}`;
+
+  content += `<br><small class="small">${h3}</small>`;
+
+  let p = cc.map(x=>x.toFixed(0));
+  content += `<hr>${p[0]} ${p[1]} ${p[2]}`;
+
+  tooltip.innerHTML = content;
+
+  let c = marker.getContainerExtent();
+  let screenPosition = {x: c.pxmin, y: c.pymin};
+
+  // Determine the tooltip position
+  var mapContainer = map.getContainer();
+  var mapRect = mapContainer.getBoundingClientRect();
+  var tooltipWidth = tooltip.offsetWidth;
+  var tooltipHeight = tooltip.offsetHeight;
+
+  // Calculate available space
+  var spaceRight = mapRect.width - screenPosition.x;
+  var spaceLeft = screenPosition.x;
+
+  let gap = 16;//getMarkerSize(marker)/2+5;
+
+  // Position the tooltip
+  if (spaceRight > tooltipWidth) {
+    // Place tooltip to the right
+    tooltip.style.left = mapRect.left + screenPosition.x + gap + 'px';
+    tooltip.className = 'arrow-left';
+  } else {
+    // Place tooltip to the left
+    tooltip.style.left =  mapRect.left + screenPosition.x - tooltipWidth - gap + 'px';
+    tooltip.className = 'arrow-right';
+  }
+
+  tooltip.style.top = mapRect.top + screenPosition.y - tooltipHeight/2 + 'px';
+}
+
+// Function to hide the tooltip
+function hideTooltip() {
+  var tooltip = document.getElementById('map-tooltip');
+  tooltip.style.display = 'none';
+  clearSelection();
+}
+
+function showTooltipExt(e) {
+  let marker = e.target;
+  clearTimeout(tooltipShowTimer);
+  if (marker.getInfoWindow() && marker.getInfoWindow().isVisible()) return; // do not open popup if there's an info window
+  showTooltip(e);
+}
+
+function hideTooltipExt(e) {
+  let marker = e.target;
+  clearTimeout(tooltipShowTimer);
+  clearTimeout(tooltipHideTimer);
+  tooltipHideTimer = setTimeout(hideTooltip, tooltipHideDelay);
+}
+
 function popupOnClick(e) {
   //console.log('clicked', e.target.feature);
 
-  //hideTooltipExt(e);
+  hideTooltipExt(e);
 
   let marker = e.target;
 
@@ -413,14 +533,15 @@ function popupOnClick(e) {
   let id = (info.title||'').replaceAll(' ','_');
   let backlink = getMapURL(id);
 
-  popup.querySelector('#popup-title').innerHTML = `<a href="${backlink}" onclick="return showItem('${info.type}')">${info.title}</a>`;
+  let title = capitalize((info.title||'undefined') + '&nbsp;' + formatZ(feature.geometry.coordinates));
+
+  popup.querySelector('#popup-title').innerHTML = `<a href="${backlink}" onclick="return showItem('${info.type}')">${title}</a>`;
   popup.querySelector('#popup-title').title = backlink;
 
   popup.querySelector('#popup-subtitle').innerHTML = `<a href="#group:${info.group}" onclick="return showGroup('${info.group}')">${translate(info.group)}</a>`;
 
   popup.querySelector('#popup-note').innerHTML = getSubtitle(feature);
   popup.querySelector('#popup-data').innerHTML = '<hr/><pre>'+JSON.stringify(o, null, 2) + '</pre>';
-
 
   popup.querySelector('#popup-data-toggle').onclick = function(e) {
     let data_id = document.querySelector('#popup-data-toggle').getAttribute('data-target');
@@ -574,6 +695,7 @@ function addMarker(feature, options) {
   let subtitle = getSubtitle(feature);
   if (subtitle) subtitle = ' - ' + subtitle;
 
+  /*
   const tooltip = new maptalks.ui.ToolTip(`${title} (${translate(t.group)})${subtitle}`, {
       showTimeout: 100, // Delay in milliseconds before showing the tooltip
       dx: 10,           // X-offset from the geometry
@@ -581,6 +703,10 @@ function addMarker(feature, options) {
   });
 
   tooltip.addTo(marker);
+  */
+
+  marker.on('mouseover', showTooltipExt);
+  marker.on('mouseout', hideTooltipExt);
 
   //if (t.type =='Inventory_Toothpin_C') console.log(feature);
 
