@@ -31,4 +31,21 @@ local function teleportPlayer()
 end
 
 RegisterKeyBind(Key.LEFT_MOUSE_BUTTON, {ModifierKey.ALT}, teleportPlayer)
+
 print("[TeleportMod] Click Alt+LMB to teleport to cursor")
+
+RegisterConsoleCommandHandler("XTeleportTo", function(FullCommand, Parameters, Ar)
+    if #Parameters < 3 then
+        Ar:Log("Usage: XTeleportTo X Y Z")
+        return true
+    end
+    
+    local loc = {X=tonumber(Parameters[1]), Y=tonumber(Parameters[2]), Z=tonumber(Parameters[3])}
+
+    ExecuteWithDelay(250, function()
+        ExecuteInGameThread(function()
+            UEHelpers.GetPlayerController().Pawn.RootComponent:K2_SetWorldLocation(loc, false, {}, true)
+        end)
+    end)
+    return true
+end)
