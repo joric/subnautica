@@ -1,5 +1,5 @@
 {
-  "blackbox": { "class": "fa fa-person", "color": "red" },
+  "blackbox": { "class": "fa fa-person", "color": "indianred" },
   "lifepod": { "class": "fa fa-house", "color": "dodgerblue"},
   "chip": { "class": "fa fa-microchip", "color": "royalblue"},
   "databox": { "class": "fa fa-box", "color": "steelblue"},
