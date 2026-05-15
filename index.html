@@ -558,7 +558,7 @@ function popupOnClick(e) {
   let teleport = `XTeleportTo ${t[0]} ${t[1]} ${t[2]+100}` // 1M higher actually
   c = popup.querySelector('#popup-marker-id-link')
   c.href = '#' + teleport;
-  c.title = `Copy Coordinates (${teleport})`;
+  c.title = `Copy Coordinates (${teleport}) (z+100)`;
   c.onclick = function(e){ copyToClipboard(e.target.href.split('#')[1].replaceAll('%20',' ')); return false; };
 
   c = popup.querySelector('#popup-form-id-link');
