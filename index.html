@@ -555,7 +555,7 @@ function popupOnClick(e) {
 
 
   let t = feature.geometry.coordinates;
-  let teleport = `XTeleportTo ${t[0]} ${t[1]} ${t[2]}`
+  let teleport = `XTeleportTo ${t[0]} ${t[1]} ${t[2]+100}` // 1M higher actually
   c = popup.querySelector('#popup-marker-id-link')
   c.href = '#' + teleport;
   c.title = `Copy Coordinates (${teleport})`;
