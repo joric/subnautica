@@ -1,8 +1,8 @@
 {
-  "blackbox": { "class": "fa fa-person", "color": "indianred" },
+  "blackbox": { "class": "fa fa-box", "color": "indianred" },
   "lifepod": { "class": "fa fa-house", "color": "dodgerblue"},
   "chip": { "class": "fa fa-microchip", "color": "royalblue"},
-  "databox": { "class": "fa fa-box", "color": "steelblue"},
+  "databox": { "class": "fa fa-inbox", "color": "steelblue"},
   "supply_crate": { "class": "fa fa-box-open", "color": "darkcyan"},
 
   "fragment": { "class": "fa fa-gear", "color": "darkslategray" },
