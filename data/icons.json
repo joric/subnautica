@@ -1,8 +1,8 @@
 {
-  "blackbox": { "class": "fa fa-box", "color": "salmon" },
+  "blackbox": { "class": "fa fa-box", "color": "indianred" },
   "lifepod": { "class": "fa fa-house", "color": "dodgerblue"},
   "chip": { "class": "fa fa-microchip", "color": "royalblue"},
-  "databox": { "class": "fa fa-box-open", "color": "dodgerblue"},
+  "databox": { "class": "fa fa-box-open", "color": "steelblue"},
   "terminal": { "class": "fa fa-display", "color": "slategrey"},
   "bed": { "class": "fa fa-bed", "color": "slateblue"},
   "eow_volume": { "class": "fa fa-cube", "color": "red" },
