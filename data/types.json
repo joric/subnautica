@@ -5,7 +5,9 @@
     "type": {
       "BP_StaticLifepod_Surface_C": {"icon": "lifepod", "group": "items", "title": "Lifepod" },
       "BP_EdgeOfWorldVolume_C": {"icon": "eow_volume", "group": "misc", "title": "EOW Volume" },
-      "BP_Nrtv_QuartzChip_C": { "icon": "audio_log", "group": "collectible", "title":"Audio Log"},
+      "BP_Nrtv_QuartzChip_C": { "icon": "chip", "group": "collectible", "title":"Quartz Chip"},
+      "BP_RecipeGainDataCard_Button_C": { "icon": "databox", "group": "collectible", "title":"Data Box"},
+
       "BP_ComputerTextInterface_Terminal_C": { "icon": "terminal", "group": "items", "title":"NOA Terminal"},
       "BP_BioBed_C": { "icon": "bed", "group": "items", "title":"Reprint Point"},
       "BP_Black[bB]ox_Clickable_*": { "icon": "blackbox", "group": "collectible", "title":"Blackbox", "weight": -10000 },
