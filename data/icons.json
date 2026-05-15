@@ -13,6 +13,8 @@
 
   "gun": { "class": "fa fa-gun", "color": "slategrey" },
 
+  "canker": { "class": "fa fa-biohazard", "color": "magenta" },
+
   "titanium": { "class": "fa fa-cubes", "color": "grey" },
   "silver": { "class": "fa fa-cubes", "color": "lightgrey" },
   "gold": { "class": "fa fa-cubes", "color": "orange" },
