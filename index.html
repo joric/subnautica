@@ -533,7 +533,7 @@ function popupOnClick(e) {
   let id = (info.title||'').replaceAll(' ','_');
   let backlink = getMapURL(id);
 
-  let title = capitalize((info.title||o.type||'undefined') + '&nbsp;' + formatZ(feature.geometry.coordinates));
+  let title = capitalize((info.title||'undefined') + '&nbsp;' + formatZ(feature.geometry.coordinates));
 
   popup.querySelector('#popup-title').innerHTML = `<a href="${backlink}" onclick="return showItem('${info.type}')">${title}</a>`;
   popup.querySelector('#popup-title').title = backlink;
