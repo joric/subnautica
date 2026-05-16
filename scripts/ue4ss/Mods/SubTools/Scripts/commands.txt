@@ -8,6 +8,9 @@ r.DepthOfFieldQuality 0
 r.MotionBlurQuality 0
 r.EyeAdaptationQuality 0
 
+r.VolumetricFog 0
+r.Atmosphere 0
+
 r.ShadowQuality 0
 r.DynamicGlobalIlluminationMethod 0
 r.Water.SingleLayer.Disable 0
