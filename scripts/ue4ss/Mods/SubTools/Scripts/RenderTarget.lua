@@ -13,7 +13,7 @@
 
 local UEHelpers = require("UEHelpers")
 
-size=100000
+size=200000
 
 local cc = { left=-337193, top=433406, alt=5000} -- lifepod
 
@@ -79,6 +79,7 @@ local function TakeOrthoByRenderTarget()
             StreamingComp.DefaultLoadingRange = 500000
             StreamingComp.bEnableStreaming = true
             UEHelpers.GetGameplayStatics():FinishSpawningActor(SourceActor, { X = 0, Y = 0, Z = 0 }, 0)
+            print(string.format("\n[MapCapture] finished spawning streaming source %s", StreamingComp:GetFullName()))
         end
     end
 
@@ -88,6 +89,7 @@ local function TakeOrthoByRenderTarget()
 
     local function CaptureNextTile()
         if tileIndex >= totalTiles then
+            print("[MapCapture] Capture finished.")
             return
         end
 
@@ -99,16 +101,13 @@ local function TakeOrthoByRenderTarget()
 
         ExecuteInGameThread(function()
             CaptureActor:K2_SetActorLocation({X = CenterX, Y = CenterY, Z = Altitude}, false, {}, true)
-            print(string.format("[MapCapture] Moved RT to Tile %d/%d. Waiting for chunks...", tileIndex + 1, totalTiles))
+
+            local FileName = string.format("Tile_%d_%d.png", c, r)
+            print(string.format("[MapCapture] Moved RT to Tile %d/%d. Saving %s...", tileIndex + 1, totalTiles, FileName))
 
             ExecuteInGameThread(function()
-
                 CaptureComp:CaptureScene()
-                local FileName = string.format("Tile_%d_%d.png", c, r)
-                print("[MapCapture] Saving " .. FileName)
                 KismetRenderingLibrary:ExportRenderTarget(World, RT, SavePath, FileName)
-                print("[MapCapture] Saved.")
-
                 tileIndex = tileIndex + 1
                 CaptureNextTile()
             end)
