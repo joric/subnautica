@@ -15,7 +15,7 @@ local UEHelpers = require("UEHelpers")
 
 size=100000
 
-local cc = { left=-337193, top=433406, alt=25000} -- lifepod
+local cc = { left=-337193, top=433406, alt=5000} -- lifepod
 
 local bb = { left = cc.left-size/2, top = cc.top-size/2, right = cc.left+size/2, bottom = cc.top+size/2 }
 
