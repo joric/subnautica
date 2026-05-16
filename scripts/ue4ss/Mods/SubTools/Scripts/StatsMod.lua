@@ -149,7 +149,7 @@ local function getStats()
         minDist = 0
     end
 
-    local res = string.format("Press Alt+O to hide\nBlackboxes: %d of %d\nClosest: %.1f m", found, total, minDist/1000)
+    local res = string.format("Press Alt+O to hide\nBlackboxes: %d of %d\nClosest: %.1f m", found, total, minDist/100)
 
     return(res)
 end

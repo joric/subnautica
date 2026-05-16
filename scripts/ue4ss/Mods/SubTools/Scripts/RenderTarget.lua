@@ -79,11 +79,11 @@ local function TakeOrthoByRenderTarget()
             StreamingComp.DefaultLoadingRange = 500000
             StreamingComp.bEnableStreaming = true
             UEHelpers.GetGameplayStatics():FinishSpawningActor(SourceActor, { X = 0, Y = 0, Z = 0 }, 0)
-            print(string.format("\n[MapCapture] finished spawning streaming source %s", StreamingComp:GetFullName()))
+            print(string.format("[MapCapture] finished spawning streaming source %s", StreamingComp:GetFullName()))
         end
     end
 
-    print(string.format("\n[MapCapture] RenderTarget Capture Started! Saving to %s", SavePath))
+    print(string.format("[MapCapture] RenderTarget Capture Started! Saving to %s", SavePath))
 
     local tileIndex = 0
 
