@@ -178,4 +178,3 @@ RegisterHook("/Script/Engine.PlayerController:ClientRestart", function(self)
 end)
 
 LoopAsync(1000, updateWidget) -- update stats, and also re-add widget to viewport if removed between reloads
-
