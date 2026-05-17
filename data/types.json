@@ -7,7 +7,9 @@
       "BP_EdgeOfWorldVolume_C": {"icon": "eow_volume", "group": "misc", "title": "EOW Volume" },
       "BP_Nrtv_QuartzChip_C": { "icon": "chip", "group": "collectible", "title":"Quartz Chip"},
       "BP_RecipeGainDataCard_Button_C": { "icon": "databox", "group": "collectible", "title":"Data Box"},
-      "BP_WorldSupplyLocker_C": { "icon": "supply_crate", "group": "collectible", "title":"Supply Crate"},
+      "BP_WorldSupplyLocker_C": { "icon": "supply_crate", "group": "collectible", "title":"Supply Locker"},
+
+      "BP_SupplyCrate_C": { "icon": "supply_crate", "group": "collectible", "title":"Supply Crate"},
 
       "BP_ComputerTextInterface_Terminal_C": { "icon": "terminal", "group": "items", "title":"NOA Terminal"},
       "BP_BioBed_C": { "icon": "bed", "group": "items", "title":"Reprint Point"},
