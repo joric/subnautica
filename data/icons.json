@@ -4,10 +4,8 @@
   "chip": { "class": "fa fa-microchip", "color": "royalblue"},
   "databox": { "class": "fa fa-inbox", "color": "steelblue"},
   "supply_crate": { "class": "fa fa-box-open", "color": "darkcyan"},
-
   "fragment": { "class": "fa fa-gear", "color": "darkslategray" },
   "tadpole": { "class": "fa fa-helicopter", "color": "darkslategray" },
-
   "terminal": { "class": "fa fa-display", "color": "slategrey"},
   "bed": { "class": "fa fa-bed", "color": "slateblue"},
   "eow_volume": { "class": "fa fa-cube", "color": "red" },
@@ -15,17 +13,16 @@
   "water_slug": { "class": "fa fa-shrimp", "color": "pink" },
   "vegetation": { "class": "fa fa-flower", "color": "green" },
   "fish": { "class": "fa fa-fish-fins", "color": "slategrey" },
-
   "gun": { "class": "fa fa-gun", "color": "slategrey" },
   "canker": { "class": "fa fa-biohazard", "color": "magenta" },
   "turbine": { "class": "fa fa-fan", "color": "red" },
-
   "titanium": { "class": "fa fa-cubes", "color": "grey" },
   "silver": { "class": "fa fa-cubes", "color": "lightgrey" },
   "gold": { "class": "fa fa-cubes", "color": "orange" },
   "copper": { "class": "fa fa-cubes", "color": "chocolate" },
   "salt": { "class": "fa fa-gem", "color": "lightgrey" },
   "quartz": { "class": "fa fa-gem", "color": "grey" },
+  "glyph": { "class": "fa fa-om", "color": "goldenrod" },
 
   "hay": { "class": "fa fa-wheat-awn", "color": "goldenrod" },
   "guide": { "class": "fa fa-receipt", "color": "peru" },

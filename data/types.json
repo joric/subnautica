@@ -11,6 +11,8 @@
 
       "BP_SupplyCrate_C": { "icon": "supply_crate", "group": "collectible", "title":"Supply Crate"},
 
+      "BP_AxumGlyph_C": { "icon": "glyph", "group": "misc", "title":"Axum Glyph"},
+
       "BP_ComputerTextInterface_Terminal_C": { "icon": "terminal", "group": "items", "title":"NOA Terminal"},
       "BP_BioBed_C": { "icon": "bed", "group": "items", "title":"Reprint Point"},
       "BP_Black[bB]ox_Clickable_*": { "icon": "blackbox", "group": "collectible", "title":"Blackbox", "weight": -10000 },
