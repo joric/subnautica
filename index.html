@@ -477,20 +477,20 @@ function showTooltip(e) {
   var spaceRight = mapRect.width - screenPosition.x;
   var spaceLeft = screenPosition.x;
 
-  let gap = 16;//getMarkerSize(marker)/2+5;
+  let offset = [30,30]; //getMarkerSize(marker)/2+5;
 
   // Position the tooltip
   if (spaceRight > tooltipWidth) {
     // Place tooltip to the right
-    tooltip.style.left = mapRect.left + screenPosition.x + gap + 'px';
+    tooltip.style.left = mapRect.left + screenPosition.x + offset[0] + 'px';
     tooltip.className = 'arrow-left';
   } else {
     // Place tooltip to the left
-    tooltip.style.left =  mapRect.left + screenPosition.x - tooltipWidth - gap + 'px';
+    tooltip.style.left =  mapRect.left + screenPosition.x - tooltipWidth - offset[0] + 'px';
     tooltip.className = 'arrow-right';
   }
 
-  tooltip.style.top = mapRect.top + screenPosition.y - tooltipHeight/2 + 'px';
+  tooltip.style.top = mapRect.top - offset[1] + screenPosition.y - tooltipHeight/2 + 'px';
 }
 
 // Function to hide the tooltip
