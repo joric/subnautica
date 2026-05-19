@@ -46,6 +46,21 @@ local function toggleEffects()
             o.SetHiddenInGame(bHide, true)
         end
     end
+
+    local timeComponent = FindFirstOf("UWETimeOfDayComponent")
+    if timeComponent and timeComponent:IsValid() then
+        timeComponent:SetTimeOfDay(0.5)
+        timeComponent:FreezeTime(bHide)
+    end
+    
+    local sky = FindFirstOf("BP_UWESky_C")
+    if sky and sky:IsValid() and sky.SunDirectionalLight then
+        -- Change 25.0 to whatever intensity you prefer
+        sky.SunDirectionalLight:SetIntensity(bHide and 100.0 or 10.0)
+
+        --sky.SunDirectionalLight.DynamicShadowDistanceMovableLight = 0.0
+
+    end
 end
 
 local function TakeOrthoByRenderTarget()
