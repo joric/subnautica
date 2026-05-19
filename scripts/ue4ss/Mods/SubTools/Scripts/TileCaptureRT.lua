@@ -32,8 +32,18 @@ local bHide = false
 
 local function toggleEffects()
     bHide = not bHide
-    FindFirstOf("WaterBodyOceanComponent").SetHiddenInGame(bHide, true)
-    FindFirstOf("ExponentialHeightFogComponent").SetHiddenInGame(bHide, true)
+
+    local names = {
+        'WaterBodyOceanComponent',
+        'ExponentialHeightFogComponent',
+    }
+
+    for _, name in ipairs(names) do
+        local o = FindFirstOf(name)
+        if o and o:IsValid() and o.SetHiddenInGame then
+            o.SetHiddenInGame(bHide, true)
+        end
+    end
 end
 
 local function TakeOrthoByRenderTarget()
@@ -130,7 +140,7 @@ end
 
 RegisterKeyBind(Key.F, {ModifierKey.CONTROL}, function()
     toggleEffects()
-    ExecuteWithDelay(1000, function()
+    ExecuteWithDelay(250, function()
         TakeOrthoByRenderTarget()
         toggleEffects()
     end)
