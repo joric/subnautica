@@ -23,6 +23,7 @@
   "salt": { "class": "fa fa-gem", "color": "lightgrey" },
   "quartz": { "class": "fa fa-gem", "color": "grey" },
   "glyph": { "class": "fa fa-om", "color": "goldenrod" },
+  "planetary": { "class": "fa fa-globe", "color": "goldenrod" },
 
   "hay": { "class": "fa fa-wheat-awn", "color": "goldenrod" },
   "guide": { "class": "fa fa-receipt", "color": "peru" },

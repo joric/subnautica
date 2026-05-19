@@ -13,18 +13,28 @@
 
 local UEHelpers = require("UEHelpers")
 
-size=200000
+size=25000
 
 local cc = { left=-337193, top=433406, alt=5000} -- lifepod
+-- local cc = { left=-160717, top=436872, alt=5000} -- turbine
+-- local cc = { left=-222771, top=432320, alt=5000} -- planetary
 
 local bb = { left = cc.left-size/2, top = cc.top-size/2, right = cc.left+size/2, bottom = cc.top+size/2 }
 
 local Altitude = cc.alt
 
 local mapSize = 4096
-local tileSize = 2048
+local tileSize = 4096
 
 local SavePath = "C:\\Temp\\Capture\\"
+
+local bHide = false
+
+local function toggleEffects()
+    bHide = not bHide
+    FindFirstOf("WaterBodyOceanComponent").SetHiddenInGame(bHide, true)
+    FindFirstOf("ExponentialHeightFogComponent").SetHiddenInGame(bHide, true)
+end
 
 local function TakeOrthoByRenderTarget()
     local PC = FindFirstOf("PlayerController")
@@ -118,7 +128,11 @@ local function TakeOrthoByRenderTarget()
 
 end
 
-RegisterKeyBind(Key.R, {ModifierKey.ALT}, function()
-    TakeOrthoByRenderTarget()
+RegisterKeyBind(Key.F, {ModifierKey.CONTROL}, function()
+    toggleEffects()
+    ExecuteWithDelay(1000, function()
+        TakeOrthoByRenderTarget()
+        toggleEffects()
+    end)
 end)
 

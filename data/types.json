@@ -3,7 +3,7 @@
   "group": "misc",
   "match": {
     "type": {
-      "BP_StaticLifepod_Surface_C": {"icon": "lifepod", "group": "items", "title": "Lifepod" },
+      "BP_StaticLifepod_Surface_C": {"icon": "lifepod", "group": "locations", "title": "Lifepod" },
       "BP_EdgeOfWorldVolume_C": {"icon": "eow_volume", "group": "misc", "title": "EOW Volume" },
       "BP_Nrtv_QuartzChip_C": { "icon": "chip", "group": "collectible", "title":"Quartz Chip"},
       "BP_RecipeGainDataCard_Button_C": { "icon": "databox", "group": "collectible", "title":"Data Box"},
@@ -13,23 +13,25 @@
 
       "BP_AxumGlyph_C": { "icon": "glyph", "group": "misc", "title":"Axum Glyph"},
 
-      "BP_ComputerTextInterface_Terminal_C": { "icon": "terminal", "group": "items", "title":"NOA Terminal"},
-      "BP_BioBed_C": { "icon": "bed", "group": "items", "title":"Reprint Point"},
+      "BP_Planetary_C": { "icon": "planetary", "group": "locations", "title":"Planetary"},
+
+      "BP_ComputerTextInterface_Terminal_C": { "icon": "terminal", "group": "locations", "title":"NOA Terminal"},
+      "BP_BioBed_C": { "icon": "bed", "group": "locations", "title":"Reprint Point"},
       "BP_Black[bB]ox_Clickable_*": { "icon": "blackbox", "group": "collectible", "title":"Blackbox", "weight": -10000 },
       "BP_CrabFeces_C": { "icon": "poop", "group": "misc", "title":"Crab Feces"},
       "BP_WaterSlugWorldPopProxy_C": { "icon": "water_slug", "group": "misc", "title":"Water Slug"},
-      "BP_BlightNode_C": { "icon": "canker", "group": "collectible", "title":"Bloom Node"},
+      "BP_BlightNode_C": { "icon": "canker", "group": "locations", "title":"Bloom Node"},
 
-      "BP_ActivateConsoleButton_C": { "icon": "button", "group": "items", "title":"Alien Console"},
+      "BP_ActivateConsoleButton_C": { "icon": "button", "group": "locations", "title":"Alien Console"},
 
-      "BP_WorldBuildable_C": { "icon": "turbine", "group": "items", "title":"Turbine"},
+      "BP_WorldBuildable_C": { "icon": "turbine", "group": "locations", "title":"Turbine"},
 
-      "BP_SonicResonatorV2_Scannable_C": { "icon": "gun", "group": "fragments", "title":"Feedback Resonator"},
-      "BP_Tadpole_.*Fragment*": {"icon": "tadpole", "group": "fragments", "category": "Tadpole Fragment"},
-      "BP_BiobedFragment*": {"icon": "fragment", "group": "fragments", "category": "Biobed Fragment"},
-      "BP_BioLab_Fragment*": {"icon": "fragment", "group": "fragments", "category": "Biolab Fragment"},
+      "BP_SonicResonatorV2_Scannable_C": { "icon": "gun", "group": "tech", "title":"Feedback Resonator"},
+      "BP_Tadpole_.*Fragment*": {"icon": "tadpole", "group": "tech", "category": "Tadpole Fragment"},
+      "BP_BiobedFragment*": {"icon": "fragment", "group": "tech", "category": "Biobed Fragment"},
+      "BP_BioLab_Fragment*": {"icon": "fragment", "group": "tech", "category": "Biolab Fragment"},
 
-      ".*Fragment*": {"icon": "fragment", "group": "fragments", "category": "fragment"},
+      ".*Fragment*": {"icon": "fragment", "group": "tech", "category": "fragment"},
 
 
       ".*(Flower|Petal|Anemone|Coral).*": {"icon": "flower", "group": "misc", "category": "vegetation"},
