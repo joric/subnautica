@@ -16,7 +16,7 @@ local function FLinearColor(R,G,B,A) return {R=R,G=G,B=B,A=A} end
 local function FSlateColor(R,G,B,A) return {SpecifiedColor=FLinearColor(R,G,B,A), ColorUseRule=0} end
 
 local function setText(text)
-    if textBlock and textBlock:IsValid() then
+    if textBlock and textBlock:IsValid() and FText then
         textBlock:SetText(FText(text))
     end
 end
