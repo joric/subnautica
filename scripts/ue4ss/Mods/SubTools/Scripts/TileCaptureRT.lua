@@ -4,12 +4,14 @@
 -- r.Fog 0 
 -- r.Water.WaterMesh.Enabled 0 
 
+-- you can get the best sun with slomo 100 and then slomo 0.001 to stop the sun
+-- use these to adjust light
+-- r.BloomQuality 0
+-- r.TonemapperGamma 10
+
 -- these two don't seem to work properly, everything is dark
 -- r.ShadowQuality 0 
 -- r.DynamicGlobalIlluminationMethod 0
-
--- you can get the best sun with slomo 100 and then slomo 0.001 to stop the sun
-
 
 local UEHelpers = require("UEHelpers")
 
