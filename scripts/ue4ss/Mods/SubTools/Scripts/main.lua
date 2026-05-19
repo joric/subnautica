@@ -1,6 +1,5 @@
 require("SpeedMod")
 require("DebugCameraMod")
-require("NoClipFlyMod")
 require("TeleportMod")
 require("StatsMod")
 require("TileCaptureHRS")
