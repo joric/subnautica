@@ -15,28 +15,21 @@
 
 local UEHelpers = require("UEHelpers")
 
--- local cc = { left = -337193, top = 433406, alt = 5000, size=35000 } -- lifepod
+local cc = { left = -337193, top = 433406, alt = 5000, size=100000 } -- lifepod
 -- local cc = { left=-222771, top=432320, alt=5000, size=35000} -- planetary
-local cc = { left=-160717, top=436872, alt=10000, size= 50000} -- turbine
+-- local cc = { left=-160717, top=436872, alt=10000, size= 50000} -- turbine
 
-local size = cc.size
-
-local bb = { left = cc.left - size / 2, top = cc.top - size / 2, right = cc.left + size / 2, bottom = cc.top + size / 2 }
-
-local Altitude = cc.alt
-
+local tileSize = 512
+local zoomLevel = 2 -- sets number of tiles (0=>1 tile, 1=>4 tiles, 2=>16 tiles, etc...)
 local streamingDelay = 5000 -- 0 means do not teleport pawn and do not wait for chunks
 
-local tileSize = 2048
 
-local zoomLevel = 2 -- sets number of tiles (0=>1 tile, 1=>4 tiles, 2=>16 tiles, etc...)
+local size = cc.size
+local bb = { left = cc.left - size / 2, top = cc.top - size / 2, right = cc.left + size / 2, bottom = cc.top + size / 2 }
+local Altitude = cc.alt
 local mapSize = tileSize*(1<<zoomLevel)
 
-print('mapSize is', mapSize)
-
 local SavePath = "C:\\Temp\\Capture\\"
-
-local bHide = false
 
 local function toggleEffects(bHide)
     local names = {
@@ -60,7 +53,7 @@ local function toggleEffects(bHide)
     local sky = FindFirstOf("BP_UWESky_C")
     if sky and sky:IsValid() and sky.SunDirectionalLight then
         local light = sky.SunDirectionalLight
-        light:SetIntensity(bHide and 100.0 or 10.0)
+        light:SetIntensity(bHide and 50.0 or 10.0)
         -- light:SetCastShadows(not bHide) --  that just makes all black
         --light.DynamicShadowDistanceMovableLight = bHide and 2000.0 or 10000.0 -- no effect ?
     end
