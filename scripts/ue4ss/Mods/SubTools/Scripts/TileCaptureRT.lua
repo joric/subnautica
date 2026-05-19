@@ -1,8 +1,8 @@
 -- before capturing, do these commands in console (those cvars can't be scripted, apparently):
 
 -- disables fog on distance and disables water (!)
--- r.Fog 0 
--- r.Water.WaterMesh.Enabled 0 
+-- r.Fog 0
+-- r.Water.WaterMesh.Enabled 0
 
 -- you can get the best sun with slomo 100 and then slomo 0.001 to stop the sun
 -- use these to adjust light
@@ -10,18 +10,18 @@
 -- r.TonemapperGamma 10
 
 -- these two don't seem to work properly, everything is dark
--- r.ShadowQuality 0 
+-- r.ShadowQuality 0
 -- r.DynamicGlobalIlluminationMethod 0
 
 local UEHelpers = require("UEHelpers")
 
-size=25000
+local size = 25000
 
-local cc = { left=-337193, top=433406, alt=5000} -- lifepod
+local cc = { left = -337193, top = 433406, alt = 5000 } -- lifepod
 -- local cc = { left=-160717, top=436872, alt=5000} -- turbine
 -- local cc = { left=-222771, top=432320, alt=5000} -- planetary
 
-local bb = { left = cc.left-size/2, top = cc.top-size/2, right = cc.left+size/2, bottom = cc.top+size/2 }
+local bb = { left = cc.left - size / 2, top = cc.top - size / 2, right = cc.left + size / 2, bottom = cc.top + size / 2 }
 
 local Altitude = cc.alt
 
@@ -69,18 +69,19 @@ local function TakeOrthoByRenderTarget()
     local bbHeight = bb.bottom - bb.top
     local tileUUWidth = bbWidth / cols
     local tileUUHeight = bbHeight / rows
-    
-    local Rotation = {Pitch = 90.0, Yaw = 0.0, Roll = 0.0}
+
+    local Rotation = { Pitch = 90.0, Yaw = 0.0, Roll = 0.0 }
 
     -- 1. Spawn the hidden Capture Actor
-    local CaptureActor = World:SpawnActor(CaptureClass, {X = 0, Y = 0, Z = Altitude}, Rotation)
+    local CaptureActor = World:SpawnActor(CaptureClass, { X = 0, Y = 0, Z = Altitude }, Rotation)
     if not CaptureActor or not CaptureActor:IsValid() then return end
 
     local CaptureComp = CaptureActor.CaptureComponent2D
 
-    -- 2. Create the Render Target 
+    -- 2. Create the Render Target
     -- Passed exactly as: World, Width, Height, Format, ClearColor, bAutoGenerateMipMaps, bSupportFractionalGamma, Filter
-    local RT = KismetRenderingLibrary:CreateRenderTarget2D(World, tileSize, tileSize, 2, {R=0.0, G=0.0, B=0.0, A=1.0}, false, false)
+    local RT = KismetRenderingLibrary:CreateRenderTarget2D(World, tileSize, tileSize, 2, { R = 0.0, G = 0.0, B = 0.0, A = 1.0 },
+        false, false)
 
     -- 3. Configure the Capture Component
     CaptureComp.TextureTarget = RT
@@ -92,7 +93,8 @@ local function TakeOrthoByRenderTarget()
 
     -- Spawn a hidden actor with streaming source component
     local StreamingSourceClass = StaticFindObject("/Script/Engine.WorldPartitionStreamingSourceComponent")
-    local SourceActor = World:SpawnActor(StaticFindObject("/Script/Engine.Actor"), { X = 0, Y = 0, Z = 0 }, { Pitch = 0, Yaw = 0, Roll = 0 })
+    local SourceActor = World:SpawnActor(StaticFindObject("/Script/Engine.Actor"), { X = 0, Y = 0, Z = 0 },
+        { Pitch = 0, Yaw = 0, Roll = 0 })
 
     if StreamingSourceClass and SourceActor then
         local StreamingComp = SourceActor:AddComponentByClass(StreamingSourceClass, false, {}, false)
@@ -117,12 +119,12 @@ local function TakeOrthoByRenderTarget()
 
         local c = tileIndex % cols
         local r = math.floor(tileIndex / cols)
-        
+
         local CenterX = bb.left + (c + 0.5) * tileUUWidth
         local CenterY = bb.top + (r + 0.5) * tileUUHeight
 
         ExecuteInGameThread(function()
-            CaptureActor:K2_SetActorLocation({X = CenterX, Y = CenterY, Z = Altitude}, false, {}, true)
+            CaptureActor:K2_SetActorLocation({ X = CenterX, Y = CenterY, Z = Altitude }, false, {}, true)
 
             local FileName = string.format("Tile_%d_%d.png", c, r)
             print(string.format("[MapCapture] Moved RT to Tile %d/%d. Saving %s...", tileIndex + 1, totalTiles, FileName))
@@ -137,14 +139,12 @@ local function TakeOrthoByRenderTarget()
     end
 
     CaptureNextTile()
-
 end
 
-RegisterKeyBind(Key.F, {ModifierKey.CONTROL}, function()
+RegisterKeyBind(Key.F, { ModifierKey.CONTROL }, function()
     toggleEffects()
     ExecuteWithDelay(250, function()
         TakeOrthoByRenderTarget()
         toggleEffects()
     end)
 end)
-
