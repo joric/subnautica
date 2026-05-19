@@ -18,23 +18,21 @@ local UEHelpers = require("UEHelpers")
 local size = 25000
 
 local cc = { left = -337193, top = 433406, alt = 5000 } -- lifepod
--- local cc = { left=-160717, top=436872, alt=5000} -- turbine
 -- local cc = { left=-222771, top=432320, alt=5000} -- planetary
+-- local cc = { left=-160717, top=436872, alt=10000} -- turbine
 
 local bb = { left = cc.left - size / 2, top = cc.top - size / 2, right = cc.left + size / 2, bottom = cc.top + size / 2 }
 
 local Altitude = cc.alt
 
 local mapSize = 4096
-local tileSize = 4096
+local tileSize = 2048
 
 local SavePath = "C:\\Temp\\Capture\\"
 
 local bHide = false
 
-local function toggleEffects()
-    bHide = not bHide
-
+local function toggleEffects(bHide)
     local names = {
         'WaterBodyOceanComponent',
         'ExponentialHeightFogComponent',
@@ -55,12 +53,25 @@ local function toggleEffects()
     
     local sky = FindFirstOf("BP_UWESky_C")
     if sky and sky:IsValid() and sky.SunDirectionalLight then
-        -- Change 25.0 to whatever intensity you prefer
-        sky.SunDirectionalLight:SetIntensity(bHide and 100.0 or 10.0)
-
-        --sky.SunDirectionalLight.DynamicShadowDistanceMovableLight = 0.0
-
+        local light = sky.SunDirectionalLight
+        light:SetIntensity(bHide and 75.0 or 10.0)
+        -- lt:SetCastShadows(not bHide) --  that just makes all black
+        -- lt.DynamicShadowDistanceMovableLight = bHide and 0.0 or 10000.0 -- no effect
+        light.DynamicShadowDistanceMovableLight = 2000.0
     end
+
+    local pc = UEHelpers.GetPlayerController()
+    if pc and pc:IsValid() then
+        local world = pc:GetWorld()
+        local ksl = StaticFindObject("/Script/Engine.Default__KismetSystemLibrary")
+        if world and world:IsValid() and ksl and ksl:IsValid() then
+            print('executing commands')
+            -- ksl:ExecuteConsoleCommand(world, "r.TonemapperGamma " .. (bHide and "10" or "5"), nil) -- doesn't work in code apparently
+
+            ksl:ExecuteConsoleCommand(world, "slomo " .. (bHide and "0.0000001" or "1"), nil)
+        end
+    end
+
 end
 
 local function TakeOrthoByRenderTarget()
@@ -93,6 +104,8 @@ local function TakeOrthoByRenderTarget()
 
     local CaptureComp = CaptureActor.CaptureComponent2D
 
+    CaptureComp:K2_SetWorldRotation({ Pitch = -90.0, Yaw = -90.0, Roll = 0.0 }, false, {}, true)
+
     -- 2. Create the Render Target
     -- Passed exactly as: World, Width, Height, Format, ClearColor, bAutoGenerateMipMaps, bSupportFractionalGamma, Filter
     local RT = KismetRenderingLibrary:CreateRenderTarget2D(World, tileSize, tileSize, 2, { R = 0.0, G = 0.0, B = 0.0, A = 1.0 },
@@ -108,19 +121,24 @@ local function TakeOrthoByRenderTarget()
 
     -- Spawn a hidden actor with streaming source component
     local StreamingSourceClass = StaticFindObject("/Script/Engine.WorldPartitionStreamingSourceComponent")
-    local SourceActor = World:SpawnActor(StaticFindObject("/Script/Engine.Actor"), { X = 0, Y = 0, Z = 0 },
-        { Pitch = 0, Yaw = 0, Roll = 0 })
+    local SourceActor = World:SpawnActor(StaticFindObject("/Script/Engine.Actor"), { X = 0, Y = 0, Z = 0 }, { Pitch = 0, Yaw = 0, Roll = 0 })
 
     if StreamingSourceClass and SourceActor then
         local StreamingComp = SourceActor:AddComponentByClass(StreamingSourceClass, false, {}, false)
         if StreamingComp then
             -- Set loading range directly on the component
-            StreamingComp.DefaultLoadingRange = 500000
+
+            StreamingComp.DefaultLoadingRange = 50000
             StreamingComp.bEnableStreaming = true
+
+            StreamingComp:EnableStreamingSource()
+
+
             UEHelpers.GetGameplayStatics():FinishSpawningActor(SourceActor, { X = 0, Y = 0, Z = 0 }, 0)
             print(string.format("[MapCapture] finished spawning streaming source %s", StreamingComp:GetFullName()))
         end
     end
+
 
     print(string.format("[MapCapture] RenderTarget Capture Started! Saving to %s", SavePath))
 
@@ -128,6 +146,7 @@ local function TakeOrthoByRenderTarget()
 
     local function CaptureNextTile()
         if tileIndex >= totalTiles then
+            toggleEffects(false)
             print("[MapCapture] Capture finished.")
             return
         end
@@ -139,16 +158,23 @@ local function TakeOrthoByRenderTarget()
         local CenterY = bb.top + (r + 0.5) * tileUUHeight
 
         ExecuteInGameThread(function()
-            CaptureActor:K2_SetActorLocation({ X = CenterX, Y = CenterY, Z = Altitude }, false, {}, true)
 
+            local loc = { X = CenterX, Y = CenterY, Z = Altitude }
+
+            CaptureActor:K2_SetActorLocation(loc, false, {}, true)
             local FileName = string.format("Tile_%d_%d.png", c, r)
             print(string.format("[MapCapture] Moved RT to Tile %d/%d. Saving %s...", tileIndex + 1, totalTiles, FileName))
 
-            ExecuteInGameThread(function()
-                CaptureComp:CaptureScene()
-                KismetRenderingLibrary:ExportRenderTarget(World, RT, SavePath, FileName)
-                tileIndex = tileIndex + 1
-                CaptureNextTile()
+            -- UEHelpers.GetPlayerController().Pawn.RootComponent:K2_SetWorldLocation(loc, false, {}, true) -- move pawn for streaming. BAD!
+            local streamingDelay = 0
+
+            ExecuteWithDelay(streamingDelay, function()
+                ExecuteInGameThread(function()
+                    CaptureComp:CaptureScene()
+                    KismetRenderingLibrary:ExportRenderTarget(World, RT, SavePath, FileName)
+                    tileIndex = tileIndex + 1
+                    CaptureNextTile()
+                end)
             end)
         end)
     end
@@ -157,9 +183,8 @@ local function TakeOrthoByRenderTarget()
 end
 
 RegisterKeyBind(Key.F, { ModifierKey.CONTROL }, function()
-    toggleEffects()
-    ExecuteWithDelay(250, function()
+    toggleEffects(true)
+    ExecuteWithDelay(2000, function() -- wait 2 sec for autoexposure to settle
         TakeOrthoByRenderTarget()
-        toggleEffects()
     end)
 end)
