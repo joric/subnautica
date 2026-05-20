@@ -1,6 +1,7 @@
 -- needs UE4SS experimental-latest (with FText support)
 -- to adjust exposure, see SetIntensity and r.TonemapperGamma calls below
--- maybe try r.ForceLOD 0 in console. best captured from low height (~200)
+-- maybe try r.ForceLOD 0 in console. best captured from low height (~250)
+-- issues: the high-detailed grating next to the observatory is not loading, only loads on -10000 height
 
 local UEHelpers = require("UEHelpers")
 
@@ -10,10 +11,10 @@ local chunkSize = 25600 -- do not change this
 -- so if you set size to chunkSize*1 it's mostly 2x2 chunks, and chunkSize*9 would be 10x10 chunks
 
 local locations = {
-    lifepod = { left = -337193, top = 433406, alt = 200, size = chunkSize },
+    lifepod = { left = -337193, top = 433406, alt = 250, size = chunkSize },
     planetary = { left = -222771, top = 432320, alt = -10000, size = chunkSize },
-    turbine = { left = -160717, top = 436872, alt = 200, size = chunkSize },
-    all = { left = -222771, top = 432320, alt = 200, size = chunkSize*11 },
+    turbine = { left = -160717, top = 436872, alt = 250, size = chunkSize },
+    all = { left = -222771, top = 432320, alt = 250, size = chunkSize*11 },
 }
 
 --local cc = locations.lifepod
