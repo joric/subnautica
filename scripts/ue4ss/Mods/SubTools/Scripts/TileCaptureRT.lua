@@ -171,6 +171,8 @@ local function createTextWidget()
     widget:AddToViewport(99)
 
     captureWidget = widget
+
+    _print('TileCaptureRT loaded, Ctrl+F to start/stop capture.')
 end
 
 -- /widget
@@ -317,7 +319,7 @@ RegisterKeyBind(Key.F, { ModifierKey.CONTROL }, function()
     end)
 end)
 
-local function updateWidget()    
+local function updateWidget()
     if captureWidget and captureWidget:IsValid() then
         if not captureWidget:IsInViewport() then captureWidget:AddToViewport(99) end
     end
@@ -329,6 +331,3 @@ RegisterHook("/Script/Engine.PlayerController:ClientRestart", function(self)
 end)
 
 updateWidget()
-
-_print('TileCaptureRT loaded, Ctrl+F to start/stop capture.')
-
