@@ -5,31 +5,34 @@ local UEHelpers = require("UEHelpers")
 
 local captureWidgetBanner = 'TileCaptureRT loaded. Press Ctrl+F to capture.'
 
-local chunkSize = 12800 -- do not change this
+local chunkSize = 25600 -- do not change this
 
 -- these locations use coordinates as an interest point (roughly in the center), aligned to chunk boundaries
 -- so if you set size to chunkSize*1 it's mostly 2x2 chunks, and chunkSize*9 would be 10x10 chunks
 
 local locations = {
-    lifepod_only = { left = -337193, top = 433406, alt = 1000, size = 1 },
-    lifepod = { left = -337193, top = 433406, alt = 1000, size = chunkSize },
-    planetary = { left = -222771, top = 432320, alt = 1000, size = chunkSize*2 },
-    turbine = { left = -160717, top = 436872, alt = 1000, size = chunkSize },
-    the_pit = { left = -344231.96875, top = 449815.84375, alt=1000, size = chunkSize},
+    lifepod_only = { left = -337193, top = 433406, alt = 500, size = 1 },
 
-    all = { left = -222771, top = 432320, alt = 0, size = chunkSize*22 },
+    lifepod = { left = -337193, top = 433406, alt = 500, size = chunkSize },
+    planetary = { left = -222771, top = 432320, alt = 500, size = chunkSize*2 },
+    turbine = { left = -160717, top = 436872, alt = 500, size = chunkSize },
+
+    the_pit = { left = -344231.96875, top = 449815.84375, alt=-1, size = chunkSize},
+
+    all = { left = -222771, top = 432320, alt = 500, size = 281600 },
 }
 
 --local cc = locations.lifepod
 --local cc = locations.turbine
 --local cc = locations.planetary
 --local cc = locations.lifepod_only
---local cc = locations.all
-local cc = locations.the_pit
+--local cc = locations.the_pit
+local cc = locations.all
+
 
 
 local tileSize = 2048 -- Resolution of the final exported image per chunk (e.g., 512x512px)
-local streamingDelay = 7500 -- delay to wait for chunk to load after teleporting pawn
+local streamingDelay = 12000 -- delay to wait for chunk to load after teleporting pawn
 local loadDistanceThreshold = chunkSize*4 -- distance from last load point before triggering another load wait
 
 
@@ -106,32 +109,15 @@ local function toggleEffects(bHide)
     local sky = FindFirstOf("BP_UWESky_C")
     if sky and sky:IsValid() and sky.SunDirectionalLight then
         local light = sky.SunDirectionalLight
-        light:SetIntensity(bHide and 75.0 or 10.0)
+        light:SetIntensity(bHide and 60.0 or 10.0)
 
-        -- Boosts bounced light, filling shadows with more diffuse lighting
-        --light.IndirectLightingIntensity = 5.0 
         
-        -- (Optional) If you increase Intensity a lot, reduce SpecularScale 
-        -- so the light doesn't blind you on shiny surfaces
-        --light.SpecularScale = 0.25 
-
-        -- 2. MAKE SHADOWS SUPER SOFT
-        -- Default is ~0.5. Values between 10 to 30 make shadows incredibly soft.
-        -- Note: This works best if the game uses Virtual Shadow Maps, Raytracing, or Distance Field Shadows.
-        --light.LightSourceAngle = 20.0 
-        
-        -- Lowering resolution naturally blurs/softens standard cascaded shadow maps
-        --light.ShadowResolutionScale = 0.25 
-        
-        -- Prevents the engine from artificially sharpening shadow edges
-        --light.ShadowSharpen = 0.0
-
-
-        light.IndirectLightingIntensity = 5.0
-        light.SpecularScale = 0.1
+        -- light.IndirectLightingIntensity = 30.0
+        -- light.SpecularScale = 0.02
+        -- light.VolumetricScatteringIntensity = 0
 
         if sky.SkyLight then
-            sky.SkyLight:SetIntensity(bHide and 10.0 or 5.0)
+            -- sky.SkyLight:SetIntensity(bHide and 30.0 or 5.0)
         end
 
     end
@@ -143,49 +129,37 @@ local function toggleEffects(bHide)
         if world and world:IsValid() and ksl and ksl:IsValid() then
             -- note that not all command work in script runtime, most need actual user input in console
             local cmds = {
-
-                -- Static Meshes: setting scale to 0 forces LOD 0 at all distances
-                'r.StaticMeshLODDistanceScale 0',
-
-                -- Skeletal Meshes: heavy negative bias forces highest LOD
-                'r.SkeletalMeshLODBias -10', 
-
-                -- Foliage: force LOD 0 directly
-                'foliage.ForceLOD 0',
-                'foliage.LODDistanceScale 0', -- Or an extremely high number like 100 depending on UE version
-
-                -- Nanite: Negative offset forces higher detail
-                'r.Nanite.ViewMeshLODBias.Offset -10',
-                'r.Nanite.MaxPixelsPerEdge 1',
-
-                -- General render distance (prevents culling at a distance)
-                'r.ViewDistanceScale 10',
-
-                -- (Optional) Texture streaming: forces highest resolution mips
-                'r.MipMapLODBias -10',
-
-                --'r.Shadow.FilterMethod 1',
-                --'r.Shadow.RadiusThreshold 0.01',
-                --'r.Shadow.CSM.TransitionScale 2.0', -- Blends the cascades much softer
-
-
-                -- Makes shadow cascades draw at an incredibly short distance (virtually disappearing them)
-                'r.Shadow.DistanceScale 0.001',
-
-                -- Force maximum blur/fade transition
-                'r.Shadow.CSM.TransitionScale 1.0',
-
-                -- Disable contact shadows (which create sharp micro-shadows)
-                'r.ContactShadows 0',
-
-
                 --'r.BloomQuality 0',
                 --'r.Tonemapper.Quality 0',
                 --'r.TonemapperGamma 6',
 
+                'r.AmbientOcclusionLevels 0',
+                'r.ContactShadows 0',
+                'r.DistanceFieldAO 0',
+                'r.Shadow.FilterMethod 1',
+                'r.Shadow.MaxCSMResolution 512',
+                'r.Shadow.CSM.MaxCascades 1',
+                'r.Shadow.RadiusThreshold 0.1',
 
-                -- 'r.AntiAliasingMethod 0', -- breaks pictures, they become fully transparent
-                -- 'r.ShadowQuality 0' -- breaks pictures, they become black
+                'r.ForceLOD 0',
+                'r.ParticleLODBias -10',
+                'r.HLOD 0',
+                'r.HLOD.DistanceScale 0',
+                'r.LandscapeLODDistributionScale 3',
+                'r.LandscapeLOD0DistributionScale 3',
+                'r.LandscapeLODBias -3',
+                'r.ViewDistanceScale 100',
+                'foliage.ForceLOD 0',
+                'r.Nanite.MaxPixelsPerEdge 0.5',
+                'r.LandscapeLOD0ScreenSize 10',
+                'r.Streaming.FullyLoadUsedTextures 1',
+                'r.Streaming.UseAllMips 1',
+
+                'r.Nanite.MaxPixelsPerEdge 0.25',
+                'r.Nanite.ViewMeshLODBias.Offset -4',
+                'r.ScreenPercentage 200',
+                'r.ViewDistanceScale 100',
+
             }
 
             for _, cmd in ipairs(cmds) do
@@ -331,6 +305,10 @@ local function TakeOrthoByRenderTarget()
     CaptureComp.bCaptureEveryFrame = false
     CaptureComp.bCaptureOnMovement = false
 
+    CaptureComp.LODDistanceFactor = 0
+    CaptureComp.MaxViewDistanceOverride = 0
+    CaptureComp.bUseFieldOfViewForLOD = false
+
     -- Attach the Streaming Source directly to the CaptureActor
     local StreamingSourceClass = StaticFindObject("/Script/Engine.WorldPartitionStreamingSourceComponent")
     if StreamingSourceClass then
@@ -401,13 +379,55 @@ local function TakeOrthoByRenderTarget()
 
             _print(string.format("Saving %d/%d [%s]. Ctrl+F to stop.", chunkIndex + 1, totalChunks, FileName))
 
+
+            -- hideMovableActors() -- ensure streamed-in dynamic objects are hidden right before the shot
+            CaptureActor:FlushNetDormancy()
+
             -- Wait for streaming, then capture
             ExecuteWithDelay(delayTime, function()
                 ExecuteInGameThread(function()
 
-                    -- hideMovableActors() -- ensure streamed-in dynamic objects are hidden right before the shot
+                    local meshes = FindAllOf("StaticMeshComponent")
+                    for _,m in ipairs(meshes) do
+                        if m:IsValid() then
+                            m:SetForcedLodModel(1)
 
+                            m.MinLOD = 0
+                            m.StreamingDistanceMultiplier = 100
+                            m.bForceMipStreaming = true
+                            m.NeverDistanceCull = true
+                            m.CachedMaxDrawDistance = 0
+
+                        end
+                    end
+
+                    local landscapes = FindAllOf("LandscapeComponent")
+                    for _,l in ipairs(landscapes) do
+                        if l:IsValid() then
+                            l.ForcedLOD = 0
+                            l.LODDistributionSetting = 3
+                            l.CachedMaxDrawDistance = 0
+                        end
+                    end
+
+                    local hism = FindAllOf("HierarchicalInstancedStaticMeshComponent")
+                    for _,h in ipairs(hism) do
+                        if h:IsValid() then
+                            h:SetForcedLodModel(1)
+                            h.InstanceLODDistanceScale = 100
+                            h.CachedMaxDrawDistance = 0
+                        end
+                    end
+
+                    CaptureComp.bAlwaysPersistRenderingState = false
+                    CaptureComp.bCaptureEveryFrame = false
+                    --double capture
+                    --SceneCapture2D sometimes caches LODs from BEFORE the move. so do it twice
+                    CaptureComp.bCameraCutThisFrame = true
                     CaptureComp:CaptureScene()
+                    CaptureComp:CaptureScene()
+
+
                     KismetRenderingLibrary:ExportRenderTarget(World, RT, SavePath, FileName)
 
                     chunkIndex = chunkIndex + 1
