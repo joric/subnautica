@@ -12,19 +12,19 @@ local chunkSize = 25600 -- do not change this
 -- so if you set size to chunkSize*1 it's mostly 2x2 chunks, and chunkSize*9 would be 10x10 chunks
 
 local locations = {
-    lifepod = { left = -337193, top = 433406, alt = 1000, size = chunkSize },
+    lifepod = { left = -337193, top = 433406, alt = 5000, size = chunkSize },
     planetary = { left = -222771, top = 432320, alt = 1000, size = chunkSize },
     turbine = { left = -160717, top = 436872, alt = 5000, size = chunkSize },
     planetary_all = { left = -222771, top = 432320, alt = 5000, size = chunkSize*11 },
 }
 
+--local cc = locations.turbine
 --local cc = locations.lifepod
-
 local cc = locations.planetary_all
 
 
-local tileSize = 256 -- Resolution of the final exported image per chunk (e.g., 512x512px)
-local streamingDelay = 6000 -- delay to wait for chunk to load after teleporting pawn
+local tileSize = 2048 -- Resolution of the final exported image per chunk (e.g., 512x512px)
+local streamingDelay = 4000 -- delay to wait for chunk to load after teleporting pawn
 local loadDistanceThreshold = chunkSize*4 -- distance from last load point before triggering another load wait
 
 local Altitude = cc.alt
@@ -33,6 +33,89 @@ local size = cc.size
 local SavePath = "C:\\Temp\\Capture\\"
 
 local captureStopped = true
+
+-- widget
+
+local VISIBLE = 4
+local HIDDEN = 2
+
+local statsWidget = FindObject("UserWidget", "CaptureWidget")
+local textBlock = FindObject("TextBlock", "CaptureTextBlock")
+
+local function FLinearColor(R,G,B,A) return {R=R,G=G,B=B,A=A} end
+local function FSlateColor(R,G,B,A) return {SpecifiedColor=FLinearColor(R,G,B,A), ColorUseRule=0} end
+
+local function setText(text)
+    if textBlock and textBlock:IsValid() and FText then
+        textBlock:SetText(FText(text))
+    end
+end
+
+local function _print(s) 
+    setText(s)
+    print('[TileCaptureRT] ' .. s)
+end
+
+local function setAlignment(slot, alignment)
+    local b = 0
+    local alignments = {
+        center = {anchor = {0.5, 0.5}, align = {0.5, 0.5}, pos = {0, 0}},
+        top = {anchor = {0.5, 0}, align = {0.5, 0}, pos = {0, b}},
+        bottom = {anchor = {0.5, 1}, align = {0.5, 1}, pos = {0, -b}},
+        topleft = {anchor = {0, 0}, align = {0, 0}, pos = {b, b}},
+        topright = {anchor = {1, 0}, align = {1, 0}, pos = {-b, b}},
+        bottomleft = {anchor = {0, 1}, align = {0, 1}, pos = {b, -b}},
+        bottomright = {anchor = {1, 1}, align = {1, 1}, pos = {-b, -b}}
+    }
+    local a = alignments[alignment] or alignments.center
+    slot:SetAnchors({Minimum = {X = a.anchor[1], Y = a.anchor[2]}, Maximum = {X = a.anchor[1], Y = a.anchor[2]}})
+    slot:SetAlignment({X = a.align[1], Y = a.align[2]})
+    slot:SetPosition({X = a.pos[1], Y = a.pos[2]})
+end
+
+local function createTextWidget()
+    useStats = false
+    if statsWidget and statsWidget:IsValid() then
+        return
+    end
+
+    local gi = UEHelpers.GetGameInstance()
+    widget = StaticConstructObject(StaticFindObject("/Script/UMG.UserWidget"), gi, FName("StatsWidget"))
+    widget.WidgetTree = StaticConstructObject(StaticFindObject("/Script/UMG.WidgetTree"), widget, FName("StatsSimpleTree"))
+
+    local canvas = StaticConstructObject(StaticFindObject("/Script/UMG.CanvasPanel"), widget.WidgetTree, FName("StatsCanvas"))
+    widget.WidgetTree.RootWidget = canvas
+
+    local bg = StaticConstructObject(StaticFindObject("/Script/UMG.Border"), canvas, FName("StatsBG"))
+    bg:SetBrushColor(FLinearColor(0,0,0,0.25))
+    bg:SetPadding({Left = 15, Top = 10, Right = 15, Bottom = 10})
+
+    local slot = canvas:AddChildToCanvas(bg)
+    slot:SetAutoSize(true)
+    setAlignment(slot, alignment or 'topright')
+
+    local text = StaticConstructObject(StaticFindObject("/Script/UMG.TextBlock"), bg, FName("StatsTextBlock"))
+    text.Font.Size = 24
+    text:SetColorAndOpacity(FSlateColor(1,1,1,1))
+    text:SetShadowOffset({X = 1, Y = 1})
+    text:SetShadowColorAndOpacity(FLinearColor(0,0,0,0.5))
+    text:SetText(FText('Hello World!'))
+    text:SetVisibility(VISIBLE)
+    textBlock = text
+    bg:SetContent(text)
+
+    bg:SetVisibility(VISIBLE)
+    widget:SetVisibility(VISIBLE)
+
+    widget:AddToViewport(99)
+
+    statsWidget = widget
+
+    _print('TileCaptureRT loaded, Ctrl+F to start/stop capture.')
+end
+
+-- /widget
+
 
 local function toggleEffects(bHide)
     local names = {
@@ -73,7 +156,7 @@ local function toggleEffects(bHide)
                 'foliage.ForceLOD 0',
                 'r.BloomQuality 0',
                 'r.Tonemapper.Quality 0',
-                'r.TonemapperGamma 3',
+                'r.TonemapperGamma 4',
                 -- 'r.AntiAliasingMethod 0', -- breaks pictures, they become fully transparent
                 -- 'r.ShadowQuality 0' -- breaks pictures, they become black
             }
@@ -140,7 +223,7 @@ local function TakeOrthoByRenderTarget()
         end
     end
 
-    -- print(string.format("[MapCapture] RenderTarget Capture Started! Total Chunks: %d. Saving to %s", totalChunks, SavePath))
+    _print(string.format("Capture Started! Saving %d chunks (%dp) to %s", totalChunks, tileSize, SavePath))
 
     local chunkIndex = 0
     local lastLoc = nil
@@ -149,7 +232,7 @@ local function TakeOrthoByRenderTarget()
         if captureStopped or chunkIndex >= totalChunks then
             toggleEffects(false)
             captureStopped = true
-            print("[MapCapture] Capture stopped.")
+            _print("Capture finished. Ctrl+R to reload script, Ctrl+F to capture.")
             return
         end
 
@@ -187,7 +270,9 @@ local function TakeOrthoByRenderTarget()
                 ExecuteInGameThread(function()
                     CaptureComp:CaptureScene()
 
-                    print(string.format("[MapCapture] Saving chunk %d/%d (X: %d, Y: %d) to %s...", chunkIndex + 1, totalChunks, CenterX, CenterY, FileName))
+                    --_print(string.format("Ctrl+F to stop. Saving chunk %d/%d (%d, %d) to %s...", chunkIndex + 1, totalChunks, CenterX, CenterY, FileName))
+
+                    _print(string.format("Saving chunk %d/%d (%dp) [%d,%d]. Ctrl+F to stop.", chunkIndex + 1, totalChunks, tileSize, CenterX, CenterY))
 
                     KismetRenderingLibrary:ExportRenderTarget(World, RT, SavePath, FileName)
                     -- print(string.format("[MapCapture] Saved %s", FileName))
@@ -214,3 +299,18 @@ RegisterKeyBind(Key.F, { ModifierKey.CONTROL }, function()
         end)
     end)
 end)
+
+
+local function updateWidget()
+    if statsWidget and statsWidget:IsValid() then
+        if not statsWidget:IsInViewport() then statsWidget:AddToViewport(99) end
+    end
+end
+
+RegisterHook("/Script/Engine.PlayerController:ClientRestart", function(self)
+    createTextWidget()
+end)
+
+createTextWidget()
+updateWidget()
+
