@@ -1,6 +1,6 @@
 require("SpeedMod")
 require("TeleportMod")
-require("StatsMod")
-require("TileCaptureHRS")
 require("TileCaptureRT")
+-- require("StatsMod")
+-- require("TileCaptureHRS")
 require("ToggleEffects")

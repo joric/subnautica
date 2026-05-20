@@ -19,10 +19,8 @@ local locations = {
 }
 
 local cc = locations.lifepod
-
 --local cc = locations.turbine
-
-local cc = locations.all
+-- local cc = locations.all
 
 local tileSize = 256 -- Resolution of the final exported image per chunk (e.g., 512x512px)
 local streamingDelay = 5000 -- delay to wait for chunk to load after teleporting pawn
@@ -34,6 +32,18 @@ local size = cc.size
 local SavePath = "C:\\Temp\\Capture\\"
 
 local captureStopped = true
+
+local forceOverwrite = true
+
+function fileExists(filename)
+    local file = io.open(filename, "r")
+    if file then
+        file:close()
+        return true
+    else
+        return false
+    end
+end
 
 local function toggleEffects(bHide)
     local names = {
@@ -74,7 +84,7 @@ local function toggleEffects(bHide)
                 'foliage.ForceLOD 0',
                 'r.BloomQuality 0',
                 'r.Tonemapper.Quality 0',
-                'r.TonemapperGamma 4',
+                'r.TonemapperGamma 8',
                 -- 'r.AntiAliasingMethod 0', -- breaks pictures, they become fully transparent
                 -- 'r.ShadowQuality 0' -- breaks pictures, they become black
             }
@@ -91,15 +101,15 @@ end
 local VISIBLE = 4
 local HIDDEN = 2
 
-local statsWidget = FindObject("UserWidget", "CaptureWidget")
-local textBlock = FindObject("TextBlock", "CaptureTextBlock")
+local captureWidget = FindObject("UserWidget", "captureWidget")
+local captureWidgetTextBlock = FindObject("TextBlock", "captureWidgetTextBlock")
 
 local function FLinearColor(R,G,B,A) return {R=R,G=G,B=B,A=A} end
 local function FSlateColor(R,G,B,A) return {SpecifiedColor=FLinearColor(R,G,B,A), ColorUseRule=0} end
 
 local function setText(text)
-    if textBlock and textBlock:IsValid() and FText then
-        textBlock:SetText(FText(text))
+    if captureWidgetTextBlock and captureWidgetTextBlock:IsValid() and FText then
+        captureWidgetTextBlock:SetText(FText(text))
     end
 end
 
@@ -126,19 +136,18 @@ local function setAlignment(slot, alignment)
 end
 
 local function createTextWidget()
-    useStats = false
-    if statsWidget and statsWidget:IsValid() then
+    if captureWidget and captureWidget:IsValid() then
         return
     end
 
     local gi = UEHelpers.GetGameInstance()
-    widget = StaticConstructObject(StaticFindObject("/Script/UMG.UserWidget"), gi, FName("StatsWidget"))
-    widget.WidgetTree = StaticConstructObject(StaticFindObject("/Script/UMG.WidgetTree"), widget, FName("StatsSimpleTree"))
+    widget = StaticConstructObject(StaticFindObject("/Script/UMG.UserWidget"), gi, FName("captureWidgetUserWidget"))
+    widget.WidgetTree = StaticConstructObject(StaticFindObject("/Script/UMG.WidgetTree"), widget, FName("captureWidgetSimpleTree"))
 
-    local canvas = StaticConstructObject(StaticFindObject("/Script/UMG.CanvasPanel"), widget.WidgetTree, FName("StatsCanvas"))
+    local canvas = StaticConstructObject(StaticFindObject("/Script/UMG.CanvasPanel"), widget.WidgetTree, FName("captureWidgetCanvas"))
     widget.WidgetTree.RootWidget = canvas
 
-    local bg = StaticConstructObject(StaticFindObject("/Script/UMG.Border"), canvas, FName("StatsBG"))
+    local bg = StaticConstructObject(StaticFindObject("/Script/UMG.Border"), canvas, FName("captureWidgetBG"))
     bg:SetBrushColor(FLinearColor(0,0,0,0.25))
     bg:SetPadding({Left = 15, Top = 10, Right = 15, Bottom = 10})
 
@@ -146,7 +155,7 @@ local function createTextWidget()
     slot:SetAutoSize(true)
     setAlignment(slot, alignment or 'topright')
 
-    local text = StaticConstructObject(StaticFindObject("/Script/UMG.TextBlock"), bg, FName("StatsTextBlock"))
+    local text = StaticConstructObject(StaticFindObject("/Script/UMG.TextBlock"), bg, FName("captureWidgetTextBlock"))
     text.Font.Size = 24
     text:SetColorAndOpacity(FSlateColor(1,1,1,1))
     text:SetShadowOffset({X = 1, Y = 1})
@@ -161,22 +170,10 @@ local function createTextWidget()
 
     widget:AddToViewport(99)
 
-    statsWidget = widget
-
-    _print('TileCaptureRT loaded, Ctrl+F to start/stop capture.')
+    captureWidget = widget
 end
 
 -- /widget
-
-function fileExists(filename)
-    local file = io.open(filename, "r")
-    if file then
-        file:close()
-        return true
-    else
-        return false
-    end
-end
 
 local function TakeOrthoByRenderTarget()
     local PC = FindFirstOf("PlayerController")
@@ -265,7 +262,7 @@ local function TakeOrthoByRenderTarget()
 
             local fullPath = SavePath .. FileName
 
-            if fileExists(fullPath) then
+            if not forceOverwrite and fileExists(fullPath) then
                 ExecuteInGameThread(function()
                     chunkIndex = chunkIndex + 1
                     CaptureNextChunk()
@@ -320,17 +317,18 @@ RegisterKeyBind(Key.F, { ModifierKey.CONTROL }, function()
     end)
 end)
 
-
-local function updateWidget()
-    if statsWidget and statsWidget:IsValid() then
-        if not statsWidget:IsInViewport() then statsWidget:AddToViewport(99) end
+local function updateWidget()    
+    if captureWidget and captureWidget:IsValid() then
+        if not captureWidget:IsInViewport() then captureWidget:AddToViewport(99) end
     end
 end
 
 RegisterHook("/Script/Engine.PlayerController:ClientRestart", function(self)
     createTextWidget()
+    updateWidget()
 end)
 
-createTextWidget()
 updateWidget()
+
+_print('TileCaptureRT loaded, Ctrl+F to start/stop capture.')
 
