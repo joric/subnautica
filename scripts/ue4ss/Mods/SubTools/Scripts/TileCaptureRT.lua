@@ -1,8 +1,4 @@
--- before capturing, do these commands in console (those cvars can't be scripted, apparently):
--- r.Fog 0
--- r.Water.WaterMesh.Enabled 0
--- r.BloomQuality 0
--- r.TonemapperGamma 10
+-- needs UE4SS experimental-latest (with FText support)
 
 local UEHelpers = require("UEHelpers")
 
@@ -18,11 +14,12 @@ local locations = {
     all = { left = -222771, top = 432320, alt = 5000, size = chunkSize*11 },
 }
 
-local cc = locations.lifepod
---local cc = locations.turbine
+-- local cc = locations.lifepod
+-- local cc = locations.turbine
+local cc = locations.planetary
 -- local cc = locations.all
 
-local tileSize = 2048 -- Resolution of the final exported image per chunk (e.g., 512x512px)
+local tileSize = 256 -- Resolution of the final exported image per chunk (e.g., 512x512px)
 local streamingDelay = 8000 -- delay to wait for chunk to load after teleporting pawn
 local loadDistanceThreshold = chunkSize*4 -- distance from last load point before triggering another load wait
 
@@ -108,6 +105,7 @@ local function FLinearColor(R,G,B,A) return {R=R,G=G,B=B,A=A} end
 local function FSlateColor(R,G,B,A) return {SpecifiedColor=FLinearColor(R,G,B,A), ColorUseRule=0} end
 
 local function setText(text)
+    captureWidgetTextBlock = FindObject("TextBlock", "captureWidgetTextBlock") -- required
     if captureWidgetTextBlock and captureWidgetTextBlock:IsValid() and FText then
         captureWidgetTextBlock:SetText(FText(text))
     end
@@ -171,8 +169,6 @@ local function createTextWidget()
     widget:AddToViewport(99)
 
     captureWidget = widget
-
-    _print('TileCaptureRT loaded, Ctrl+F to start/stop capture.')
 end
 
 -- /widget
@@ -232,7 +228,7 @@ local function TakeOrthoByRenderTarget()
         end
     end
 
-    _print(string.format("Capture Started! Saving %d chunks (%dp) to %s", totalChunks, tileSize, SavePath))
+    _print(string.format("Saving %d chunks (%dp) to %s...", totalChunks, tileSize, SavePath))
 
     local chunkIndex = 0
     local lastLoc = nil
@@ -311,6 +307,8 @@ RegisterKeyBind(Key.F, { ModifierKey.CONTROL }, function()
         return
     end
 
+    _print("Capture started!")
+
     toggleEffects(true)
     ExecuteWithDelay(2000, function() -- wait 2 sec for autoexposure to settle
         ExecuteInGameThread(function()
@@ -327,7 +325,9 @@ end
 
 RegisterHook("/Script/Engine.PlayerController:ClientRestart", function(self)
     createTextWidget()
-    updateWidget()
+    _print('TileCaptureRT loaded. Ctrl+F to start capture.')
 end)
 
 updateWidget()
+_print('TileCaptureRT reloaded, Ctrl+F to start/stop capture.')
+
