@@ -1,35 +1,38 @@
 -- before capturing, do these commands in console (those cvars can't be scripted, apparently):
-
--- disables fog on distance and disables water (!)
 -- r.Fog 0
 -- r.Water.WaterMesh.Enabled 0
-
--- you can get the best sun with slomo 100 and then slomo 0.001 to stop the sun
--- use these to adjust light
 -- r.BloomQuality 0
 -- r.TonemapperGamma 10
 
--- these two don't seem to work properly, everything is dark
--- r.ShadowQuality 0
--- r.DynamicGlobalIlluminationMethod 0
-
 local UEHelpers = require("UEHelpers")
 
-local cc = { left = -337193, top = 433406, alt = 5000, size=100000 } -- lifepod
--- local cc = { left=-222771, top=432320, alt=5000, size=35000} -- planetary
--- local cc = { left=-160717, top=436872, alt=10000, size= 50000} -- turbine
+local chunkSize = 25600 -- do not change this
 
-local tileSize = 512
-local zoomLevel = 2 -- sets number of tiles (0=>1 tile, 1=>4 tiles, 2=>16 tiles, etc...)
-local streamingDelay = 5000 -- 0 means do not teleport pawn and do not wait for chunks
+-- these locations use coordinates as an interest point (roughly in the center), aligned to chunk boundaries
+-- so if you set size to chunkSize*1 it's mostly 2x2 chunks, and chunkSize*9 would be 10x10 chunks
+
+local locations = {
+    lifepod = { left = -337193, top = 433406, alt = 1000, size = chunkSize },
+    planetary = { left = -222771, top = 432320, alt = 1000, size = chunkSize },
+    turbine = { left = -160717, top = 436872, alt = 5000, size = chunkSize },
+    planetary_all = { left = -222771, top = 432320, alt = 5000, size = chunkSize*11 },
+}
+
+--local cc = locations.lifepod
+
+local cc = locations.planetary_all
 
 
-local size = cc.size
-local bb = { left = cc.left - size / 2, top = cc.top - size / 2, right = cc.left + size / 2, bottom = cc.top + size / 2 }
+local tileSize = 256 -- Resolution of the final exported image per chunk (e.g., 512x512px)
+local streamingDelay = 6000 -- delay to wait for chunk to load after teleporting pawn
+local loadDistanceThreshold = chunkSize*4 -- distance from last load point before triggering another load wait
+
 local Altitude = cc.alt
-local mapSize = tileSize*(1<<zoomLevel)
+local size = cc.size
 
 local SavePath = "C:\\Temp\\Capture\\"
+
+local captureStopped = true
 
 local function toggleEffects(bHide)
     local names = {
@@ -54,8 +57,6 @@ local function toggleEffects(bHide)
     if sky and sky:IsValid() and sky.SunDirectionalLight then
         local light = sky.SunDirectionalLight
         light:SetIntensity(bHide and 50.0 or 10.0)
-        -- light:SetCastShadows(not bHide) --  that just makes all black
-        --light.DynamicShadowDistanceMovableLight = bHide and 2000.0 or 10000.0 -- no effect ?
     end
 
     local pc = UEHelpers.GetPlayerController()
@@ -63,13 +64,25 @@ local function toggleEffects(bHide)
         local world = pc:GetWorld()
         local ksl = StaticFindObject("/Script/Engine.Default__KismetSystemLibrary")
         if world and world:IsValid() and ksl and ksl:IsValid() then
-            print('executing commands')
-            -- ksl:ExecuteConsoleCommand(world, "r.TonemapperGamma " .. (bHide and "10" or "5"), nil) -- doesn't work in code apparently
+            ksl:ExecuteConsoleCommand(world, "slomo " .. (bHide and "0.00000001" or "1"), nil)
 
-            ksl:ExecuteConsoleCommand(world, "slomo " .. (bHide and "0.0000001" or "1"), nil)
+            -- note that not all command work in script runtime, most need actual user input in console
+            local cmds = {
+                'landscape.ForceLOD 0',
+                'r.ForceLOD 0',
+                'foliage.ForceLOD 0',
+                'r.BloomQuality 0',
+                'r.Tonemapper.Quality 0',
+                'r.TonemapperGamma 3',
+                -- 'r.AntiAliasingMethod 0', -- breaks pictures, they become fully transparent
+                -- 'r.ShadowQuality 0' -- breaks pictures, they become black
+            }
+
+            for _, cmd in ipairs(cmds) do
+                ksl:ExecuteConsoleCommand(world, cmd, nil)
+            end
         end
     end
-
 end
 
 local function TakeOrthoByRenderTarget()
@@ -85,14 +98,15 @@ local function TakeOrthoByRenderTarget()
         return
     end
 
-    -- Grid Math
-    local cols = math.floor(mapSize / tileSize)
-    local rows = math.floor(mapSize / tileSize)
-    local totalTiles = cols * rows
-    local bbWidth = bb.right - bb.left
-    local bbHeight = bb.bottom - bb.top
-    local tileUUWidth = bbWidth / cols
-    local tileUUHeight = bbHeight / rows
+    -- Grid Math - fixed the X/Y mixup here!
+    local minX = math.floor((cc.left - size / 2) / chunkSize) * chunkSize
+    local maxX = math.ceil((cc.left + size / 2) / chunkSize) * chunkSize
+    local minY = math.floor((cc.top - size / 2) / chunkSize) * chunkSize
+    local maxY = math.ceil((cc.top + size / 2) / chunkSize) * chunkSize
+
+    local cols = math.floor((maxX - minX) / chunkSize)
+    local rows = math.floor((maxY - minY) / chunkSize)
+    local totalChunks = cols * rows
 
     local Rotation = { Pitch = 90.0, Yaw = 0.0, Roll = 0.0 }
 
@@ -101,90 +115,102 @@ local function TakeOrthoByRenderTarget()
     if not CaptureActor or not CaptureActor:IsValid() then return end
 
     local CaptureComp = CaptureActor.CaptureComponent2D
-
     CaptureComp:K2_SetWorldRotation({ Pitch = -90.0, Yaw = -90.0, Roll = 0.0 }, false, {}, true)
 
     -- 2. Create the Render Target
-    -- Passed exactly as: World, Width, Height, Format, ClearColor, bAutoGenerateMipMaps, bSupportFractionalGamma, Filter
-    local RT = KismetRenderingLibrary:CreateRenderTarget2D(World, tileSize, tileSize, 2, { R = 0.0, G = 0.0, B = 0.0, A = 1.0 },
-        false, false)
+    local RT = KismetRenderingLibrary:CreateRenderTarget2D(World, tileSize, tileSize, 2, { R = 0.0, G = 0.0, B = 0.0, A = 1.0 }, false, false)
 
     -- 3. Configure the Capture Component
     CaptureComp.TextureTarget = RT
-    CaptureComp.ProjectionType = 1 -- 1 = Orthographic
-    CaptureComp.OrthoWidth = tileUUWidth
-    CaptureComp.CaptureSource = 2  -- 2 = FinalColorLDR (Includes post-processing, use 0 for raw SceneColor if needed)
+    CaptureComp.ProjectionType = 1 -- Orthographic
+    CaptureComp.OrthoWidth = chunkSize -- Camera covers exactly one chunk perfectly
+    CaptureComp.CaptureSource = 2  -- FinalColorLDR
     CaptureComp.bCaptureEveryFrame = false
     CaptureComp.bCaptureOnMovement = false
 
-    -- Spawn a hidden actor with streaming source component
+    -- Attach the Streaming Source directly to the CaptureActor
     local StreamingSourceClass = StaticFindObject("/Script/Engine.WorldPartitionStreamingSourceComponent")
-    local SourceActor = World:SpawnActor(StaticFindObject("/Script/Engine.Actor"), { X = 0, Y = 0, Z = 0 }, { Pitch = 0, Yaw = 0, Roll = 0 })
-
-    if StreamingSourceClass and SourceActor then
-        local StreamingComp = SourceActor:AddComponentByClass(StreamingSourceClass, false, {}, false)
+    if StreamingSourceClass then
+        local StreamingComp = CaptureActor:AddComponentByClass(StreamingSourceClass, false, {}, false)
         if StreamingComp then
-            -- Set loading range directly on the component
-
-            StreamingComp.DefaultLoadingRange = 50000
+            StreamingComp.DefaultLoadingRange = loadDistanceThreshold * 2 -- Cover a wide area around the camera
             StreamingComp.bEnableStreaming = true
-
             StreamingComp:EnableStreamingSource()
-
-
-            UEHelpers.GetGameplayStatics():FinishSpawningActor(SourceActor, { X = 0, Y = 0, Z = 0 }, 0)
-            print(string.format("[MapCapture] finished spawning streaming source %s", StreamingComp:GetFullName()))
+            -- print("[MapCapture] Attached WorldPartitionStreamingSource to Camera.")
         end
     end
 
+    -- print(string.format("[MapCapture] RenderTarget Capture Started! Total Chunks: %d. Saving to %s", totalChunks, SavePath))
 
-    print(string.format("[MapCapture] RenderTarget Capture Started! Saving to %s", SavePath))
+    local chunkIndex = 0
+    local lastLoc = nil
 
-    local tileIndex = 0
-
-    local function CaptureNextTile()
-        if tileIndex >= totalTiles then
+    local function CaptureNextChunk()
+        if captureStopped or chunkIndex >= totalChunks then
             toggleEffects(false)
-            print("[MapCapture] Capture finished.")
+            captureStopped = true
+            print("[MapCapture] Capture stopped.")
             return
         end
 
-        local c = tileIndex % cols
-        local r = math.floor(tileIndex / cols)
+        local c = chunkIndex % cols
+        local r = math.floor(chunkIndex / cols)
 
-        local CenterY = bb.top + (c + 0.5) * tileUUWidth
-        local CenterX = bb.left + (r + 0.5) * tileUUHeight
+        local CenterX = minX + (c + 0.5) * chunkSize
+        local CenterY = minY + (r + 0.5) * chunkSize
 
         ExecuteInGameThread(function()
-
             local loc = { X = CenterX, Y = CenterY, Z = Altitude }
-
+            
+            -- Move Camera (The streaming source component is attached and moves with it)
             CaptureActor:K2_SetActorLocation(loc, false, {}, true)
-            local FileName = string.format("Tile_%d_%d.png", c, r)
-            print(string.format("[MapCapture] Moved RT to Tile %d/%d. Saving %s...", tileIndex + 1, totalTiles, FileName))
 
-            if streamingDelay>0 then
-                UEHelpers.GetPlayerController().Pawn.RootComponent:K2_SetWorldLocation(loc, false, {}, true) -- move pawn for streaming. BAD!
-                streamingDelay = 0
+            local FileName = string.format("Chunk_%d_%d.png", c, r)
+
+            -- Check if we are far enough from the last loaded center to warrant a pause
+            local dist = 999999
+            if lastLoc then
+                dist = math.sqrt((CenterX - lastLoc.X)^2 + (CenterY - lastLoc.Y)^2)
             end
 
-            ExecuteWithDelay(streamingDelay, function()
+            local delayTime = 100 -- brief delay even if 0 to ensure transform update
+
+            -- If we moved beyond our threshold, apply the streaming delay
+            if streamingDelay > 0 and dist > loadDistanceThreshold then
+                -- print(string.format("[MapCapture] Waiting for chunk to stream (Distance: %.0f > %.0f)...", dist, loadDistanceThreshold))
+                lastLoc = loc
+                delayTime = streamingDelay
+            end
+
+            -- Wait for streaming, then capture
+            ExecuteWithDelay(delayTime, function()
                 ExecuteInGameThread(function()
                     CaptureComp:CaptureScene()
+
+                    print(string.format("[MapCapture] Saving chunk %d/%d (X: %d, Y: %d) to %s...", chunkIndex + 1, totalChunks, CenterX, CenterY, FileName))
+
                     KismetRenderingLibrary:ExportRenderTarget(World, RT, SavePath, FileName)
-                    tileIndex = tileIndex + 1
-                    CaptureNextTile()
+                    -- print(string.format("[MapCapture] Saved %s", FileName))
+                    chunkIndex = chunkIndex + 1
+                    CaptureNextChunk()
                 end)
             end)
         end)
     end
 
-    CaptureNextTile()
+    CaptureNextChunk()
 end
 
 RegisterKeyBind(Key.F, { ModifierKey.CONTROL }, function()
+    captureStopped  = not captureStopped
+    if captureStopped then
+        return
+    end
+
     toggleEffects(true)
     ExecuteWithDelay(2000, function() -- wait 2 sec for autoexposure to settle
-        TakeOrthoByRenderTarget()
+        ExecuteInGameThread(function()
+            TakeOrthoByRenderTarget()
+        end)
     end)
 end)
