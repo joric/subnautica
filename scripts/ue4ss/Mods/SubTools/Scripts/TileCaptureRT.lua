@@ -15,16 +15,16 @@ local locations = {
     lifepod = { left = -337193, top = 433406, alt = 5000, size = chunkSize },
     planetary = { left = -222771, top = 432320, alt = 1000, size = chunkSize },
     turbine = { left = -160717, top = 436872, alt = 5000, size = chunkSize },
-    planetary_all = { left = -222771, top = 432320, alt = 5000, size = chunkSize*11 },
+    all = { left = -222771, top = 432320, alt = 5000, size = chunkSize*11 },
 }
 
 local cc = locations.lifepod
 
 --local cc = locations.turbine
---local cc = locations.planetary_all
 
+local cc = locations.all
 
-local tileSize = 2048 -- Resolution of the final exported image per chunk (e.g., 512x512px)
+local tileSize = 256 -- Resolution of the final exported image per chunk (e.g., 512x512px)
 local streamingDelay = 5000 -- delay to wait for chunk to load after teleporting pawn
 local loadDistanceThreshold = chunkSize*4 -- distance from last load point before triggering another load wait
 
@@ -34,6 +34,57 @@ local size = cc.size
 local SavePath = "C:\\Temp\\Capture\\"
 
 local captureStopped = true
+
+local function toggleEffects(bHide)
+    local names = {
+        'WaterBodyOceanComponent',
+        'ExponentialHeightFogComponent',
+    }
+
+    for _, name in ipairs(names) do
+        local o = FindFirstOf(name)
+        if o and o:IsValid() and o.SetHiddenInGame then
+            o.SetHiddenInGame(bHide, true)
+        end
+    end
+
+    local timeComponent = FindFirstOf("UWETimeOfDayComponent")
+    if timeComponent and timeComponent:IsValid() then
+        timeComponent:SetTimeOfDay(0.5)
+        timeComponent:FreezeTime(bHide)
+    end
+    
+    local sky = FindFirstOf("BP_UWESky_C")
+    if sky and sky:IsValid() and sky.SunDirectionalLight then
+        local light = sky.SunDirectionalLight
+        light:SetIntensity(bHide and 50.0 or 10.0)
+    end
+
+    local pc = UEHelpers.GetPlayerController()
+    if pc and pc:IsValid() then
+        local world = pc:GetWorld()
+        local ksl = StaticFindObject("/Script/Engine.Default__KismetSystemLibrary")
+        if world and world:IsValid() and ksl and ksl:IsValid() then
+            ksl:ExecuteConsoleCommand(world, "slomo " .. (bHide and "0.00000001" or "1"), nil)
+
+            -- note that not all command work in script runtime, most need actual user input in console
+            local cmds = {
+                'landscape.ForceLOD 0',
+                'r.ForceLOD 0',
+                'foliage.ForceLOD 0',
+                'r.BloomQuality 0',
+                'r.Tonemapper.Quality 0',
+                'r.TonemapperGamma 4',
+                -- 'r.AntiAliasingMethod 0', -- breaks pictures, they become fully transparent
+                -- 'r.ShadowQuality 0' -- breaks pictures, they become black
+            }
+
+            for _, cmd in ipairs(cmds) do
+                ksl:ExecuteConsoleCommand(world, cmd, nil)
+            end
+        end
+    end
+end
 
 -- widget
 
@@ -117,55 +168,13 @@ end
 
 -- /widget
 
-
-local function toggleEffects(bHide)
-    local names = {
-        'WaterBodyOceanComponent',
-        'ExponentialHeightFogComponent',
-    }
-
-    for _, name in ipairs(names) do
-        local o = FindFirstOf(name)
-        if o and o:IsValid() and o.SetHiddenInGame then
-            o.SetHiddenInGame(bHide, true)
-        end
-    end
-
-    local timeComponent = FindFirstOf("UWETimeOfDayComponent")
-    if timeComponent and timeComponent:IsValid() then
-        timeComponent:SetTimeOfDay(0.5)
-        timeComponent:FreezeTime(bHide)
-    end
-    
-    local sky = FindFirstOf("BP_UWESky_C")
-    if sky and sky:IsValid() and sky.SunDirectionalLight then
-        local light = sky.SunDirectionalLight
-        light:SetIntensity(bHide and 50.0 or 10.0)
-    end
-
-    local pc = UEHelpers.GetPlayerController()
-    if pc and pc:IsValid() then
-        local world = pc:GetWorld()
-        local ksl = StaticFindObject("/Script/Engine.Default__KismetSystemLibrary")
-        if world and world:IsValid() and ksl and ksl:IsValid() then
-            ksl:ExecuteConsoleCommand(world, "slomo " .. (bHide and "0.00000001" or "1"), nil)
-
-            -- note that not all command work in script runtime, most need actual user input in console
-            local cmds = {
-                'landscape.ForceLOD 0',
-                'r.ForceLOD 0',
-                'foliage.ForceLOD 0',
-                'r.BloomQuality 0',
-                'r.Tonemapper.Quality 0',
-                'r.TonemapperGamma 4',
-                -- 'r.AntiAliasingMethod 0', -- breaks pictures, they become fully transparent
-                -- 'r.ShadowQuality 0' -- breaks pictures, they become black
-            }
-
-            for _, cmd in ipairs(cmds) do
-                ksl:ExecuteConsoleCommand(world, cmd, nil)
-            end
-        end
+function fileExists(filename)
+    local file = io.open(filename, "r")
+    if file then
+        file:close()
+        return true
+    else
+        return false
     end
 end
 
@@ -249,7 +258,20 @@ local function TakeOrthoByRenderTarget()
             -- Move Camera (The streaming source component is attached and moves with it)
             CaptureActor:K2_SetActorLocation(loc, false, {}, true)
 
-            local FileName = string.format("Chunk_%d_%d.png", c, r)
+            local ct = math.floor(CenterX/chunkSize)
+            local rt = math.floor(CenterY/chunkSize)
+
+            local FileName = string.format("Chunk_%dp_%d_%d.png", tileSize, ct, rt)
+
+            local fullPath = SavePath .. FileName
+
+            if fileExists(fullPath) then
+                ExecuteInGameThread(function()
+                    chunkIndex = chunkIndex + 1
+                    CaptureNextChunk()
+                end)
+                return
+            end
 
             -- Check if we are far enough from the last loaded center to warrant a pause
             local dist = 999999
@@ -269,9 +291,11 @@ local function TakeOrthoByRenderTarget()
             -- Wait for streaming, then capture
             ExecuteWithDelay(delayTime, function()
                 ExecuteInGameThread(function()
+                    _print(string.format("Saving chunk %d/%d [%s]. Ctrl+F to stop.", chunkIndex + 1, totalChunks, FileName))
+
                     CaptureComp:CaptureScene()
-                    _print(string.format("Saving chunk %d/%d (%dp) [%d,%d]. Ctrl+F to stop.", chunkIndex + 1, totalChunks, tileSize, CenterX, CenterY))
                     KismetRenderingLibrary:ExportRenderTarget(World, RT, SavePath, FileName)
+
                     chunkIndex = chunkIndex + 1
                     CaptureNextChunk()
                 end)
