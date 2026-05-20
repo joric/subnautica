@@ -1,7 +1,7 @@
 -- needs UE4SS experimental-latest (with FText support)
 -- to adjust exposure, see SetIntensity and r.TonemapperGamma calls below
 -- maybe try r.ForceLOD 0 in console. best captured from low height (~250)
--- issues: the high-detailed grating next to the observatory is not loading, only loads on -10000 height
+-- the high-detailed grating next to the observatory is not loading, only loads on -10000 height
 
 local UEHelpers = require("UEHelpers")
 
