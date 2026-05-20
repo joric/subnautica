@@ -1,7 +1,5 @@
 -- needs UE4SS experimental-latest (with FText support)
 -- to adjust exposure, see SetIntensity and r.TonemapperGamma calls below
--- the high-detailed grating next to the observatory is not loading
--- maybe try r.ForceLOD 0 in console
 
 local UEHelpers = require("UEHelpers")
 
@@ -9,31 +7,38 @@ local captureWidgetBanner = 'TileCaptureRT loaded. Press Ctrl+F to capture.'
 
 local chunkSize = 12800 -- do not change this
 
-local tileSize = 2048 -- Resolution of the final exported image per chunk (e.g., 512x512px)
-local streamingDelay = 7500 -- delay to wait for chunk to load after teleporting pawn
-local loadDistanceThreshold = chunkSize*4 -- distance from last load point before triggering another load wait
-
 -- these locations use coordinates as an interest point (roughly in the center), aligned to chunk boundaries
 -- so if you set size to chunkSize*1 it's mostly 2x2 chunks, and chunkSize*9 would be 10x10 chunks
 
 local locations = {
     lifepod_only = { left = -337193, top = 433406, alt = 1000, size = 1 },
-    lifepod = { left = -337193, top = 433406, alt = 5000, size = chunkSize },
-    planetary = { left = -222771, top = 432320, alt = -10000, size = chunkSize*2 },
-    turbine = { left = -160717, top = 436872, alt = 5000, size = chunkSize },
-    all = { left = -222771, top = 432320, alt = 5000, size = chunkSize*22 },
+    lifepod = { left = -337193, top = 433406, alt = 1000, size = chunkSize },
+    planetary = { left = -222771, top = 432320, alt = 1000, size = chunkSize*2 },
+    turbine = { left = -160717, top = 436872, alt = 1000, size = chunkSize },
+    the_pit = { left = -344231.96875, top = 449815.84375, alt=1000, size = chunkSize},
+
+    all = { left = -222771, top = 432320, alt = 0, size = chunkSize*22 },
 }
 
 --local cc = locations.lifepod
 --local cc = locations.turbine
 --local cc = locations.planetary
---local cc =locations.lifepod_only
-local cc = locations.all
+--local cc = locations.lifepod_only
+--local cc = locations.all
+local cc = locations.the_pit
+
+
+local tileSize = 2048 -- Resolution of the final exported image per chunk (e.g., 512x512px)
+local streamingDelay = 7500 -- delay to wait for chunk to load after teleporting pawn
+local loadDistanceThreshold = chunkSize*4 -- distance from last load point before triggering another load wait
+
+
+
+
+local SavePath = "C:\\Temp\\Capture\\"
 
 local Altitude = cc.alt
 local size = cc.size
-
-local SavePath = "C:\\Temp\\Capture\\"
 
 local captureStopped = true
 
@@ -101,7 +106,34 @@ local function toggleEffects(bHide)
     local sky = FindFirstOf("BP_UWESky_C")
     if sky and sky:IsValid() and sky.SunDirectionalLight then
         local light = sky.SunDirectionalLight
-        light:SetIntensity(bHide and 50.0 or 10.0)
+        light:SetIntensity(bHide and 75.0 or 10.0)
+
+        -- Boosts bounced light, filling shadows with more diffuse lighting
+        --light.IndirectLightingIntensity = 5.0 
+        
+        -- (Optional) If you increase Intensity a lot, reduce SpecularScale 
+        -- so the light doesn't blind you on shiny surfaces
+        --light.SpecularScale = 0.25 
+
+        -- 2. MAKE SHADOWS SUPER SOFT
+        -- Default is ~0.5. Values between 10 to 30 make shadows incredibly soft.
+        -- Note: This works best if the game uses Virtual Shadow Maps, Raytracing, or Distance Field Shadows.
+        --light.LightSourceAngle = 20.0 
+        
+        -- Lowering resolution naturally blurs/softens standard cascaded shadow maps
+        --light.ShadowResolutionScale = 0.25 
+        
+        -- Prevents the engine from artificially sharpening shadow edges
+        --light.ShadowSharpen = 0.0
+
+
+        light.IndirectLightingIntensity = 5.0
+        light.SpecularScale = 0.1
+
+        if sky.SkyLight then
+            sky.SkyLight:SetIntensity(bHide and 10.0 or 5.0)
+        end
+
     end
 
     local pc = UEHelpers.GetPlayerController()
@@ -111,12 +143,47 @@ local function toggleEffects(bHide)
         if world and world:IsValid() and ksl and ksl:IsValid() then
             -- note that not all command work in script runtime, most need actual user input in console
             local cmds = {
-                'landscape.ForceLOD 0',
-                'r.ForceLOD 0',
+
+                -- Static Meshes: setting scale to 0 forces LOD 0 at all distances
+                'r.StaticMeshLODDistanceScale 0',
+
+                -- Skeletal Meshes: heavy negative bias forces highest LOD
+                'r.SkeletalMeshLODBias -10', 
+
+                -- Foliage: force LOD 0 directly
                 'foliage.ForceLOD 0',
-                'r.BloomQuality 0',
-                'r.Tonemapper.Quality 0',
-                'r.TonemapperGamma 6',
+                'foliage.LODDistanceScale 0', -- Or an extremely high number like 100 depending on UE version
+
+                -- Nanite: Negative offset forces higher detail
+                'r.Nanite.ViewMeshLODBias.Offset -10',
+                'r.Nanite.MaxPixelsPerEdge 1',
+
+                -- General render distance (prevents culling at a distance)
+                'r.ViewDistanceScale 10',
+
+                -- (Optional) Texture streaming: forces highest resolution mips
+                'r.MipMapLODBias -10',
+
+                --'r.Shadow.FilterMethod 1',
+                --'r.Shadow.RadiusThreshold 0.01',
+                --'r.Shadow.CSM.TransitionScale 2.0', -- Blends the cascades much softer
+
+
+                -- Makes shadow cascades draw at an incredibly short distance (virtually disappearing them)
+                'r.Shadow.DistanceScale 0.001',
+
+                -- Force maximum blur/fade transition
+                'r.Shadow.CSM.TransitionScale 1.0',
+
+                -- Disable contact shadows (which create sharp micro-shadows)
+                'r.ContactShadows 0',
+
+
+                --'r.BloomQuality 0',
+                --'r.Tonemapper.Quality 0',
+                --'r.TonemapperGamma 6',
+
+
                 -- 'r.AntiAliasingMethod 0', -- breaks pictures, they become fully transparent
                 -- 'r.ShadowQuality 0' -- breaks pictures, they become black
             }
@@ -270,6 +337,7 @@ local function TakeOrthoByRenderTarget()
         local StreamingComp = CaptureActor:AddComponentByClass(StreamingSourceClass, false, {}, false)
         if StreamingComp then
             StreamingComp.DefaultLoadingRange = loadDistanceThreshold * 2 -- Cover a wide area around the camera
+            StreamingComp.Priority = 1
             StreamingComp.bEnableStreaming = true
             StreamingComp:EnableStreamingSource()
             -- print("[MapCapture] Attached WorldPartitionStreamingSource to Camera.")
