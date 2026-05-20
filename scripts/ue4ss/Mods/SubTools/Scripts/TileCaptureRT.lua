@@ -325,7 +325,7 @@ end
 
 RegisterHook("/Script/Engine.PlayerController:ClientRestart", function(self)
     createTextWidget()
-    _print('TileCaptureRT loaded. Ctrl+F to start capture.')
+    _print('TileCaptureRT loaded. Ctrl+F to start/stop capture.')
 end)
 
 updateWidget()
