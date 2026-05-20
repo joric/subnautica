@@ -22,8 +22,8 @@ local cc = locations.lifepod
 --local cc = locations.turbine
 -- local cc = locations.all
 
-local tileSize = 256 -- Resolution of the final exported image per chunk (e.g., 512x512px)
-local streamingDelay = 5000 -- delay to wait for chunk to load after teleporting pawn
+local tileSize = 2048 -- Resolution of the final exported image per chunk (e.g., 512x512px)
+local streamingDelay = 8000 -- delay to wait for chunk to load after teleporting pawn
 local loadDistanceThreshold = chunkSize*4 -- distance from last load point before triggering another load wait
 
 local Altitude = cc.alt
