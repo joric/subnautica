@@ -1,30 +1,34 @@
 -- needs UE4SS experimental-latest (with FText support)
 -- to adjust exposure, see SetIntensity and r.TonemapperGamma calls below
--- maybe try r.ForceLOD 0 in console. best captured from low height (~250)
--- the high-detailed grating next to the observatory is not loading, only loads on -10000 height
+-- the high-detailed grating next to the observatory is not loading
+-- maybe try r.ForceLOD 0 in console
 
 local UEHelpers = require("UEHelpers")
 
-local chunkSize = 25600 -- do not change this
+local captureWidgetBanner = 'TileCaptureRT loaded. Press Ctrl+F to capture.'
+
+local chunkSize = 12800 -- do not change this
+
+local tileSize = 2048 -- Resolution of the final exported image per chunk (e.g., 512x512px)
+local streamingDelay = 7500 -- delay to wait for chunk to load after teleporting pawn
+local loadDistanceThreshold = chunkSize*4 -- distance from last load point before triggering another load wait
 
 -- these locations use coordinates as an interest point (roughly in the center), aligned to chunk boundaries
 -- so if you set size to chunkSize*1 it's mostly 2x2 chunks, and chunkSize*9 would be 10x10 chunks
 
 local locations = {
-    lifepod = { left = -337193, top = 433406, alt = 250, size = chunkSize },
-    planetary = { left = -222771, top = 432320, alt = -10000, size = chunkSize },
-    turbine = { left = -160717, top = 436872, alt = 250, size = chunkSize },
-    all = { left = -222771, top = 432320, alt = 250, size = chunkSize*11 },
+    lifepod_only = { left = -337193, top = 433406, alt = 1000, size = 1 },
+    lifepod = { left = -337193, top = 433406, alt = 5000, size = chunkSize },
+    planetary = { left = -222771, top = 432320, alt = -10000, size = chunkSize*2 },
+    turbine = { left = -160717, top = 436872, alt = 5000, size = chunkSize },
+    all = { left = -222771, top = 432320, alt = 5000, size = chunkSize*22 },
 }
 
 --local cc = locations.lifepod
 --local cc = locations.turbine
--- local cc = locations.planetary
+--local cc = locations.planetary
+--local cc =locations.lifepod_only
 local cc = locations.all
-
-local tileSize = 2048 -- Resolution of the final exported image per chunk (e.g., 512x512px)
-local streamingDelay = 7500 -- delay to wait for chunk to load after teleporting pawn
-local loadDistanceThreshold = chunkSize*4 -- distance from last load point before triggering another load wait
 
 local Altitude = cc.alt
 local size = cc.size
@@ -34,6 +38,9 @@ local SavePath = "C:\\Temp\\Capture\\"
 local captureStopped = true
 
 local forceOverwrite = true
+
+-- Table to track all hidden dynamic actors so we can restore them later
+local hiddenDynamicActors = {}
 
 function fileExists(filename)
     local file = io.open(filename, "r")
@@ -45,7 +52,34 @@ function fileExists(filename)
     end
 end
 
+-- Function to find and hide all streamed-in movable actors safely
+local function hideMovableActors()
+    local actors = FindAllOf("Actor")
+    if actors then
+        for _, actor in ipairs(actors) do
+            -- Check if the actor is movable and currently visible
+            if actor:IsValid() and not actor.bHidden then
+                local moveComp = actor:GetComponentByClass("MovementComponent")
+                if moveComp and moveComp:IsValid() then
+
+                    local className = actor:GetClass():GetName()
+                    -- Exclude essential actors, lights, sky, and cameras from being hidden
+                    if not string.find(className, "Light") and not string.find(className, "Sky") and not string.find(className, "PlayerController") and not string.find(className, "SceneCapture") then
+                        actor:SetActorHiddenInGame(true)
+                        table.insert(hiddenDynamicActors, actor)
+                    end
+
+                end
+            end
+        end
+    end
+end
+
 local function toggleEffects(bHide)
+    if bHide then
+        hiddenDynamicActors = {} -- Reset the tracker on capture start
+    end
+
     local names = {
         'WaterBodyOceanComponent',
         'ExponentialHeightFogComponent',
@@ -82,7 +116,7 @@ local function toggleEffects(bHide)
                 'foliage.ForceLOD 0',
                 'r.BloomQuality 0',
                 'r.Tonemapper.Quality 0',
-                'r.TonemapperGamma 3',
+                'r.TonemapperGamma 6',
                 -- 'r.AntiAliasingMethod 0', -- breaks pictures, they become fully transparent
                 -- 'r.ShadowQuality 0' -- breaks pictures, they become black
             }
@@ -94,6 +128,16 @@ local function toggleEffects(bHide)
 
             ksl:ExecuteConsoleCommand(world, "slomo " .. (bHide and "0.00000001" or "1"), nil)
         end
+    end
+
+    -- Restore hidden dynamic objects when stopping the capture
+    if not bHide then
+        for _, actor in ipairs(hiddenDynamicActors) do
+            if actor and actor:IsValid() then
+                actor:SetActorHiddenInGame(false)
+            end
+        end
+        hiddenDynamicActors = {}
     end
 end
 
@@ -114,8 +158,6 @@ local function setText(text)
         captureWidgetTextBlock:SetText(FText(text))
     end
 end
-
-local captureWidgetBanner = 'TileCaptureRT loaded. Ctri+R to reload, Ctrl+F to capture.'
 
 local function _print(s) 
     setText(s)
@@ -234,7 +276,7 @@ local function TakeOrthoByRenderTarget()
         end
     end
 
-    _print(string.format("Preparing to save %d chunks (%dp) to %s...", totalChunks, tileSize, SavePath))
+    _print(string.format("Saving %d chunk(s) (%dp) to %s...", totalChunks, tileSize, SavePath))
 
     local chunkIndex = 0
     local lastLoc = nil
@@ -289,10 +331,13 @@ local function TakeOrthoByRenderTarget()
                 delayTime = streamingDelay
             end
 
+            _print(string.format("Saving %d/%d [%s]. Ctrl+F to stop.", chunkIndex + 1, totalChunks, FileName))
+
             -- Wait for streaming, then capture
             ExecuteWithDelay(delayTime, function()
                 ExecuteInGameThread(function()
-                    _print(string.format("Saving chunk %d/%d [%s]. Ctrl+F to stop.", chunkIndex + 1, totalChunks, FileName))
+
+                    -- hideMovableActors() -- ensure streamed-in dynamic objects are hidden right before the shot
 
                     CaptureComp:CaptureScene()
                     KismetRenderingLibrary:ExportRenderTarget(World, RT, SavePath, FileName)
@@ -338,4 +383,3 @@ _print('Reloading...')
 ExecuteWithDelay(250,function()
     _print(captureWidgetBanner)
 end)
-
