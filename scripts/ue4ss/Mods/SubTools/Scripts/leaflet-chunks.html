@@ -21,7 +21,7 @@ html, body, #map { width:100%; height: 100%; margin: 0; padding: 0; }
 
 window.onload = function() {
 
-  let tileSize = 256;
+  let tileSize = 2048;
 
   let tileZoom = Math.floor(Math.log2(tileSize)) - 4;
 
@@ -36,7 +36,8 @@ window.onload = function() {
     zoom: tileZoom,
   });
 
-  let tilesLayer = L.tileLayer('captureTiles/Chunk_'+tileSize+'p_{x}_{y}.png', {
+  //let tilesLayer = L.tileLayer('captureTiles/Chunk_'+tileSize+'p_{x}_{y}.png', {
+  let tilesLayer = L.tileLayer('Capture/Chunk_'+tileSize+'p_{x}_{y}.png', {
     tileSize: tileSize,
     minNativeZoom: tileZoom,
     maxNativeZoom: tileZoom,

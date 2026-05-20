@@ -1,4 +1,6 @@
 -- needs UE4SS experimental-latest (with FText support)
+-- to adjust exposure, see SetIntensity and r.TonemapperGamma calls below
+-- maybe try r.ForceLOD 0 in console. best captured from low height (~200)
 
 local UEHelpers = require("UEHelpers")
 
@@ -8,19 +10,19 @@ local chunkSize = 25600 -- do not change this
 -- so if you set size to chunkSize*1 it's mostly 2x2 chunks, and chunkSize*9 would be 10x10 chunks
 
 local locations = {
-    lifepod = { left = -337193, top = 433406, alt = 5000, size = chunkSize },
-    planetary = { left = -222771, top = 432320, alt = 1000, size = chunkSize },
-    turbine = { left = -160717, top = 436872, alt = 5000, size = chunkSize },
-    all = { left = -222771, top = 432320, alt = 5000, size = chunkSize*11 },
+    lifepod = { left = -337193, top = 433406, alt = 200, size = chunkSize },
+    planetary = { left = -222771, top = 432320, alt = -10000, size = chunkSize },
+    turbine = { left = -160717, top = 436872, alt = 200, size = chunkSize },
+    all = { left = -222771, top = 432320, alt = 200, size = chunkSize*11 },
 }
 
--- local cc = locations.lifepod
--- local cc = locations.turbine
-local cc = locations.planetary
--- local cc = locations.all
+--local cc = locations.lifepod
+--local cc = locations.turbine
+-- local cc = locations.planetary
+local cc = locations.all
 
-local tileSize = 256 -- Resolution of the final exported image per chunk (e.g., 512x512px)
-local streamingDelay = 8000 -- delay to wait for chunk to load after teleporting pawn
+local tileSize = 2048 -- Resolution of the final exported image per chunk (e.g., 512x512px)
+local streamingDelay = 7500 -- delay to wait for chunk to load after teleporting pawn
 local loadDistanceThreshold = chunkSize*4 -- distance from last load point before triggering another load wait
 
 local Altitude = cc.alt
@@ -72,8 +74,6 @@ local function toggleEffects(bHide)
         local world = pc:GetWorld()
         local ksl = StaticFindObject("/Script/Engine.Default__KismetSystemLibrary")
         if world and world:IsValid() and ksl and ksl:IsValid() then
-            ksl:ExecuteConsoleCommand(world, "slomo " .. (bHide and "0.00000001" or "1"), nil)
-
             -- note that not all command work in script runtime, most need actual user input in console
             local cmds = {
                 'landscape.ForceLOD 0',
@@ -81,7 +81,7 @@ local function toggleEffects(bHide)
                 'foliage.ForceLOD 0',
                 'r.BloomQuality 0',
                 'r.Tonemapper.Quality 0',
-                'r.TonemapperGamma 8',
+                'r.TonemapperGamma 3',
                 -- 'r.AntiAliasingMethod 0', -- breaks pictures, they become fully transparent
                 -- 'r.ShadowQuality 0' -- breaks pictures, they become black
             }
@@ -89,6 +89,9 @@ local function toggleEffects(bHide)
             for _, cmd in ipairs(cmds) do
                 ksl:ExecuteConsoleCommand(world, cmd, nil)
             end
+
+
+            ksl:ExecuteConsoleCommand(world, "slomo " .. (bHide and "0.00000001" or "1"), nil)
         end
     end
 end
@@ -110,6 +113,8 @@ local function setText(text)
         captureWidgetTextBlock:SetText(FText(text))
     end
 end
+
+local captureWidgetBanner = 'TileCaptureRT loaded. Ctri+R to reload, Ctrl+F to capture.'
 
 local function _print(s) 
     setText(s)
@@ -158,7 +163,7 @@ local function createTextWidget()
     text:SetColorAndOpacity(FSlateColor(1,1,1,1))
     text:SetShadowOffset({X = 1, Y = 1})
     text:SetShadowColorAndOpacity(FLinearColor(0,0,0,0.5))
-    text:SetText(FText('Hello World!'))
+    text:SetText(FText(captureWidgetBanner))
     text:SetVisibility(VISIBLE)
     textBlock = text
     bg:SetContent(text)
@@ -228,7 +233,7 @@ local function TakeOrthoByRenderTarget()
         end
     end
 
-    _print(string.format("Saving %d chunks (%dp) to %s...", totalChunks, tileSize, SavePath))
+    _print(string.format("Preparing to save %d chunks (%dp) to %s...", totalChunks, tileSize, SavePath))
 
     local chunkIndex = 0
     local lastLoc = nil
@@ -310,7 +315,7 @@ RegisterKeyBind(Key.F, { ModifierKey.CONTROL }, function()
     _print("Capture started!")
 
     toggleEffects(true)
-    ExecuteWithDelay(2000, function() -- wait 2 sec for autoexposure to settle
+    ExecuteWithDelay(4000, function() -- wait 4 sec for autoexposure to settle
         ExecuteInGameThread(function()
             TakeOrthoByRenderTarget()
         end)
@@ -325,9 +330,11 @@ end
 
 RegisterHook("/Script/Engine.PlayerController:ClientRestart", function(self)
     createTextWidget()
-    _print('TileCaptureRT loaded. Ctrl+F to start/stop capture.')
 end)
 
 updateWidget()
-_print('TileCaptureRT reloaded, Ctrl+F to start/stop capture.')
+_print('Reloading...')
+ExecuteWithDelay(250,function()
+    _print(captureWidgetBanner)
+end)
 
