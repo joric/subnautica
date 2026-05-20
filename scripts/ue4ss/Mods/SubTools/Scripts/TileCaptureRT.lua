@@ -18,13 +18,14 @@ local locations = {
     planetary_all = { left = -222771, top = 432320, alt = 5000, size = chunkSize*11 },
 }
 
+local cc = locations.lifepod
+
 --local cc = locations.turbine
---local cc = locations.lifepod
-local cc = locations.planetary_all
+--local cc = locations.planetary_all
 
 
 local tileSize = 2048 -- Resolution of the final exported image per chunk (e.g., 512x512px)
-local streamingDelay = 4000 -- delay to wait for chunk to load after teleporting pawn
+local streamingDelay = 5000 -- delay to wait for chunk to load after teleporting pawn
 local loadDistanceThreshold = chunkSize*4 -- distance from last load point before triggering another load wait
 
 local Altitude = cc.alt
@@ -269,13 +270,8 @@ local function TakeOrthoByRenderTarget()
             ExecuteWithDelay(delayTime, function()
                 ExecuteInGameThread(function()
                     CaptureComp:CaptureScene()
-
-                    --_print(string.format("Ctrl+F to stop. Saving chunk %d/%d (%d, %d) to %s...", chunkIndex + 1, totalChunks, CenterX, CenterY, FileName))
-
                     _print(string.format("Saving chunk %d/%d (%dp) [%d,%d]. Ctrl+F to stop.", chunkIndex + 1, totalChunks, tileSize, CenterX, CenterY))
-
                     KismetRenderingLibrary:ExportRenderTarget(World, RT, SavePath, FileName)
-                    -- print(string.format("[MapCapture] Saved %s", FileName))
                     chunkIndex = chunkIndex + 1
                     CaptureNextChunk()
                 end)
