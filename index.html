@@ -409,6 +409,18 @@ function compassOnClick(e) {
   }
 }
 
+function getCardinalBearing(deltaX, deltaY) {
+  let bearing = Math.atan2(deltaX, -deltaY) * 180 / Math.PI;
+  bearing = Math.round(bearing);
+  if (bearing < 0) bearing += 360;
+
+  // Convert bearing to cardinal direction
+  const cardinalDirections = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+  const cardinalIndex = Math.round(bearing / 45) % 8;
+  const cardinal = cardinalDirections[cardinalIndex];
+  return `${cardinal} ${bearing}°`;
+}
+
 function getDirections(feature) {
   const t = feature.geometry.coordinates;
   const src = {x:-337193.4375, y:433406.34375}
@@ -425,20 +437,14 @@ function getDirections(feature) {
   const horizontalDistance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
   const distanceMeters = Math.ceil(horizontalDistance/100);
 
-  let bearing = Math.atan2(deltaX, -deltaY) * 180 / Math.PI;
-  bearing = Math.round(bearing);
-  if (bearing < 0) bearing += 360;
-
-  // Convert bearing to cardinal direction
-  const cardinalDirections = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
-  const cardinalIndex = Math.round(bearing / 45) % 8;
-  const cardinal = cardinalDirections[cardinalIndex];
-
   // Depth (absolute value since z is negative for depth)
   const depthMeters = Math.round(Math.abs(deltaZ)/100);
 
+  const cb = getCardinalBearing(deltaX, deltaY);
+  const cbr = getCardinalBearing(-deltaX, -deltaY);
+
   // Create directions
-  const directions = `<hr><small><b>${cardinal} ${bearing}°</b> face this on compass<br><b>${distanceMeters} m</b> swim this far from Lifepod<br><b>Depth ${depthMeters} m</b> target depth</small>`;
+  const directions = `<hr><small><b>${cb}</b> from Lifepod<br><b>${cbr}</b> to Lifepod<br><b>${distanceMeters} m</b> far from Lifepod<br><b>Depth ${depthMeters} m</b> target depth</small>`;
 
   return directions;
 }
