@@ -1274,7 +1274,7 @@ function loadMap(mapId) {
     mmTimeout = setTimeout(resetTitle, 5000);
   });
 
-  document.addEventListener('mouseleave', resetTitle);
+  map.on('mouseleave',resetTitle);
 
   //map.config({heightFactor: 0.00001}); // doesn't help, messes up infowindow
 
