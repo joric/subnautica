@@ -68,6 +68,7 @@
 
 <script>
 document.head.appendChild(document.getElementById(location.protocol === 'file:' ? 'local' : 'remote').content.cloneNode(true));
+let tileset_base = location.protocol === 'file:' ? '../subnautica2_tileset' : 'https://joric.github.io/subnautica2_tileset';
 </script>
 
 <div tabindex=0 id="map"></div>
@@ -113,8 +114,19 @@ let counters = {};
 //let theme = 'retro';
 let theme = '';
 
-let bb = {left: -400000.0, top: 250000.0, right: -80000.0, bottom: 500000.0};
-let cc = { left: bb.left + (bb.right-bb.left)/2, top: 300000 + (bb.bottom-bb.top)/2, alt: 0};
+//let bb = {left: -400000.0, top: 250000.0, right: -80000.0, bottom: 500000.0};
+//let cc = { left: bb.left + (bb.right-bb.left)/2, top: 300000 + (bb.bottom-bb.top)/2, alt: 0};
+
+//-17,8 to -2,23
+
+//let bb = {left: -400000.0, top: 250000.0, right: -80000.0, bottom: 500000.0};
+
+cb = {left:-17, top:8, right: -1, bottom: 24}
+cs = 25600;
+
+let bb = {left: cb.left*cs, top: cb.top*cs, right: cb.right*cs, bottom: cb.bottom*cs};
+
+let cc = { left: bb.left + (bb.right-bb.left)/2, top: bb.top + (bb.bottom-bb.top)/2, alt: 0};
 
 let maps = {
   sn2:  { 
@@ -122,8 +134,8 @@ let maps = {
     bounds: bb,
     center: cc,
     tileSize: 512,
-    maxZoom: 2,
-    tiles: 'tiles/sn2/{z}/{x}/{y}.jpg',
+    maxZoom: 6,
+    tiles: `${tileset_base}/tiles/capture_v1/{z}/{x}_{y}.jpg`,
     versions: {
       '113109': { date: '2026-05-14', data: 'data/Subnautica2.113109.json.gz'},
     },
@@ -301,7 +313,7 @@ const getGroup = f =>getType(f).group;
 
 let mouseMoved = false;
 document.addEventListener('mousedown', function(event) {mouseMoved = false; });
-document.addEventListener('mousemove', function(event){mouseMoved = true;});
+document.addEventListener('mousemove', function(event){mouseMoved = true; });
 
 function getBaseURL() {
   //return window.location.href.replace(/#.*$/,'');
@@ -1208,6 +1220,13 @@ function loadMap(mapId) {
   map.on('mousedown touchstart', function(e) {
     document.getElementById('map').focus(); // needs tabindex on the map element
   });
+
+  map.on('mousemove', function(e){
+    const p = e.coordinate;
+     //z: ${map.getZoom().toFixed(0)}
+    document.title = `${p.x.toFixed(0)} ${p.y.toFixed(0)}`;
+  });
+
 
   //map.config({heightFactor: 0.00001}); // doesn't help, messes up infowindow
 

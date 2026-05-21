@@ -15,15 +15,15 @@ local locations = {
     turbine = { left = -160717, top = 436872, alt = 500, size = chunkSize*2 },
     the_pit = { left = -344231.96875, top = 449815.84375, alt=1000, size = chunkSize},
     glyph = { left= -232185.984375, top=431499.40625, alt=500, size= chunkSize*3},
-    all = { left = -222771, top = 432320, alt = 1000, size = 307200 },
+    all = { left = -222771, top = 432320, alt = 1000, size = 409600 },
 }
 
 --local cc = locations.lifepod
 --local cc = locations.turbine
 --local cc = locations.planetary
-local cc = locations.the_pit
+--local cc = locations.the_pit
 --local cc = locations.glyph
---local cc = locations.all
+local cc = locations.all
 
 local tileSize = 2048 -- Resolution of the final exported image per chunk (e.g., 512x512px)
 local streamingDelay = 4000 -- delay to wait for chunk to load after teleporting pawn
@@ -39,7 +39,7 @@ local size = cc.size
 
 local captureStopped = true
 
-local forceOverwrite = true
+local forceOverwrite = false
 
 -- Table to track all hidden dynamic actors so we can restore them later
 local hiddenDynamicActors = {}
