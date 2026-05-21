@@ -5,38 +5,30 @@ local UEHelpers = require("UEHelpers")
 
 local captureWidgetBanner = 'TileCaptureRT loaded. Press Ctrl+F to capture.'
 
-local chunkSize = 25600 -- do not change this
+local chunkSize = 12800*10 -- do not change this
 
 -- these locations use coordinates as an interest point (roughly in the center), aligned to chunk boundaries
--- so if you set size to chunkSize*1 it's mostly 2x2 chunks, and chunkSize*9 would be 10x10 chunks
 
 local locations = {
-    lifepod_only = { left = -337193, top = 433406, alt = 500, size = 1 },
-
-    lifepod = { left = -337193, top = 433406, alt = 500, size = chunkSize },
-    planetary = { left = -222771, top = 432320, alt = 500, size = chunkSize*2 },
-    turbine = { left = -160717, top = 436872, alt = 500, size = chunkSize },
-
-    the_pit = { left = -344231.96875, top = 449815.84375, alt=-1, size = chunkSize},
-
-    all = { left = -222771, top = 432320, alt = 500, size = 281600 },
+    lifepod = { left = -337193, top = 433406, alt = 5000, size = chunkSize },
+    planetary = { left = -222771, top = 432320, alt = 5000, size = chunkSize*2 },
+    turbine = { left = -160717, top = 436872, alt = 5000, size = chunkSize*2 },
+    the_pit = { left = -344231.96875, top = 449815.84375, alt=5000, size = chunkSize},
+    glyph = { left= -232185.984375, top=431499.40625, alt=5000, size= chunkSize},
+    all = { left = -222771, top = 432320, alt = 5000, size = 281600 },
 }
 
 --local cc = locations.lifepod
 --local cc = locations.turbine
 --local cc = locations.planetary
---local cc = locations.lifepod_only
 --local cc = locations.the_pit
+--local cc = locations.glyph
 local cc = locations.all
 
 
-
-local tileSize = 2048 -- Resolution of the final exported image per chunk (e.g., 512x512px)
-local streamingDelay = 12000 -- delay to wait for chunk to load after teleporting pawn
+local tileSize = 4096 -- Resolution of the final exported image per chunk (e.g., 512x512px)
+local streamingDelay = 2000 -- delay to wait for chunk to load after teleporting pawn
 local loadDistanceThreshold = chunkSize*4 -- distance from last load point before triggering another load wait
-
-
-
 
 local SavePath = "C:\\Temp\\Capture\\"
 
@@ -83,6 +75,52 @@ local function hideMovableActors()
     end
 end
 
+local function forceLOD0()
+    local meshes = FindAllOf("StaticMeshComponent")
+    for _,m in ipairs(meshes) do
+        if m:IsValid() then
+            m:SetForcedLodModel(1)
+
+            m.MinLOD = 0
+            m.StreamingDistanceMultiplier = 100
+            m.bForceMipStreaming = true
+            m.NeverDistanceCull = true
+            m.CachedMaxDrawDistance = 0
+
+            if m.bEnableNanite then
+                -- Force Nanite to use highest detail
+                m.ForcedLodModel = 1  -- LOD0
+                m.NaniteMaxPixelsPerEdge = 0.1  -- Smaller = more triangles
+                m.NaniteMinPixelsPerEdge = 0    -- Force maximum detail
+
+                m.NaniteFallbackRelativeError = 0.5  -- Force fallback quality
+                m.bForceNaniteRepresentation = true   -- Ensure Nanite is used
+
+            end
+
+        end
+    end
+
+    local landscapes = FindAllOf("LandscapeComponent")
+    for _,l in ipairs(landscapes) do
+        if l:IsValid() then
+            l.ForcedLOD = 0
+            l.LODDistributionSetting = 3
+            l.CachedMaxDrawDistance = 0
+            l.LODBias = -10
+        end
+    end
+
+    local hism = FindAllOf("HierarchicalInstancedStaticMeshComponent")
+    for _,h in ipairs(hism) do
+        if h:IsValid() then
+            h:SetForcedLodModel(1)
+            h.InstanceLODDistanceScale = 100
+            h.CachedMaxDrawDistance = 0
+        end
+    end
+end
+
 local function toggleEffects(bHide)
     if bHide then
         hiddenDynamicActors = {} -- Reset the tracker on capture start
@@ -117,7 +155,7 @@ local function toggleEffects(bHide)
         -- light.VolumetricScatteringIntensity = 0
 
         if sky.SkyLight then
-            -- sky.SkyLight:SetIntensity(bHide and 30.0 or 5.0)
+            sky.SkyLight:SetIntensity(bHide and 1.5 or 1.0)
         end
 
     end
@@ -136,18 +174,20 @@ local function toggleEffects(bHide)
                 'r.AmbientOcclusionLevels 0',
                 'r.ContactShadows 0',
                 'r.DistanceFieldAO 0',
-                'r.Shadow.FilterMethod 1',
-                'r.Shadow.MaxCSMResolution 512',
+                'r.Shadow.FilterMethod 1', -- 3 for PCSS (softer, lighter-looking shadows)
+                'r.Shadow.MaxCSMResolution 512', --(lower resolution = blurrier = lighter)
                 'r.Shadow.CSM.MaxCascades 1',
-                'r.Shadow.RadiusThreshold 0.1',
+                'r.Shadow.RadiusThreshold 0.001', --to 0.5 (higher threshold = fewer shadows cast)
 
                 'r.ForceLOD 0',
                 'r.ParticleLODBias -10',
                 'r.HLOD 0',
                 'r.HLOD.DistanceScale 0',
+
                 'r.LandscapeLODDistributionScale 3',
                 'r.LandscapeLOD0DistributionScale 3',
                 'r.LandscapeLODBias -3',
+
                 'r.ViewDistanceScale 100',
                 'foliage.ForceLOD 0',
                 'r.Nanite.MaxPixelsPerEdge 0.5',
@@ -275,24 +315,38 @@ local function TakeOrthoByRenderTarget()
         return
     end
 
-    -- Grid Math - fixed the X/Y mixup here!
-    local minX = math.floor((cc.left - size / 2) / chunkSize) * chunkSize
-    local maxX = math.ceil((cc.left + size / 2) / chunkSize) * chunkSize
-    local minY = math.floor((cc.top - size / 2) / chunkSize) * chunkSize
-    local maxY = math.ceil((cc.top + size / 2) / chunkSize) * chunkSize
+    local sizeChunks = math.ceil(size / chunkSize)
 
-    local cols = math.floor((maxX - minX) / chunkSize)
-    local rows = math.floor((maxY - minY) / chunkSize)
+    local cx = math.floor(cc.left / chunkSize)
+    local cy = math.floor(cc.top / chunkSize)
+
+    local half = math.floor(sizeChunks / 2)
+
+    local minIndexX = cx - half
+    local minIndexY = cy - half
+
+    local maxIndexX = minIndexX + sizeChunks - 1
+    local maxIndexY = minIndexY + sizeChunks - 1
+
+    local cols = sizeChunks
+    local rows = sizeChunks
     local totalChunks = cols * rows
+
+    local minX = minIndexX * chunkSize
+    local minY = minIndexY * chunkSize
+
 
     local Rotation = { Pitch = 90.0, Yaw = 0.0, Roll = 0.0 }
 
+    local actorZ = Altitude
+
     -- 1. Spawn the hidden Capture Actor
-    local CaptureActor = World:SpawnActor(CaptureClass, { X = 0, Y = 0, Z = Altitude }, Rotation)
+    local CaptureActor = World:SpawnActor(CaptureClass, { X = 0, Y = 0, Z = ActorZ }, Rotation)
     if not CaptureActor or not CaptureActor:IsValid() then return end
 
     local CaptureComp = CaptureActor.CaptureComponent2D
     CaptureComp:K2_SetWorldRotation({ Pitch = -90.0, Yaw = -90.0, Roll = 0.0 }, false, {}, true)
+    CaptureComp:K2_SetRelativeLocation({X = 0, Y = 0, Z = 0 }, false, {}, true)
 
     -- 2. Create the Render Target
     local RT = KismetRenderingLibrary:CreateRenderTarget2D(World, tileSize, tileSize, 2, { R = 0.0, G = 0.0, B = 0.0, A = 1.0 }, false, false)
@@ -301,13 +355,19 @@ local function TakeOrthoByRenderTarget()
     CaptureComp.TextureTarget = RT
     CaptureComp.ProjectionType = 1 -- Orthographic
     CaptureComp.OrthoWidth = chunkSize -- Camera covers exactly one chunk perfectly
-    CaptureComp.CaptureSource = 2  -- FinalColorLDR
+    CaptureComp.CaptureSource = 3  -- 2-FinalColorLDR, 3 - RawHDR (removes vignetting)
     CaptureComp.bCaptureEveryFrame = false
     CaptureComp.bCaptureOnMovement = false
 
-    CaptureComp.LODDistanceFactor = 0
+    CaptureComp.LODDistanceFactor = 0.01 -- near-forced LOD0 behavior
     CaptureComp.MaxViewDistanceOverride = 0
     CaptureComp.bUseFieldOfViewForLOD = false
+
+    --CaptureComp.OrthoNearPlane = -100000
+    --CaptureComp.OrthoFarPlane = 100000
+    --CaptureComp.PostProcessSettings = {}
+    --CaptureComp.PostProcessBlendWeight = 0
+    --CaptureComp.bUseCustomProjectionMatrix = false
 
     -- Attach the Streaming Source directly to the CaptureActor
     local StreamingSourceClass = StaticFindObject("/Script/Engine.WorldPartitionStreamingSourceComponent")
@@ -342,7 +402,8 @@ local function TakeOrthoByRenderTarget()
         local CenterY = minY + (r + 0.5) * chunkSize
 
         ExecuteInGameThread(function()
-            local loc = { X = CenterX, Y = CenterY, Z = Altitude }
+
+            local loc = { X = CenterX, Y = CenterY, Z = Altitude}
             
             -- Move Camera (The streaming source component is attached and moves with it)
             CaptureActor:K2_SetActorLocation(loc, false, {}, true)
@@ -350,7 +411,7 @@ local function TakeOrthoByRenderTarget()
             local ct = math.floor(CenterX/chunkSize)
             local rt = math.floor(CenterY/chunkSize)
 
-            local FileName = string.format("Chunk_%dp_%d_%d.png", tileSize, ct, rt)
+            local FileName = string.format("Chunk_%d_%dp_%d_%d.png", chunkSize, tileSize, ct, rt)
 
             local fullPath = SavePath .. FileName
 
@@ -379,59 +440,29 @@ local function TakeOrthoByRenderTarget()
 
             _print(string.format("Saving %d/%d [%s]. Ctrl+F to stop.", chunkIndex + 1, totalChunks, FileName))
 
-
             -- hideMovableActors() -- ensure streamed-in dynamic objects are hidden right before the shot
-            CaptureActor:FlushNetDormancy()
 
             -- Wait for streaming, then capture
             ExecuteWithDelay(delayTime, function()
                 ExecuteInGameThread(function()
+                    ExecuteWithDelay(100, function()
+                        ExecuteInGameThread(function()
+                            CaptureActor:FlushNetDormancy()
+                            -- force visibility update pass
+                            CaptureActor:SetActorHiddenInGame(false)
 
-                    local meshes = FindAllOf("StaticMeshComponent")
-                    for _,m in ipairs(meshes) do
-                        if m:IsValid() then
-                            m:SetForcedLodModel(1)
+                            CaptureComp:CaptureScene()
 
-                            m.MinLOD = 0
-                            m.StreamingDistanceMultiplier = 100
-                            m.bForceMipStreaming = true
-                            m.NeverDistanceCull = true
-                            m.CachedMaxDrawDistance = 0
-
-                        end
-                    end
-
-                    local landscapes = FindAllOf("LandscapeComponent")
-                    for _,l in ipairs(landscapes) do
-                        if l:IsValid() then
-                            l.ForcedLOD = 0
-                            l.LODDistributionSetting = 3
-                            l.CachedMaxDrawDistance = 0
-                        end
-                    end
-
-                    local hism = FindAllOf("HierarchicalInstancedStaticMeshComponent")
-                    for _,h in ipairs(hism) do
-                        if h:IsValid() then
-                            h:SetForcedLodModel(1)
-                            h.InstanceLODDistanceScale = 100
-                            h.CachedMaxDrawDistance = 0
-                        end
-                    end
-
-                    CaptureComp.bAlwaysPersistRenderingState = false
-                    CaptureComp.bCaptureEveryFrame = false
-                    --double capture
-                    --SceneCapture2D sometimes caches LODs from BEFORE the move. so do it twice
-                    CaptureComp.bCameraCutThisFrame = true
-                    CaptureComp:CaptureScene()
-                    CaptureComp:CaptureScene()
-
-
-                    KismetRenderingLibrary:ExportRenderTarget(World, RT, SavePath, FileName)
-
-                    chunkIndex = chunkIndex + 1
-                    CaptureNextChunk()
+                            ExecuteWithDelay(50, function()
+                                ExecuteInGameThread(function()
+                                    CaptureComp:CaptureScene()
+                                    KismetRenderingLibrary:ExportRenderTarget(World, RT, SavePath, FileName)
+                                    chunkIndex = chunkIndex + 1
+                                    CaptureNextChunk()
+                                end)
+                            end)
+                        end)
+                    end)
                 end)
             end)
         end)
@@ -451,6 +482,7 @@ RegisterKeyBind(Key.F, { ModifierKey.CONTROL }, function()
     toggleEffects(true)
     ExecuteWithDelay(4000, function() -- wait 4 sec for autoexposure to settle
         ExecuteInGameThread(function()
+            forceLOD0()
             TakeOrthoByRenderTarget()
         end)
     end)
