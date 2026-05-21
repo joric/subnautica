@@ -1255,20 +1255,20 @@ function loadMap(mapId) {
     document.getElementById('map').focus(); // needs tabindex on the map element
   });
 
-  let mmTimeout = 0;
+  function resetTitle() {
+    document.title = "Joric's Subnautica 2";
+  }
 
+  let mmTimeout = 0;
   map.on('mousemove', function(e){
     const p = e.coordinate;
      //z: ${map.getZoom().toFixed(0)}
     document.title = `${p.x.toFixed(0)} ${p.y.toFixed(0)}`;
-
     clearTimeout(mmTimeout);
-    mmTimeout = setTimeout(function() {
-      document.title = "Joric's Subnautica 2";
-    }, 5000);
-
+    mmTimeout = setTimeout(resetTitle, 5000);
   });
 
+  document.addEventListener('mouseleave', resetTitle);
 
   //map.config({heightFactor: 0.00001}); // doesn't help, messes up infowindow
 
