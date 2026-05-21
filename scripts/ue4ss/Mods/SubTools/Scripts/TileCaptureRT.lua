@@ -155,7 +155,7 @@ local function toggleEffects(bHide)
         -- light.VolumetricScatteringIntensity = 0
 
         if sky.SkyLight then
-            sky.SkyLight:SetIntensity(bHide and 1.5 or 1.0)
+            --sky.SkyLight:SetIntensity(bHide and 1.5 or 1.0)
         end
 
     end
