@@ -5,35 +5,37 @@ local UEHelpers = require("UEHelpers")
 
 local captureWidgetBanner = 'TileCaptureRT loaded. Press Ctrl+F to capture.'
 
-local chunkSize = 12800*10 -- do not change this
+local chunkSize = 25600 -- do not change this
 
 -- these locations use coordinates as an interest point (roughly in the center), aligned to chunk boundaries
 
 local locations = {
-    lifepod = { left = -337193, top = 433406, alt = 5000, size = chunkSize },
-    planetary = { left = -222771, top = 432320, alt = 5000, size = chunkSize*2 },
-    turbine = { left = -160717, top = 436872, alt = 5000, size = chunkSize*2 },
-    the_pit = { left = -344231.96875, top = 449815.84375, alt=5000, size = chunkSize},
-    glyph = { left= -232185.984375, top=431499.40625, alt=5000, size= chunkSize},
-    all = { left = -222771, top = 432320, alt = 5000, size = 281600 },
+    lifepod = { left = -337193, top = 433406, alt = 1000, size = chunkSize },
+    planetary = { left = -222771, top = 432320, alt = 500, size = chunkSize*2 },
+    turbine = { left = -160717, top = 436872, alt = 500, size = chunkSize*2 },
+    the_pit = { left = -344231.96875, top = 449815.84375, alt=1000, size = chunkSize},
+    glyph = { left= -232185.984375, top=431499.40625, alt=500, size= chunkSize*3},
+    all = { left = -222771, top = 432320, alt = 1000, size = 307200 },
 }
 
 --local cc = locations.lifepod
 --local cc = locations.turbine
 --local cc = locations.planetary
---local cc = locations.the_pit
+local cc = locations.the_pit
 --local cc = locations.glyph
-local cc = locations.all
+--local cc = locations.all
 
-
-local tileSize = 4096 -- Resolution of the final exported image per chunk (e.g., 512x512px)
-local streamingDelay = 2000 -- delay to wait for chunk to load after teleporting pawn
+local tileSize = 2048 -- Resolution of the final exported image per chunk (e.g., 512x512px)
+local streamingDelay = 4000 -- delay to wait for chunk to load after teleporting pawn
 local loadDistanceThreshold = chunkSize*4 -- distance from last load point before triggering another load wait
 
 local SavePath = "C:\\Temp\\Capture\\"
 
 local Altitude = cc.alt
 local size = cc.size
+
+-- local bb = {left=cc.left-cc.size/2, top=cc.top-cc.size/2, right=cc.left+cc.size/2, bottom=cc.top+cc.size/2}
+-- bb = {left=-382366, top=361996, right=-85030, bottom=502627} -- global map/doesn't work now
 
 local captureStopped = true
 
@@ -166,7 +168,7 @@ local function toggleEffects(bHide)
         local ksl = StaticFindObject("/Script/Engine.Default__KismetSystemLibrary")
         if world and world:IsValid() and ksl and ksl:IsValid() then
             -- note that not all command work in script runtime, most need actual user input in console
-            local cmds = {
+            local cmds0 = {
                 --'r.BloomQuality 0',
                 --'r.Tonemapper.Quality 0',
                 --'r.TonemapperGamma 6',
@@ -179,16 +181,16 @@ local function toggleEffects(bHide)
                 'r.Shadow.CSM.MaxCascades 1',
                 'r.Shadow.RadiusThreshold 0.001', --to 0.5 (higher threshold = fewer shadows cast)
 
-                'r.ForceLOD 0',
+                'r.ForceLOD 0', -- not recognized
                 'r.ParticleLODBias -10',
-                'r.HLOD 0',
-                'r.HLOD.DistanceScale 0',
+                'r.HLOD 0', -- not recognized
+                'r.HLOD.DistanceScale 0', -- not recognized
 
                 'r.LandscapeLODDistributionScale 3',
                 'r.LandscapeLOD0DistributionScale 3',
                 'r.LandscapeLODBias -3',
 
-                'r.ViewDistanceScale 100',
+                'r.ViewDistanceScale 3', -- recognized but doesn't do shit
                 'foliage.ForceLOD 0',
                 'r.Nanite.MaxPixelsPerEdge 0.5',
                 'r.LandscapeLOD0ScreenSize 10',
@@ -200,6 +202,9 @@ local function toggleEffects(bHide)
                 'r.ScreenPercentage 200',
                 'r.ViewDistanceScale 100',
 
+            }
+
+            local cmds = {
             }
 
             for _, cmd in ipairs(cmds) do
@@ -355,13 +360,13 @@ local function TakeOrthoByRenderTarget()
     CaptureComp.TextureTarget = RT
     CaptureComp.ProjectionType = 1 -- Orthographic
     CaptureComp.OrthoWidth = chunkSize -- Camera covers exactly one chunk perfectly
-    CaptureComp.CaptureSource = 3  -- 2-FinalColorLDR, 3 - RawHDR (removes vignetting)
+    CaptureComp.CaptureSource = 2  -- 2-FinalColorLDR, 3 - RawHDR (removes vignetting)
     CaptureComp.bCaptureEveryFrame = false
     CaptureComp.bCaptureOnMovement = false
 
-    CaptureComp.LODDistanceFactor = 0.01 -- near-forced LOD0 behavior
-    CaptureComp.MaxViewDistanceOverride = 0
-    CaptureComp.bUseFieldOfViewForLOD = false
+    --CaptureComp.LODDistanceFactor = 0.01 -- near-forced LOD0 behavior
+    --CaptureComp.MaxViewDistanceOverride = 0
+    --CaptureComp.bUseFieldOfViewForLOD = false
 
     --CaptureComp.OrthoNearPlane = -100000
     --CaptureComp.OrthoFarPlane = 100000
@@ -443,26 +448,16 @@ local function TakeOrthoByRenderTarget()
             -- hideMovableActors() -- ensure streamed-in dynamic objects are hidden right before the shot
 
             -- Wait for streaming, then capture
+            CaptureActor:FlushNetDormancy()
+
             ExecuteWithDelay(delayTime, function()
                 ExecuteInGameThread(function()
-                    ExecuteWithDelay(100, function()
-                        ExecuteInGameThread(function()
-                            CaptureActor:FlushNetDormancy()
-                            -- force visibility update pass
-                            CaptureActor:SetActorHiddenInGame(false)
-
-                            CaptureComp:CaptureScene()
-
-                            ExecuteWithDelay(50, function()
-                                ExecuteInGameThread(function()
-                                    CaptureComp:CaptureScene()
-                                    KismetRenderingLibrary:ExportRenderTarget(World, RT, SavePath, FileName)
-                                    chunkIndex = chunkIndex + 1
-                                    CaptureNextChunk()
-                                end)
-                            end)
-                        end)
-                    end)
+                    CaptureActor:SetActorHiddenInGame(false)-- force visibility update pass
+                    CaptureComp:CaptureScene()
+                    CaptureComp:CaptureScene()
+                    KismetRenderingLibrary:ExportRenderTarget(World, RT, SavePath, FileName)
+                    chunkIndex = chunkIndex + 1
+                    CaptureNextChunk()
                 end)
             end)
         end)
@@ -482,7 +477,7 @@ RegisterKeyBind(Key.F, { ModifierKey.CONTROL }, function()
     toggleEffects(true)
     ExecuteWithDelay(4000, function() -- wait 4 sec for autoexposure to settle
         ExecuteInGameThread(function()
-            forceLOD0()
+            --forceLOD0() -- doesn't do shit as figures
             TakeOrthoByRenderTarget()
         end)
     end)
