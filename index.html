@@ -409,6 +409,40 @@ function compassOnClick(e) {
   }
 }
 
+function getDirections(feature) {
+  const t = feature.geometry.coordinates;
+  const src = {x:-337193.4375, y:433406.34375}
+  const dst = {x:t[0], y:t[1], z:t[2]};
+
+  if (src.x==dst.x && src.y==dst.y) return '';
+
+  // Calculate differences
+  const deltaX = dst.x - src.x;
+  const deltaY = dst.y - src.y;
+  const deltaZ = dst.z || 0;
+
+  // Calculate distance (2D horizontal distance)
+  const horizontalDistance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+  const distanceMeters = Math.ceil(horizontalDistance/100);
+
+  let bearing = Math.atan2(deltaX, -deltaY) * 180 / Math.PI;
+  bearing = Math.round(bearing);
+  if (bearing < 0) bearing += 360;
+
+  // Convert bearing to cardinal direction
+  const cardinalDirections = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
+  const cardinalIndex = Math.round(bearing / 45) % 8;
+  const cardinal = cardinalDirections[cardinalIndex];
+
+  // Depth (absolute value since z is negative for depth)
+  const depthMeters = Math.round(Math.abs(deltaZ)/100);
+
+  // Create directions
+  const directions = `<hr><small><b>${cardinal} ${bearing}°</b> face this on compass<br><b>${distanceMeters} m</b> (swim this far from Lifepod)<br><b>Depth ${depthMeters} m</b> target depth</small>`;
+
+  return directions;
+}
+
 let tooltipShowTimer = null;
 let tooltipHideTimer = null;
 let tooltipHideDelay = 1;
@@ -452,6 +486,7 @@ function showTooltip(e) {
 
   tooltip.style.display = 'block';
   let marker = e.target;
+  let feature = marker.feature;
   let o = marker.feature.properties;
 
   let info = getType2(o);
@@ -473,6 +508,8 @@ function showTooltip(e) {
 
   let p = cc.map(x=>x.toFixed(0));
   content += `<hr>${p[0]} ${p[1]} ${p[2]}`;
+
+  content += `${getDirections(feature)}`;
 
   tooltip.innerHTML = content;
 
@@ -549,10 +586,8 @@ function popupOnClick(e) {
 
   popup.querySelector('#popup-title').innerHTML = `<a href="${backlink}" onclick="return showItem('${info.type}')">${title}</a>`;
   popup.querySelector('#popup-title').title = backlink;
-
   popup.querySelector('#popup-subtitle').innerHTML = `<a href="#group:${info.group}" onclick="return showGroup('${info.group}')">${translate(info.group)}</a>`;
-
-  popup.querySelector('#popup-note').innerHTML = getSubtitle(feature);
+  popup.querySelector('#popup-note').innerHTML = `${getSubtitle(feature)}${getDirections(feature)}`;
   popup.querySelector('#popup-data').innerHTML = '<hr/><pre>'+JSON.stringify(o, null, 2) + '</pre>';
 
   popup.querySelector('#popup-data-toggle').onclick = function(e) {
@@ -564,7 +599,6 @@ function popupOnClick(e) {
   setClass(popup.querySelector('#popup-data'), settings.debugMode!=true, 'collapsed');
 
   popup.querySelector('#popup-close').onclick = function() {  e.target._infoWindow.hide(); };
-
 
   let t = feature.geometry.coordinates;
   let teleport = `XTeleportTo ${t[0]} ${t[1]} ${t[2]+100}` // 1M higher actually
