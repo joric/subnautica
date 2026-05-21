@@ -438,7 +438,7 @@ function getDirections(feature) {
   const depthMeters = Math.round(Math.abs(deltaZ)/100);
 
   // Create directions
-  const directions = `<hr><small><b>${cardinal} ${bearing}°</b> face this on compass<br><b>${distanceMeters} m</b> (swim this far from Lifepod)<br><b>Depth ${depthMeters} m</b> target depth</small>`;
+  const directions = `<hr><small><b>${cardinal} ${bearing}°</b> face this on compass<br><b>${distanceMeters} m</b> swim this far from Lifepod<br><b>Depth ${depthMeters} m</b> target depth</small>`;
 
   return directions;
 }
