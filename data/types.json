@@ -11,14 +11,14 @@
 
       "BP_SupplyCrate_C": { "icon": "supply_crate", "group": "collectible", "title":"Supply Crate"},
 
-      "BP_AxumGlyph_C": { "icon": "glyph", "group": "misc", "title":"Axum Glyph"},
+      "BP_AxumGlyph_C": { "icon": "glyph", "group": "locations", "title":"Axum Glyph"},
 
       "BP_Planetary_C": { "icon": "planetary", "group": "locations", "title":"Planetary"},
 
       "BP_ComputerTextInterface_Terminal_C": { "icon": "terminal", "group": "locations", "title":"NOA Terminal"},
       "BP_BioBed_C": { "icon": "bed", "group": "locations", "title":"Reprint Point"},
       "BP_Black[bB]ox_Clickable_*": { "icon": "blackbox", "group": "collectible", "title":"Blackbox", "weight": -10000 },
-      "BP_CrabFeces_C": { "icon": "poop", "group": "misc", "title":"Crab Feces"},
+      "BP_CrabFeces_C": { "icon": "poop", "group": "resources", "title":"Crab Feces"},
       "BP_WaterSlugWorldPopProxy_C": { "icon": "water_slug", "group": "misc", "title":"Water Slug"},
       "BP_BlightNode_C": { "icon": "canker", "group": "locations", "title":"Bloom Node"},
 
@@ -36,12 +36,23 @@
 
       ".*(Flower|Petal|Anemone|Coral).*": {"icon": "flower", "group": "misc", "category": "vegetation"},
       ".*(Fish).*": {"icon": "fish", "group": "misc", "category": "fish"},
-      ".*Titanium_C": { "icon": "titanium", "group": "resources", "category": "titanium", "title":"Titanium"},
-      ".*Copper_C": { "icon": "copper", "group": "resources",  "category": "copper", "title":"Copper"},
-      ".*Silver_C": { "icon": "silver", "group": "resources",  "category": "silver", "title":"Silver"},
-      ".*Gold_C": { "icon": "gold", "group": "resources",  "category": "gold", "title":"Gold"},
-      ".*Salt_C": { "icon": "salt", "group": "resources",  "category": "salt", "title":"Salt"},
-      ".*Quartz_C": { "icon": "quartz", "group": "resources",  "category": "quartz", "title":"Quartz"},
+
+      ".*titanium*": { "icon": "titanium", "group": "resources", "category": "titanium"},
+      ".*copper*": { "icon": "copper", "group": "resources",  "category": "copper"},
+      ".*silver*": { "icon": "silver", "group": "resources",  "category": "silver"},
+      ".*gold*": { "icon": "gold", "group": "resources",  "category": "gold"},
+      ".*salt*": { "icon": "salt", "group": "resources",  "category": "salt"},
+      ".*quartz*": { "icon": "quartz", "group": "resources",  "category": "quartz"},
+      ".*sulfur*": { "icon": "sulfur", "group": "resources",  "category": "sulfur"},
+      ".*lithium*": { "icon": "lithium", "group": "resources",  "category": "lithium"},
+      ".*celestine*": { "icon": "celestine", "group": "resources",  "category": "celestine"},
+      ".*fulgurite*": { "icon": "fulgurite", "group": "resources",  "category": "Conduit Crystal"},
+      ".*lead_c": { "icon": "lead", "group": "resources",  "category": "lead"},
+      ".*atacamite*": { "icon": "atacamite", "group": "resources",  "category": "atacamite"},
+
+      "BP_ResourceDeposit_NeedleSharkNeedles_C": { "icon": "shark_needles", "group": "resources",  "category": "Shark Needles"},
+      "BP_ResourceDeposit_DeepRootResonatableResource_C": { "icon": "deep_root", "group": "resources",  "category": "Deep Root"},
+
       "BP_WorldPopSpawned_*": { "icon": "spawn", "group": "resources", "category": "unsorted" },
       "BP_ResourceNode_*": { "icon": "nodes", "group": "resources", "category": "unsorted" },
       "BP_ResourceDeposit_*": { "icon": "deposit", "group": "resources", "category": "unsorted"}

@@ -16,12 +16,22 @@
   "gun": { "class": "fa fa-gun", "color": "slategrey" },
   "canker": { "class": "fa fa-biohazard", "color": "magenta" },
   "turbine": { "class": "fa fa-fan", "color": "red" },
+
   "titanium": { "class": "fa fa-cubes", "color": "grey" },
   "silver": { "class": "fa fa-cubes", "color": "lightgrey" },
   "gold": { "class": "fa fa-cubes", "color": "orange" },
   "copper": { "class": "fa fa-cubes", "color": "chocolate" },
   "salt": { "class": "fa fa-gem", "color": "lightgrey" },
-  "quartz": { "class": "fa fa-gem", "color": "grey" },
+  "quartz": { "class": "fa fa-square", "color": "grey" },
+  "sulfur": { "class": "fa fa-gem", "color": "orange" },
+  "lithium": { "class": "fa fa-gem", "color": "slategrey" },
+  "celestine": { "class": "fa fa-gem", "color": "lightblue" },
+  "fulgurite": { "class": "fa fa-gem", "color": "slategrey" },
+  "lead": { "class": "fa fa-cubes", "color": "silver" },
+  "atacamite": { "class": "fa fa-gem", "color": "green" },
+  "shark_needles" :{ "class": "fa fa-road-spikes", "color": "darkcyan" },
+  "deep_root": { "class": "fa fa-carrot", "color": "brown" },
+
   "glyph": { "class": "fa fa-om", "color": "goldenrod" },
   "planetary": { "class": "fa fa-globe", "color": "goldenrod" },
 

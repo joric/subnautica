@@ -582,6 +582,7 @@ pre {
 #popup-title {
   font-size: 14px;
   font-weight: bold;
+  word-break: break-all;
 }
 
 #popup-subtitle {
@@ -913,6 +914,7 @@ input::selection {
   max-width: 320px;
 
   box-shadow: 0 3px 14px rgba(0,0,0,0.4);
+  word-break: break-all;
 }
 
 .overflow-container {
