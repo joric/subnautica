@@ -118,6 +118,8 @@ let playerMarker = null;
 let playerMarkerType = 'playerPosition';
 let playerMarkerGroup = 'playerPosition';
 
+let activeMarker = null;
+
 //let bb = {left: -400000.0, top: 250000.0, right: -80000.0, bottom: 500000.0};
 //let cc = { left: bb.left + (bb.right-bb.left)/2, top: 300000 + (bb.bottom-bb.top)/2, alt: 0};
 
@@ -588,6 +590,8 @@ function hideTooltipExt(e) {
 function popupOnClick(e) {
   //console.log('clicked', e.target.feature);
 
+  activeMarker = e.target; //for closing info window globally
+
   hideTooltipExt(e);
 
   let marker = e.target;
@@ -753,7 +757,7 @@ function addMarker(feature, options) {
   layers[t.group] = layers[t.group] || [];
   layers[t.group].push(marker);
 
-  marker.setInfoWindow({autoCloseOn: 'click'})
+  marker.setInfoWindow({autoCloseOn: 'click', single: true})
   //.on('dragend', onDragEnd)
   .on('click', popupOnClick)
   .on('contextmenu', e=> {
@@ -895,19 +899,12 @@ function loadMarkersBatched(features, options) {
         fc[0] = c.x;
         fc[1] = c.y;
         settings.playerPosition = fc;
-        console.log('updating player marker to', settings.playerPosition);
+        //console.log('updating player marker to', settings.playerPosition);
         saveSettings();
       });
 
       playerMarker.on('dragstart', function(e) {
-
-        let groupLayer = map.getLayer('GroupGLLayer');
-        for (const layer of groupLayer.getLayers()) {
-          for (marker of layer._geoList) {
-            marker._infoWindow?.hide();
-          }
-        }
-
+        activeMarker?.closeInfoWindow();
       })
 
     }
