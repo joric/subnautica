@@ -427,7 +427,7 @@ function getCardinalBearing(deltaX, deltaY) {
 
 function getCoordinates(feature) {
   const cc = feature.geometry.coordinates;
-  let p = cc.map(x=>x.toFixed(0));
+  let p = cc.map(x=>x && x.toFixed(0) || 0);
   return `<hr><small title="Marker coordinates">${p[0]}, ${p[1]}, ${p[2]}</small>`;
 }
 
@@ -891,8 +891,10 @@ function loadMarkersBatched(features, options) {
       playerMarker.on('dragend', function(e) {
         const marker = e.target;
         const c = marker.getCoordinates();
-        settings.playerPosition = [c.x, c.y, c.z];
-        marker.feature.coordinates = settings.playerPosition;
+        const fc = marker.feature.geometry.coordinates;
+        fc[0] = c.x;
+        fc[1] = c.y;
+        settings.playerPosition = fc;
         console.log('updating player marker to', settings.playerPosition);
         saveSettings();
       });
