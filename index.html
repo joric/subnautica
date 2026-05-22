@@ -451,7 +451,7 @@ function getDirections(feature) {
 
   // Calculate distance (2D horizontal distance)
   const horizontalDistance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
-  const distanceMeters = Math.ceil(horizontalDistance/100);
+  const distanceMeters = Math.round(horizontalDistance/100);
 
   // Depth (absolute value since z is negative for depth)
   const depthMeters = Math.round(Math.abs(deltaZ)/100);
