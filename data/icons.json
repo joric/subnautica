@@ -1,6 +1,7 @@
 {
   "blackbox": { "class": "fa fa-box", "color": "indianred" },
-  "lifepod": { "class": "fa fa-house", "color": "orange"},
+  "lifepod": { "class": "fa fa-life-ring", "color": "orange"},
+  "player": { "class": "fa fa-house", "color": "red"},
   "chip": { "class": "fa fa-microchip", "color": "royalblue"},
   "databox": { "class": "fa fa-inbox", "color": "steelblue"},
   "supply_crate": { "class": "fa fa-box-open", "color": "darkcyan"},
@@ -8,7 +9,7 @@
   "tadpole": { "class": "fa fa-helicopter", "color": "darkslategray" },
   "terminal": { "class": "fa fa-display", "color": "slategrey"},
   "bed": { "class": "fa fa-bed", "color": "slateblue"},
-  "eow_volume": { "class": "fa fa-cube", "color": "red" },
+  "eow_volume": { "class": "fa fa-cube", "color": "firebrick" },
   "poop": { "class": "fa fa-poop", "color": "chocolate" },
   "water_slug": { "class": "fa fa-shrimp", "color": "pink" },
   "vegetation": { "class": "fa fa-flower", "color": "green" },

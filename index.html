@@ -114,6 +114,10 @@ let counters = {};
 //let theme = 'retro';
 let theme = '';
 
+let playerMarker = null;
+let playerMarkerType = 'playerPosition';
+let playerMarkerGroup = 'playerPosition';
+
 //let bb = {left: -400000.0, top: 250000.0, right: -80000.0, bottom: 500000.0};
 //let cc = { left: bb.left + (bb.right-bb.left)/2, top: 300000 + (bb.bottom-bb.top)/2, alt: 0};
 
@@ -421,9 +425,21 @@ function getCardinalBearing(deltaX, deltaY) {
   return `${cardinal} ${bearing}°`;
 }
 
+function getCoordinates(feature) {
+  const cc = feature.geometry.coordinates;
+  let p = cc.map(x=>x.toFixed(0));
+  return `<hr><small title="Marker coordinates">${p[0]}, ${p[1]}, ${p[2]}</small>`;
+}
+
 function getDirections(feature) {
+  if (feature.properties.type == playerMarkerType) return '';
+
   const t = feature.geometry.coordinates;
-  const src = {x:-337193.4375, y:433406.34375}
+  const c = settings.playerPosition;
+
+  if (!c) return '';
+
+  const src = {x:c[0], y:c[1]};
   const dst = {x:t[0], y:t[1], z:t[2]};
 
   if (src.x==dst.x && src.y==dst.y) return '';
@@ -444,7 +460,7 @@ function getDirections(feature) {
   const cbr = getCardinalBearing(-deltaX, -deltaY);
 
   // Create directions
-  const directions = `<hr><small title="Direction from Lifepod / direction to Lifepod / distance to Lifepod"><b>${cb}</b> / <b>${cbr}</b> / <b>${distanceMeters} m</b></small>`;
+  const directions = `<hr><small style="white-space: nowrap;"><b>${cb}</b> / <b>${distanceMeters} m</b> from Player Position</small>`;
 
   return directions;
 }
@@ -593,7 +609,7 @@ function popupOnClick(e) {
   popup.querySelector('#popup-title').innerHTML = `<a href="${backlink}" onclick="return showItem('${info.type}')">${title}</a>`;
   popup.querySelector('#popup-title').title = backlink;
   popup.querySelector('#popup-subtitle').innerHTML = `<a href="#group:${info.group}" onclick="return showGroup('${info.group}')">${translate(info.group)}</a>`;
-  popup.querySelector('#popup-note').innerHTML = `${getSubtitle(feature)}${getDirections(feature)}`;
+  popup.querySelector('#popup-note').innerHTML = `${getSubtitle(feature)}${getCoordinates(feature)}${getDirections(feature)}`;
   popup.querySelector('#popup-data').innerHTML = '<hr/><pre>'+JSON.stringify(o, null, 2) + '</pre>';
 
   popup.querySelector('#popup-data-toggle').onclick = function(e) {
@@ -728,7 +744,9 @@ function addMarker(feature, options) {
   gltf.feature = feature;
 */
 
-  let marker = new maptalks.Marker([x,y,z], { symbol: getSymbol(feature, opacity), cursor:'pointer' });
+  let draggable = feature.properties.type == playerMarkerType;
+
+  let marker = new maptalks.Marker([x,y,z], { draggable: draggable, symbol: getSymbol(feature, opacity), cursor:'pointer' });
 
   marker.feature = feature; // leaflet uses marker.feature after loading geojson
 
@@ -747,18 +765,18 @@ function addMarker(feature, options) {
   let subtitle = getSubtitle(feature);
   if (subtitle) subtitle = ' - ' + subtitle;
 
-  /*
-  const tooltip = new maptalks.ui.ToolTip(`${title} (${translate(t.group)})${subtitle}`, {
+
+  const tooltip = new maptalks.ui.ToolTip(`${title} (${translate(t.group)})`, {
       showTimeout: 100, // Delay in milliseconds before showing the tooltip
       dx: 10,           // X-offset from the geometry
       dy: -10           // Y-offset from the geometry
   });
 
   tooltip.addTo(marker);
-  */
 
-  marker.on('mouseover', showTooltipExt);
-  marker.on('mouseout', hideTooltipExt);
+
+  //marker.on('mouseover', showTooltipExt);
+  //marker.on('mouseout', hideTooltipExt);
 
   //if (t.type =='Inventory_Toothpin_C') console.log(feature);
 
@@ -771,6 +789,8 @@ function addMarker(feature, options) {
   }
 
   if (t.group=='misc') { marker.hide(); line.hide();}
+
+
 
   return marker;
 }
@@ -836,6 +856,10 @@ function loadMarkersBatched(features, options) {
         line.feature = feature;
       }
 
+      if (o.type == 'BP_StaticLifepod_Surface_C' && !settings.playerPosition) {
+        const t = feature.geometry.coordinates;
+        settings.playerPosition = [t[0]+1000,t[1],0];
+      }
     }
 
     result.push(...batch);
@@ -844,6 +868,46 @@ function loadMarkersBatched(features, options) {
       setTimeout(processBatch, 0); // Allow time for browser events
     } else {
       addMarkers(result, options);
+    }
+
+    if (!playerMarker) {
+      console.log('added player marker at', settings.playerPosition);
+      let feature = {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": settings.playerPosition,
+        },
+        "properties": {
+          "type": playerMarkerType,
+          "name": "Player Marker",
+          "title": "Player Marker",
+        }
+      };
+
+      playerMarker = addMarker(feature, options);
+      batch.push(playerMarker);
+
+      playerMarker.on('dragend', function(e) {
+        const marker = e.target;
+        const c = marker.getCoordinates();
+        settings.playerPosition = [c.x, c.y, c.z];
+        marker.feature.coordinates = settings.playerPosition;
+        console.log('updating player marker to', settings.playerPosition);
+        saveSettings();
+      });
+
+      playerMarker.on('dragstart', function(e) {
+
+        let groupLayer = map.getLayer('GroupGLLayer');
+        for (const layer of groupLayer.getLayers()) {
+          for (marker of layer._geoList) {
+            marker._infoWindow?.hide();
+          }
+        }
+
+      })
+
     }
 
   }
@@ -1168,7 +1232,7 @@ function loadMap(mapId) {
     localData[id].markedItems = localData[id].markedItems || {};
     localData[id].activeLayers = localData[id].activeLayers || {};
     localData[id].filter = localData[id].filter!==undefined ? localData[id].filter : '';
-    localData[id].activeItems = localData[id].activeItems || {'BP_StaticLifepod_Surface_C':true, 'BP_Blackbox_Clickable_01a_C': true, 'BP_EdgeOfWorldVolume_C':true, 'BP_Nrtv_QuartzChip_C':true};
+    localData[id].activeItems = localData[id].activeItems || {'playerPosition': true, 'BP_StaticLifepod_Surface_C':true, 'BP_Blackbox_Clickable_01a_C': true, 'BP_EdgeOfWorldVolume_C':true, 'BP_Nrtv_QuartzChip_C':true};
   }
 
   settings = localData[mapId];
@@ -1275,6 +1339,16 @@ function loadMap(mapId) {
   });
 
   map.on('mouseleave',resetTitle);
+
+  map.on('click', function(e){
+    const p = e.coordinate;
+    if (playerMarker) {
+      let c = [p.x, p.y, 0];
+      //settings.playerPosition = c;
+      //playerMarker.setCoordinates(c);
+      //console.log('setting player coordinates to', c);
+    }
+  });
 
   //map.config({heightFactor: 0.00001}); // doesn't help, messes up infowindow
 
