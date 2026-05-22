@@ -444,7 +444,7 @@ function getDirections(feature) {
   const cbr = getCardinalBearing(-deltaX, -deltaY);
 
   // Create directions
-  const directions = `<hr><small title="Angle from Lifepod / angle to Lifepod / distance to Lifepod"><b>${cb}</b> / <b>${cbr}</b> / <b>${distanceMeters} m</b></small>`;
+  const directions = `<hr><small title="Direction from Lifepod / direction to Lifepod / distance to Lifepod"><b>${cb}</b> / <b>${cbr}</b> / <b>${distanceMeters} m</b></small>`;
 
   return directions;
 }
@@ -513,7 +513,7 @@ function showTooltip(e) {
   content += `<br><small class="small">${h3}</small>`;
 
   let p = cc.map(x=>x.toFixed(0));
-  content += `<hr>${p[0]} ${p[1]} ${p[2]}`;
+  content += `<hr><small title="Marker coordinates">${p[0]}, ${p[1]}, ${p[2]}</small>`;
 
   content += `${getDirections(feature)}`;
 
