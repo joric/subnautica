@@ -444,7 +444,7 @@ function getDirections(feature) {
   const cbr = getCardinalBearing(-deltaX, -deltaY);
 
   // Create directions
-  const directions = `<hr><small><b>${cb}</b> / <b>${cbr}</b> / <b>${distanceMeters} m</b> to Lifepod</small>`;
+  const directions = `<hr><small title="Angle from Lifepod / angle to Lifepod / distance to Lifepod"><b>${cb}</b> / <b>${cbr}</b> / <b>${distanceMeters} m</b></small>`;
 
   return directions;
 }
