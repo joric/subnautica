@@ -223,7 +223,13 @@ function markerLoader(data, area) {
       }
 
       // save properties for regions
-      if (p.Region) prop.region = (p.Region.AssetPathName||'').split('/').pop().split('.').pop();
+      if (p.Region) {
+        prop.region = (p.Region.AssetPathName||'').split('/').pop().split('.').pop();
+      }
+
+      if (p.ZoneGUID) {
+        prop.zone_guid = p.ZoneGUID;
+      }
 
     }
 

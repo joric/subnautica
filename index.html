@@ -732,6 +732,62 @@ function addMarker(feature, options) {
   layers.lines.push(line);
   line.feature = feature;
 
+  if (feature.properties.type=='UWEBoxWorldZone') {
+
+    // use 'extent' property to draw polygon.
+    let o = feature.properties;
+    let e = o.extent;
+    if (e) {
+
+      zone_colors = {
+        "DA_CGShallows":      "#ffb3c8",
+        "DA_CGPlateaus":      "#ff6b9a",
+        "DA_CGGraveyard":     "#6a4a52",
+        "DA_CGAnemoneHills":  "#ffd24a",
+        "DA_CGTufaTowers":    "#bd8888",
+        "DA_CGNorthRaceway":  "#ea4c8f",
+        "DA_CGSouthRaceway":  "#c64278",
+        "DA_CGBlightedCoral": "#7a3a5a",
+        "DA_CGLeadzone":      "#4a4a5a",
+        "DA_AR-Observatory": "#7ad06a",
+        "DA_AR-PowerPlant":  "#4ec0a4",
+        "DA_AR-RootCanyon":  "#5a8c46",
+      }
+
+      let color = zone_colors[o.region] || '#fff';//'#444a55';
+
+      const defaultSymbol = {
+        'lineColor': color,    // Border color
+        'lineWidth': 1.5,            // Border width
+        'polygonFill': color,  // Fill color
+        'polygonOpacity': 0.5,      // Fill opacity
+        'lineOpacity': 1,
+      };
+
+      let points = [];
+
+      let w = e.X;
+      let h = e.Y;
+
+      points.push([x-w, y-h, z]);
+
+      points.push([x+w, y-h, z]);
+
+      points.push([x+w, y+h, z]);
+
+      points.push([x-w, y+h, z]);
+
+
+      let polygon = new maptalks.Polygon(points, { symbol: defaultSymbol });
+
+      layers.polygons = layers.polygons||[];
+      layers.polygons.push(polygon);
+      polygon.feature = feature;
+    }
+
+  }
+
+
 /*
   var symbol = {
     url: 'js/untitled.glb',
@@ -1017,24 +1073,22 @@ function addMarkers(markers, options) {
 
   for (const [name, geometries] of Object.entries(layers)) {
     if (name=='lines') {
-
       new maptalks.LineStringLayer(name, geometries, {
         style: { filter: true, symbol: { lineColor: '#eee', lineWidth: 4, lineOpacity: 0.75 } },
       }).addTo(groupLayer);
-
+    }else if (name=='polygons') {
+      new maptalks.PolygonLayer(name, geometries, {
+        visible: true,
+      }).addTo(groupLayer);
     } else if (name=='gltf') {
-
       new maptalks.GLTFLayer('gltf', geometries,{
         opacity: 0.5,
       }).addTo(groupLayer);
-
     } else {
       new maptalks.PointLayer(name, geometries, {
         sceneConfig: { depthFunc: '<'},
-
         //hitColor: [0, 0, 0, 0], // Color used for hit detection
         //hitTolerance: 1 // Tolerance for hit detection
-
       }).addTo(groupLayer);
     }
   }
