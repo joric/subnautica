@@ -5,7 +5,8 @@
     "type": {
       "playerPosition": {"icon": "player", "group": "locations", "title": "Player Position" },
       "BP_StaticLifepod_Surface_C": {"icon": "lifepod", "group": "locations", "title": "Lifepod" },
-      "BP_EdgeOfWorldVolume_C": {"icon": "eow_volume", "group": "misc", "title": "EOW Volume" },
+      "BP_EdgeOfWorldVolume_C": {"icon": "edge_volume", "group": "regions", "title": "Edge Volume" },
+      "UWEBoxWorldZone": {"icon": "zone_box", "group": "regions", "title": "Zone Box" },
       "BP_Nrtv_QuartzChip_C": { "icon": "chip", "group": "collectible", "title":"Quartz Chip"},
       "BP_RecipeGainDataCard_Button_C": { "icon": "databox", "group": "collectible", "title":"Data Box"},
       "BP_WorldSupplyLocker_C": { "icon": "supply_crate", "group": "collectible", "title":"Supply Locker"},

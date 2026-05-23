@@ -145,6 +145,9 @@ function markerLoader(data, area) {
     if (o.Type=='MessengerComponent') messengers[outer] = o;
     if (o.Type=='SupraworldLaunchComponent_C') targets[outer] = o;
 
+    if (o.Type=='BoxComponent') meshes[outer] = o;
+    if (o.Type=='CollisionCube') meshes[outer] = o;
+
     components[outer] = components[outer] || {};
     components[outer][o.Name] = o;
   }
@@ -162,7 +165,10 @@ function markerLoader(data, area) {
 
     //if (!o.Type.startsWith('BP_Blackbox_Clickable')) continue;
 
-    if (!o.Type.startsWith('BP_')) continue;
+    // this is the most agressive filter here, use with care
+    //if (!o.Type.startsWith('BP_')) continue;
+
+    if (!["BP_", "UWEBoxWorldZone"].some(p => o.Type?.startsWith(p))) continue;
 
     let c = getLocation(o, area);
 
@@ -200,6 +206,25 @@ function markerLoader(data, area) {
       if (text && text.length) prop.text = text;
 
       if (p.Achievement?.TagName) prop.achievement = p.Achievement.TagName.split('.').pop();
+
+
+      // save properties for collision cubes
+      if (p.CollisionCube && p.DefaultSceneRoot) {
+        const parent = 'DefaultSceneRoot';
+        if ((node = p[parent]) && (s = node.ObjectName)) {
+          let d = s.split("'")[1].split(':')[1].split('.')
+          let key = d[1] + '.' + d[2];
+          if (t = outers[key]) {
+            //return getMatrix(t, matrix);
+            prop.rotation = t.Properties.RelativeRotation;
+            prop.scale = t.Properties.RelativeScale3D;
+          }
+        }
+      }
+
+      // save properties for regions
+      if (p.Region) prop.region = (p.Region.AssetPathName||'').split('/').pop().split('.').pop();
+
     }
 
     for (const [name, comp] of Object.entries(components[o.Name]||{})) {
@@ -217,7 +242,12 @@ function markerLoader(data, area) {
       }
     }
 
-    if (o.Type=='StaticMeshActor' && !prop.material) continue; // do not add actors without material
+    // save box components, if any (mostly for UWEBoxWorldZone)
+    if ((m = meshes[o.Name]) && (m.Properties && m.Properties.BoxExtent)) {
+      prop.extent = m.Properties.BoxExtent;
+    }
+
+    //if (o.Type=='StaticMeshActor' && !prop.material) continue; // do not add actors without material
 
     if ((m = messengers[o.Name]) && (s = m.Properties?.MessageEvents?.[0]?.TargetActor?.SubPathString)) {
       prop.actor = s.split('.').pop();
