@@ -119,6 +119,7 @@ let playerMarkerType = 'playerPosition';
 let playerMarkerGroup = 'playerPosition';
 
 let activeMarker = null;
+let infoWindowOpen = false;
 
 //let bb = {left: -400000.0, top: 250000.0, right: -80000.0, bottom: 500000.0};
 //let cc = { left: bb.left + (bb.right-bb.left)/2, top: 300000 + (bb.bottom-bb.top)/2, alt: 0};
@@ -599,11 +600,11 @@ function selectPolygon(polygon, selected){
 function popupOnClick(e) {
   //console.log('clicked', e.target.feature);
 
-  activeMarker = e.target; //for closing info window globally
+  let marker = e.target;
+
+  activeMarker = marker; //for closing info window globally
 
   hideTooltipExt(e);
-
-  let marker = e.target;
 
   let feature = marker.feature;
   let o = feature.properties;
@@ -665,18 +666,19 @@ function popupOnClick(e) {
 
   let contentElement = popup.firstElementChild;
 
-  e.target._infoWindow.config({custom: true, dy: -12 });
-  e.target._infoWindow.setContent(contentElement);
+  let polygon = marker.options.ref_polygon;
+  if (polygon) selectPolygon(polygon, true);
 
-  // infowindowclose
-  e.target._infoWindow.on('hide', function(e) {
-    activeMarker = null;
+  marker._infoWindow.config({custom: true, dy: -12 });
+  marker._infoWindow.setContent(contentElement);
+
+  marker._infoWindow.on('hide', function(e) {
+    infoWindowOpen = false;
     let polygon = e.target._owner.options.ref_polygon;
     if (polygon) selectPolygon(polygon, false);
   });
 
-  let polygon = e.target.options.ref_polygon;
-  if (polygon) selectPolygon(polygon, true);
+  infoWindowOpen = true;
 
   contentElement.addEventListener('contextmenu', function(e) { e.stopPropagation()}, true); // enable default context menu
 }
@@ -833,11 +835,11 @@ function addMarker(feature, options) {
 
     // Add hover effects
     polygon.on('mousemove', function(e) {
-      if (!activeMarker) selectPolygon(e.target, true);
+      if (!infoWindowOpen) selectPolygon(e.target, true);
     });
 
     polygon.on('mouseout', function(e) {
-      if (!activeMarker) selectPolygon(e.target, false);
+      if (!infoWindowOpen) selectPolygon(e.target, false);
     });
 
     //polygon.setInfoWindow({autoCloseOn: 'click', single: true}).on('click', popupOnClick)
