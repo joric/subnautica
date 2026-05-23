@@ -757,11 +757,19 @@ function addMarker(feature, options) {
   function addRectangle(feature, x,y,z, w,h, angle, color) {
 
     const defaultSymbol = {
-      'lineColor': color,    // Border color
-      'lineWidth': 1.5,            // Border width
-      'polygonFill': color,  // Fill color
-      'polygonOpacity': 0.5,      // Fill opacity
+      'lineColor': color,        // Border color
+      'lineWidth': 1.5,          // Border width
+      'polygonFill': color,      // Fill color
+      'polygonOpacity': 0.5,     // Fill opacity
       'lineOpacity': 0.75,
+    };
+
+    const hoverSymbol = {
+      'lineColor': '#fff',
+      'lineWidth': 2.5,          // Thicker border on hover
+      'polygonFill': color,
+      'polygonOpacity': 0.75,    // Higher opacity on hover
+      'lineOpacity': 1.0,
     };
 
     let points = [];
@@ -775,6 +783,16 @@ function addMarker(feature, options) {
     }
 
     let polygon = new maptalks.Polygon(points, { symbol: defaultSymbol });
+
+    // Add hover effects
+    polygon.on('mousemove', function(e) {
+      polygon.setSymbol(hoverSymbol);
+    });
+
+    polygon.on('mouseout', function(e) {
+      polygon.setSymbol(defaultSymbol);
+    });
+
 
     layers.polygons = layers.polygons||[];
     layers.polygons.push(polygon);
