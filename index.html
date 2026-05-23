@@ -588,6 +588,14 @@ function hideTooltipExt(e) {
   tooltipHideTimer = setTimeout(hideTooltip, tooltipHideDelay);
 }
 
+function selectPolygon(polygon, selected){
+  if (selected) {
+    polygon.updateSymbol({lineOpacity: 1.0, polygonOpacity: 0.75 });
+  } else {
+    polygon.updateSymbol({lineOpacity: 0, polygonOpacity: 0.5, });
+  }
+}
+
 function popupOnClick(e) {
   //console.log('clicked', e.target.feature);
 
@@ -659,6 +667,16 @@ function popupOnClick(e) {
 
   e.target._infoWindow.config({custom: true, dy: -12 });
   e.target._infoWindow.setContent(contentElement);
+
+  // infowindowclose
+  e.target._infoWindow.on('hide', function(e) {
+    activeMarker = null;
+    let polygon = e.target._owner.options.ref_polygon;
+    if (polygon) selectPolygon(polygon, false);
+  });
+
+  let polygon = e.target.options.ref_polygon;
+  if (polygon) selectPolygon(polygon, true);
 
   contentElement.addEventListener('contextmenu', function(e) { e.stopPropagation()}, true); // enable default context menu
 }
@@ -740,11 +758,9 @@ function addMarker(feature, options) {
   layers[t.group].push(marker);
 
   marker.setInfoWindow({autoCloseOn: 'click', single: true})
-  //.on('dragend', onDragEnd)
   .on('click', popupOnClick)
-  .on('contextmenu', e=> {
-    if (!mouseMoved) toggleMarked(e.target.feature.properties.name);
-  })
+  .on('contextmenu', e=> { if (!mouseMoved) toggleMarked(e.target.feature.properties.name)})
+  //.on('dragend', onDragEnd)
 
   let title = t.title || feature.properties.type;
 
@@ -784,19 +800,11 @@ function addMarker(feature, options) {
   function addRectangle(feature, x,y,z, w,h, angle, color, marker) {
 
     const defaultSymbol = {
-      'lineColor': color,        // Border color
-      'lineWidth': 1.5,          // Border width
+      'lineColor': '#fff',        // Border color
+      'lineWidth': 2.0,          // Border width
       'polygonFill': color,      // Fill color
       'polygonOpacity': 0.5,     // Fill opacity
-      'lineOpacity': 0.75,
-    };
-
-    const hoverSymbol = {
-      'lineColor': '#fff',
-      'lineWidth': 2.5,          // Thicker border on hover
-      'polygonFill': color,
-      'polygonOpacity': 0.75,    // Higher opacity on hover
-      'lineOpacity': 1.0,
+      'lineOpacity': 0,
     };
 
     let points = [];
@@ -811,29 +819,34 @@ function addMarker(feature, options) {
 
     let polygon = new maptalks.Polygon(points, { symbol: defaultSymbol });
 
+    polygon.options.ref_marker = marker;
+    marker.options.ref_polygon = polygon;
+
+    polygon.on('click',function(e){
+      const marker = e.target.options.ref_marker;
+      if (marker) {
+        popupOnClick({target: marker});
+        marker.openInfoWindow();
+      }
+      return false;
+    });
+
     // Add hover effects
     polygon.on('mousemove', function(e) {
-      polygon.setSymbol(hoverSymbol);
+      if (!activeMarker) selectPolygon(e.target, true);
     });
 
     polygon.on('mouseout', function(e) {
-      polygon.setSymbol(defaultSymbol);
+      if (!activeMarker) selectPolygon(e.target, false);
     });
 
     //polygon.setInfoWindow({autoCloseOn: 'click', single: true}).on('click', popupOnClick)
 
-    polygon.ref_marker = marker;
-
-    polygon.on('click',function(e){
-      console.log(e.target.ref_marker);
-      popupOnClick({target: e.target.ref_marker});
-      e.target.ref_marker.openInfoWindow();
-      return false;
-    });
-
     layers.polygons = layers.polygons||[];
     layers.polygons.push(polygon);
     polygon.feature = feature;
+
+    return polygon;
   }
 
   if (o.type == 'UWEBoxWorldZone' && o.extent) {
