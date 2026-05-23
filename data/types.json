@@ -28,10 +28,10 @@
 
       "BP_WorldBuildable_C": { "icon": "turbine", "group": "locations", "title":"Turbine"},
 
-      "BP_SonicResonatorV2_Scannable_C": { "icon": "gun", "group": "tech", "title":"Feedback Resonator"},
-      "BP_Tadpole_.*Fragment*": {"icon": "tadpole", "group": "tech", "category": "Tadpole Fragment"},
-      "BP_BiobedFragment*": {"icon": "fragment", "group": "tech", "category": "Biobed Fragment"},
-      "BP_BioLab_Fragment*": {"icon": "fragment", "group": "tech", "category": "Biolab Fragment"},
+      "BP_SonicResonatorV2_Scannable_C": { "icon": "gun", "group": "resources", "title":"Feedback Resonator"},
+      "BP_Tadpole_.*Fragment*": {"icon": "tadpole", "group": "resources", "category": "Tadpole Fragment"},
+      "BP_BiobedFragment*": {"icon": "fragment", "group": "resources", "category": "Biobed Fragment"},
+      "BP_BioLab_Fragment*": {"icon": "fragment", "group": "resources", "category": "Biolab Fragment"},
 
       ".*Fragment*": {"icon": "fragment", "group": "tech", "category": "fragment"},
 
