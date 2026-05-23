@@ -690,7 +690,7 @@ function toggleMarked(id) {
   saveSettings();
 }
 
-function applyHeightFactor(c, k=16) {
+function applyHeightFactor(c, k=8) {
   if (c.x) return [c.x, c.y, c.z/k];
   return [c[0], c[1], c[2]/k];
 }
