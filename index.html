@@ -597,8 +597,6 @@ function popupOnClick(e) {
 
   let marker = e.target;
 
-  console.log(marker);
-
   let feature = marker.feature;
   let o = feature.properties;
 
@@ -734,6 +732,33 @@ function addMarker(feature, options) {
   layers.lines.push(line);
   line.feature = feature;
 
+  let draggable = feature.properties.type == playerMarkerType;
+  let marker = new maptalks.Marker([x,y,z], { draggable: draggable, symbol: getSymbol(feature, opacity), cursor:'pointer' });
+  marker.feature = feature; // leaflet uses marker.feature after loading geojson
+
+  layers[t.group] = layers[t.group] || [];
+  layers[t.group].push(marker);
+
+  marker.setInfoWindow({autoCloseOn: 'click', single: true})
+  //.on('dragend', onDragEnd)
+  .on('click', popupOnClick)
+  .on('contextmenu', e=> {
+    if (!mouseMoved) toggleMarked(e.target.feature.properties.name);
+  })
+
+  let title = t.title || feature.properties.type;
+
+  let subtitle = getSubtitle(feature);
+  if (subtitle) subtitle = ' - ' + subtitle;
+
+  const tooltip = new maptalks.ui.ToolTip(`${title} (${translate(t.group)})`, {
+      showTimeout: 100, // Delay in milliseconds before showing the tooltip
+      dx: 10,           // X-offset from the geometry
+      dy: -10           // Y-offset from the geometry
+  });
+
+  tooltip.addTo(marker);
+
   let o = feature.properties;
 
   function rotatePointsInPlace(points, centerX, centerY, angle) {
@@ -756,7 +781,7 @@ function addMarker(feature, options) {
       }
   }
 
-  function addRectangle(feature, x,y,z, w,h, angle, color) {
+  function addRectangle(feature, x,y,z, w,h, angle, color, marker) {
 
     const defaultSymbol = {
       'lineColor': color,        // Border color
@@ -795,7 +820,16 @@ function addMarker(feature, options) {
       polygon.setSymbol(defaultSymbol);
     });
 
-    polygon.setInfoWindow({autoCloseOn: 'click', single: true}).on('click', popupOnClick)
+    //polygon.setInfoWindow({autoCloseOn: 'click', single: true}).on('click', popupOnClick)
+
+    polygon.ref_marker = marker;
+
+    polygon.on('click',function(e){
+      console.log(e.target.ref_marker);
+      popupOnClick({target: e.target.ref_marker});
+      e.target.ref_marker.openInfoWindow();
+      return false;
+    });
 
     layers.polygons = layers.polygons||[];
     layers.polygons.push(polygon);
@@ -818,11 +852,11 @@ function addMarker(feature, options) {
       "DA_AR-RootCanyon":  "#5a8c46",
     }
     let color = zone_colors[o.region] || '#fff';
-    addRectangle(feature, x,y,z, o.extent.X, o.extent.Y, 0, color);
+    addRectangle(feature, x,y,z, o.extent.X, o.extent.Y, 0, color, marker);
   }
 
   if (o.type=='BP_EdgeOfWorldVolume_C' && o.rotation && o.scale) {
-    addRectangle(feature, x,y,z, o.scale.X*50, o.scale.Y*50, o.rotation.Yaw, '#f00');
+    addRectangle(feature, x,y,z, o.scale.X*50, o.scale.Y*50, o.rotation.Yaw, '#f00', marker);
   }
 
 /*
@@ -841,37 +875,6 @@ function addMarker(feature, options) {
   layers.gltf.push(gltf);
   gltf.feature = feature;
 */
-
-  let draggable = feature.properties.type == playerMarkerType;
-
-  let marker = new maptalks.Marker([x,y,z], { draggable: draggable, symbol: getSymbol(feature, opacity), cursor:'pointer' });
-
-  marker.feature = feature; // leaflet uses marker.feature after loading geojson
-
-  layers[t.group] = layers[t.group] || [];
-  layers[t.group].push(marker);
-
-  marker.setInfoWindow({autoCloseOn: 'click', single: true})
-  //.on('dragend', onDragEnd)
-  .on('click', popupOnClick)
-  .on('contextmenu', e=> {
-    if (!mouseMoved) toggleMarked(e.target.feature.properties.name);
-  })
-
-  let title = t.title || feature.properties.type;
-
-  let subtitle = getSubtitle(feature);
-  if (subtitle) subtitle = ' - ' + subtitle;
-
-
-  const tooltip = new maptalks.ui.ToolTip(`${title} (${translate(t.group)})`, {
-      showTimeout: 100, // Delay in milliseconds before showing the tooltip
-      dx: 10,           // X-offset from the geometry
-      dy: -10           // Y-offset from the geometry
-  });
-
-  tooltip.addTo(marker);
-
 
   //marker.on('mouseover', showTooltipExt);
   //marker.on('mouseout', hideTooltipExt);
