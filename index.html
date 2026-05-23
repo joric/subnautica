@@ -593,7 +593,7 @@ function selectPolygon(polygon, selected){
   if (selected) {
     polygon.updateSymbol({lineOpacity: 1.0, polygonOpacity: 0.75, lineColor: '#fff' });
   } else {
-    polygon.updateSymbol({lineOpacity: 0.5, polygonOpacity: 0.50, lineColor: polygon.options.color });
+    polygon.updateSymbol({lineOpacity: 0.75, polygonOpacity: 0.50, lineColor: polygon.options.color });
   }
 }
 
@@ -806,7 +806,7 @@ function addMarker(feature, options) {
       'lineWidth': 2.0,          // Border width
       'polygonFill': color,      // Fill color
       'polygonOpacity': 0.5,     // Fill opacity
-      'lineOpacity': 0.5,
+      'lineOpacity': 0.75,
     };
 
     let points = [];
