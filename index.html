@@ -597,6 +597,8 @@ function popupOnClick(e) {
 
   let marker = e.target;
 
+  console.log(marker);
+
   let feature = marker.feature;
   let o = feature.properties;
 
@@ -793,6 +795,7 @@ function addMarker(feature, options) {
       polygon.setSymbol(defaultSymbol);
     });
 
+    polygon.setInfoWindow({autoCloseOn: 'click', single: true}).on('click', popupOnClick)
 
     layers.polygons = layers.polygons||[];
     layers.polygons.push(polygon);
