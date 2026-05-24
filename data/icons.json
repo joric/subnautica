@@ -35,7 +35,7 @@
   "deep_root": { "class": "fa fa-carrot", "color": "brown" },
 
   "glyph": { "class": "fa fa-om", "color": "goldenrod" },
-  "planetary": { "class": "fa fa-globe", "color": "goldenrod" },
+  "planetary": { "class": "fa fa-globe", "color": "darkcyan" },
 
   "hay": { "class": "fa fa-wheat-awn", "color": "goldenrod" },
   "guide": { "class": "fa fa-receipt", "color": "peru" },
