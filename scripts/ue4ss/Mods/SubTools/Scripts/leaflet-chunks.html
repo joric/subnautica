@@ -14,78 +14,132 @@
 html, body, #map { width:100%; height: 100%; margin: 0; padding: 0; }
 .leaflet-grab { cursor: auto; }
 
+
+.leaflet-tile {
+    border: 2px solid rgba(255, 0, 0, 0.5) !important;
+}
+
 </style>
 
 <div id="map"></div>
 
-<div id="controls" style="position: absolute; left: 100px; top: 10px; z-index: 4000">
-  <select name="tileSize">
-    <option value="512">tileSize</option>
-    <option>512</option>
-    <option>1024</option>
-    <option>2048</option>
-    <option>4096</option>
-    <option>8192</option>
-  </select>
+<div id="controls" style="position: absolute; left: 60px; top: 10px; z-index: 4000">
+<form id="myForm">
+  <input type="text" id="baseChunk" placeholder="base chunk path" name="baseChunk" value="" size=48/>
+  <input type="submit" value="update"/>
+</form>
 </div>
 
 <script>
+let chunkSize = 12800;
+let tileSize = 4096;
+let baseChunk = 'Capture_v1/Chunk_25600_2048p_-10_16.png';
+let map = null;
 
-window.onload = function() {
+let localDataName = 'joricsSubnauticaChunks';
+let defaults = { baseChunk: baseChunk };
+let localData = JSON.parse(localStorage.getItem(localDataName)) || defaults;
+let settings = localData;
 
-  let localDataName = 'joricsSubnauticaChunks';
-  let localData = JSON.parse(localStorage.getItem(localDataName)) || {chunkSize: 12800, tileSize: 4096};
-  let settings = localData;
+let centerX = 0
+let centerY = 0;
+let tileZoom = 4;
 
-  function saveSettings() {
-    localStorage.setItem(localDataName, JSON.stringify(localData));
-  }
+let tileLayer = null;
 
+function saveSettings() {
+  localStorage.setItem(localDataName, JSON.stringify(localData));
+}
 
-  let chunkSize = 256;
-  let tileSize = 256;
-  let x=-29;
-  let y=22;
-
-  //let baseChunk = 'Chunk_12800_2048p_-27_33.png';
-  //let baseChunk = 'Chunk_12800_2048p_-19_33.png';
-
-  s = 'Chunk_12800_4096p_-18_31.png'
-
+function parseBaseChunk(baseChunk='Capture/Chunk_12800_4096p_-18_31.png') {
+  let x=0;
+  let y=0;
 
   // Parse with regex
-  let match = s.match(/Chunk_(\d+)_(\d+)p_(-?\d+)_(-?\d+)\.png/);
+  let match = baseChunk.match(/(.*)_(\d+)_(\d+)p_(-?\d+)_(-?\d+)\.png/);
+
   if (match) {
-      chunkSize = parseInt(match[1]);  // 12800
-      tileSize = parseInt(match[2]);   // 2048
-      x = parseInt(match[3]);          // -29
-      y = parseInt(match[4]);          // 22
-      console.log(chunkSize, tileSize, x, y);
+    let base = match[1];
+    chunkSize = parseInt(match[2]);  // 12800
+    tileSize = parseInt(match[3]);   // 2048
+    x = parseInt(match[4]);          // -29
+    y = parseInt(match[5]);          // 22
+    //console.log(chunkSize, tileSize, x, y);
+
+    tileZoom = Math.floor(Math.log2(tileSize));
+    let scale = (chunkSize * Math.pow(2, tileZoom)) / tileSize;
+
+    centerX = (x + 0.5) * chunkSize / scale;
+    centerY = (y + 0.5) * chunkSize / scale * -1;
+    //console.log(chunkSize, tileSize, x, y, tileZoom, centerX, centerY);
+
+    settings.baseChunk = baseChunk;
+
+    settings.chunkSize = chunkSize;
+    settings.tileSize = tileSize;
+    settings.tileZoom = tileZoom;
+    settings.x = x;
+    settings.y = y;
+    settings.template = `${base}_${chunkSize}_${tileSize}p_` + "{x}_{y}.png";
+
+    settings.center = [centerY, centerX];
+    settings.zoom = tileZoom-2;
+
+    console.log('zoom', settings.zoom);
+
+    console.log(settings);
+    saveSettings();
   }
 
-  let tileZoom = Math.floor(Math.log2(tileSize));
-
-  let scale = (chunkSize * Math.pow(2, tileZoom)) / tileSize;
-  let centerX = (x + 0.5) * chunkSize / scale;
-  let centerY = (y + 0.5) * chunkSize / scale * -1;
-
-  const map = L.map('map', {
-    crs: L.CRS.Simple,
-    center: [centerY, centerX],
-    minZoom: 0,
-    maxZoom: 21,
-    zoom: tileZoom,
-  });
-
-  if (settings.center && settings.zoom) {
+  if (settings.center) {
+    console.log('seting map to', settings.center, settings.zoom);
     map.setView(settings.center, settings.zoom, { animate: false });
   }
 
-  //let tilesLayer = L.tileLayer('captureTiles/Chunk_'+tileSize+'p_{x}_{y}.png', {
-  let tilesLayer = L.tileLayer('Capture/Chunk_'+chunkSize+'_'+tileSize+'p_{x}_{y}.png', {
-    tileSize: tileSize,
-    minNativeZoom: tileZoom,
-    maxNativeZoom: tileZoom,
+  map.eachLayer(function(layer) {
+      if (layer instanceof L.TileLayer) {
+          map.removeLayer(layer);
+      }
+  });
+
+  tileLayer = L.tileLayer(settings.template, {
+    tileSize: settings.tileSize,
+    minNativeZoom: settings.tileZoom,
+    maxNativeZoom: settings.tileZoom,
+  }).addTo(map);
+
+}
+
+window.onload = function() {
+  document.getElementById('myForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = new FormData(this);
+    const baseChunk = formData.get('baseChunk');
+    parseBaseChunk(baseChunk);
+  });
+
+  if (settings.baseChunk) document.getElementById('baseChunk').value = settings.baseChunk;
+
+  map = L.map('map', {
+    crs: L.CRS.Simple,
+    center: [0,0],
+    minZoom: 0,
+    maxZoom: 32,
+    zoom: 0,
+  });
+
+  if (!settings.zoom || settings.zoom<8) settings.zoom = 8;
+
+  if (settings.center) {
+    map.setView(settings.center, settings.zoom, { animate: false });
+  }
+
+  console.log('template', settings.template);
+
+  tileLayer = L.tileLayer(settings.template, {
+    tileSize: settings.tileSize,
+    minNativeZoom: settings.tileZoom,
+    maxNativeZoom: settings.tileZoom,
   }).addTo(map);
 
   map.on('mousemove', function(e) {
@@ -97,7 +151,6 @@ window.onload = function() {
     settings.zoom = map.getZoom();
     saveSettings();
   });
-
 }
 
 </script>

@@ -2,13 +2,13 @@ local UEHelpers = require("UEHelpers")
 
 local chunkSize = 12800 -- do not change
 
-local tileSize = 8192
+local tileSize = 2048
 local savePath = "C:\\Temp\\Capture\\"
 local delay = 3000
 local forceOverwrite = true
 
 local locations = {
-    lifepod = { left = -337193, top = 433406, alt = 1000, size = chunkSize },
+    lifepod = { left = -337193, top = 433406, alt = 1000, size = chunkSize*2 },
     planetary = { left = -222771, top = 432320, alt = 500, size = chunkSize * 2 },
     turbine = { left = -160717, top = 436872, alt = 500, size = chunkSize * 2 },
     the_pit = { left = -344231.96875, top = 449815.84375, alt = 1000, size = chunkSize },
@@ -16,7 +16,7 @@ local locations = {
     all = { left = -222771, top = 432320, alt = 1000, size = 25600*11 }
 }
 
-local cc = locations.glyph
+local cc = locations.lifepod
 
 local function fileExists(p)
     local f = io.open(p, "r")
@@ -39,13 +39,13 @@ local function setScene(bHide)
     local timeComponent = FindFirstOf("UWETimeOfDayComponent")
     if timeComponent and timeComponent:IsValid() then
         timeComponent:SetTimeOfDay(0.5)
-        timeComponent:FreezeTime(bHide)
+        --timeComponent:FreezeTime(bHide)
     end
     
     local sky = FindFirstOf("BP_UWESky_C")
     if sky and sky:IsValid() and sky.SunDirectionalLight then
         local light = sky.SunDirectionalLight
-        light:SetIntensity(bHide and 60.0 or 10.0)
+        light:SetIntensity(bHide and 90.0 or 10.0)
 
         
         -- light.IndirectLightingIntensity = 30.0
@@ -53,7 +53,7 @@ local function setScene(bHide)
         -- light.VolumetricScatteringIntensity = 0
 
         if sky.SkyLight then
-            sky.SkyLight:SetIntensity(bHide and 1.0 or 1.0)
+            --sky.SkyLight:SetIntensity(bHide and 1.0 or 1.0)
         end
 
     end
@@ -64,7 +64,7 @@ local function setScene(bHide)
         local ksl = StaticFindObject("/Script/Engine.Default__KismetSystemLibrary")
         if world and world:IsValid() and ksl and ksl:IsValid() then
             -- note that not all command work in script runtime, most need actual user input in console
-            local cmds0 = {
+            local cmds = {
                 --'r.BloomQuality 0',
                 --'r.Tonemapper.Quality 0',
                 --'r.TonemapperGamma 6',
@@ -100,7 +100,10 @@ local function setScene(bHide)
 
             }
 
-            local cmds = {
+            local cmds11 = {
+            }
+
+            local cmdszz = {
 
                 "r.ViewDistanceScale 10",
                 "r.Streaming.FullyLoadUsedTextures 1",
@@ -135,7 +138,7 @@ local function setScene(bHide)
                 "r.Shadow.Sharpen 0",
                 "r.Shadow.FilterMethod 1",
 
-                "r.Tonemapper.Gamma 2.2"
+                "r.Tonemapper.Gamma 3.2"
             }
 
             for _, cmd in ipairs(cmds) do
