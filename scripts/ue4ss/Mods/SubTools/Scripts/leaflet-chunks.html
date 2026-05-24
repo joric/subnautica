@@ -18,18 +18,39 @@ html, body, #map { width:100%; height: 100%; margin: 0; padding: 0; }
 
 <div id="map"></div>
 
+<div id="controls" style="position: absolute; left: 100px; top: 10px; z-index: 4000">
+  <select name="tileSize">
+    <option value="512">tileSize</option>
+    <option>512</option>
+    <option>1024</option>
+    <option>2048</option>
+    <option>4096</option>
+    <option>8192</option>
+  </select>
+</div>
+
 <script>
 
 window.onload = function() {
-  let chunkSize = 12800;
-  let tileSize = 2048;
+
+  let localDataName = 'joricsSubnauticaChunks';
+  let localData = JSON.parse(localStorage.getItem(localDataName)) || {chunkSize: 12800, tileSize: 4096};
+  let settings = localData;
+
+  function saveSettings() {
+    localStorage.setItem(localDataName, JSON.stringify(localData));
+  }
+
+
+  let chunkSize = 256;
+  let tileSize = 256;
   let x=-29;
   let y=22;
 
   //let baseChunk = 'Chunk_12800_2048p_-27_33.png';
   //let baseChunk = 'Chunk_12800_2048p_-19_33.png';
 
-  s = 'Chunk_25600_2048p_-10_16.png'
+  s = 'Chunk_12800_4096p_-18_31.png'
 
 
   // Parse with regex
@@ -42,21 +63,6 @@ window.onload = function() {
       console.log(chunkSize, tileSize, x, y);
   }
 
-  /*
-  let locations = {
-    lifepod : { left : -337193, top : 433406, alt : 1000, size : chunkSize },
-    planetary : { left : -222771, top : 432320, alt : 1000, size : chunkSize*2 },
-    turbine : { left : -160717, top : 436872, alt : 1000, size : chunkSize*2 },
-    the_pit : { left : -344231.96875, top : 449815.84375, alt:1000, size : chunkSize},
-    glyph : { left: -232185.984375, top:431499.40625, alt:1000, size: chunkSize},
-  }
-
-  let cc = locations.glyph;
-
-  let x = Math.floor(cc.left/chunkSize);
-  let y = Math.floor(cc.top/chunkSize);
-  */
-
   let tileZoom = Math.floor(Math.log2(tileSize));
 
   let scale = (chunkSize * Math.pow(2, tileZoom)) / tileSize;
@@ -68,8 +74,12 @@ window.onload = function() {
     center: [centerY, centerX],
     minZoom: 0,
     maxZoom: 21,
-    zoom: tileZoom-1,
+    zoom: tileZoom,
   });
+
+  if (settings.center && settings.zoom) {
+    map.setView(settings.center, settings.zoom, { animate: false });
+  }
 
   //let tilesLayer = L.tileLayer('captureTiles/Chunk_'+tileSize+'p_{x}_{y}.png', {
   let tilesLayer = L.tileLayer('Capture/Chunk_'+chunkSize+'_'+tileSize+'p_{x}_{y}.png', {
@@ -81,6 +91,13 @@ window.onload = function() {
   map.on('mousemove', function(e) {
     document.title = `${e.latlng.lat} ${e.latlng.lng} z: ${map.getZoom()}`;
   });
+
+  map.on('moveend zoomend', function(e) {
+    settings.center = [map.getCenter().lat, map.getCenter().lng]; // avoid circular refs here
+    settings.zoom = map.getZoom();
+    saveSettings();
+  });
+
 }
 
 </script>
