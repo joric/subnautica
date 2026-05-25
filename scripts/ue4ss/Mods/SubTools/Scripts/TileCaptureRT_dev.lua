@@ -1,22 +1,28 @@
 local UEHelpers = require("UEHelpers")
 
-local chunkSize = 12800 -- do not change
+local chunkSize = 100000/2
 
-local tileSize = 2048
+local tileSize = 4096
 local savePath = "C:\\Temp\\Capture\\"
-local delay = 3000
+local delay = 250
 local forceOverwrite = true
 
 local locations = {
-    lifepod = { left = -337193, top = 433406, alt = 1000, size = chunkSize*2 },
+    lifepod = { left = -337193, top = 433406, alt = 1000, size = chunkSize },
     planetary = { left = -222771, top = 432320, alt = 500, size = chunkSize * 2 },
     turbine = { left = -160717, top = 436872, alt = 500, size = chunkSize * 2 },
     the_pit = { left = -344231.96875, top = 449815.84375, alt = 1000, size = chunkSize },
-    glyph = { left = -232185.984375, top = 431499.40625, alt = 500, size = chunkSize*4 },
-    all = { left = -222771, top = 432320, alt = 1000, size = 25600*11 }
+    glyph = { left = -232185.984375, top = 431499.40625, alt = 500, size = chunkSize },
+    all = { left = -222771, top = 432320, alt = -100, size = 25600*11 }
 }
 
-local cc = locations.lifepod
+local cc = locations.all
+
+--local bb = {left=cc.left-cc.size/2, top=cc.top-cc.size/2, right=cc.left+cc.size/2, bottom=cc.top+cc.size/2}
+
+local bb = { left = -388342, bottom = 511341, top = 363219, right = -73747 }
+
+
 
 local function fileExists(p)
     local f = io.open(p, "r")
@@ -39,73 +45,49 @@ local function setScene(bHide)
     local timeComponent = FindFirstOf("UWETimeOfDayComponent")
     if timeComponent and timeComponent:IsValid() then
         timeComponent:SetTimeOfDay(0.5)
-        --timeComponent:FreezeTime(bHide)
     end
     
     local sky = FindFirstOf("BP_UWESky_C")
     if sky and sky:IsValid() and sky.SunDirectionalLight then
         local light = sky.SunDirectionalLight
         light:SetIntensity(bHide and 90.0 or 10.0)
-
-        
-        -- light.IndirectLightingIntensity = 30.0
-        -- light.SpecularScale = 0.02
-        -- light.VolumetricScatteringIntensity = 0
-
-        if sky.SkyLight then
-            --sky.SkyLight:SetIntensity(bHide and 1.0 or 1.0)
-        end
-
     end
 
     local pc = UEHelpers.GetPlayerController()
     if pc and pc:IsValid() then
         local world = pc:GetWorld()
         local ksl = StaticFindObject("/Script/Engine.Default__KismetSystemLibrary")
-        if world and world:IsValid() and ksl and ksl:IsValid() then
-            -- note that not all command work in script runtime, most need actual user input in console
-            local cmds = {
-                --'r.BloomQuality 0',
-                --'r.Tonemapper.Quality 0',
-                --'r.TonemapperGamma 6',
 
+        if world and world:IsValid() and ksl and ksl:IsValid() then
+            local cmds1 = {
                 'r.AmbientOcclusionLevels 0',
                 'r.ContactShadows 0',
                 'r.DistanceFieldAO 0',
-                'r.Shadow.FilterMethod 1', -- 3 for PCSS (softer, lighter-looking shadows)
-                'r.Shadow.MaxCSMResolution 512', --(lower resolution = blurrier = lighter)
+                'r.Shadow.FilterMethod 1',
+                'r.Shadow.MaxCSMResolution 512',
                 'r.Shadow.CSM.MaxCascades 1',
-                'r.Shadow.RadiusThreshold 0.001', --to 0.5 (higher threshold = fewer shadows cast)
-
-                'r.ForceLOD 0', -- not recognized
+                'r.Shadow.RadiusThreshold 0.001',
+                'r.ForceLOD 0',
                 'r.ParticleLODBias -10',
-                'r.HLOD 0', -- not recognized
-                'r.HLOD.DistanceScale 0', -- not recognized
-
+                'r.HLOD 0',
+                'r.HLOD.DistanceScale 0',
                 'r.LandscapeLODDistributionScale 3',
                 'r.LandscapeLOD0DistributionScale 3',
                 'r.LandscapeLODBias -3',
-
-                'r.ViewDistanceScale 3', -- recognized but doesn't do shit
+                'r.ViewDistanceScale 3',
                 'foliage.ForceLOD 0',
                 'r.Nanite.MaxPixelsPerEdge 0.5',
                 'r.LandscapeLOD0ScreenSize 10',
                 'r.Streaming.FullyLoadUsedTextures 1',
                 'r.Streaming.UseAllMips 1',
-
                 'r.Nanite.MaxPixelsPerEdge 0.25',
                 'r.Nanite.ViewMeshLODBias.Offset -4',
                 'r.ScreenPercentage 200',
                 'r.ViewDistanceScale 100',
-
             }
 
-            local cmds11 = {
-            }
-
-            local cmdszz = {
-
-                "r.ViewDistanceScale 10",
+            local cmds = {
+                "r.ViewDistanceScale 100",
                 "r.Streaming.FullyLoadUsedTextures 1",
                 "r.Streaming.UseAllMips 1",
 
@@ -118,15 +100,13 @@ local function setScene(bHide)
                 "foliage.ForceLOD 0",
 
                 "r.ScreenPercentage 200",
-                "r.Tonemapper.Quality 0",    
-
+                "r.Tonemapper.Quality 5",
                 'r.AmbientOcclusionLevels=0',
-                'r.Tonemapper.Quality=0',
  
                 "r.DefaultFeature.AutoExposure 0",
                 "r.EyeAdaptationQuality 0",
 
-                "r.SkyLightIntensityMultiplier 3",
+                "r.SkyLightIntensityMultiplier 6",
                 "r.AmbientOcclusionLevels 0",
                 "r.DistanceFieldAO 0",
                 "r.ContactShadows 0",
@@ -145,88 +125,12 @@ local function setScene(bHide)
                 ksl:ExecuteConsoleCommand(world, cmd, nil)
             end
 
-
             ksl:ExecuteConsoleCommand(world, "slomo " .. (bHide and "0.00000001" or "1"), nil)
         end
     end
-
-end
-
-local function setScene00(bHide)
-
-    local world = UEHelpers.GetPlayerController():GetWorld()
-    local ksl = StaticFindObject("/Script/Engine.Default__KismetSystemLibrary")
-
-    local cmds = {
-        "r.ViewDistanceScale 10",
-        "r.Streaming.FullyLoadUsedTextures 1",
-        "r.Streaming.UseAllMips 1",
-
-        "r.Nanite.MaxPixelsPerEdge 0.1",
-        "r.Nanite.ViewMeshLODBias.Offset -5",
-
-        "r.LandscapeLODBias -5",
-        "r.LandscapeLOD0ScreenSize 100",
-
-        "foliage.ForceLOD 0",
-
-        "r.ScreenPercentage 200",
-        "r.Tonemapper.Quality 0",    
-    }
-
-    cmds0 = {
-        "r.TonemapperGamma 3.2", --default
-
-        "r.Shadow.MaxCSMResolution 2048",
-        "r.Shadow.CSM.MaxCascades 1",
-        "r.AmbientOcclusionLevels 0",
-        "r.ContactShadows 0",
-        "r.DistanceFieldAO 0",
-        
-        'r.Shadow.FilterMethod 3', -- 3 for PCSS (softer, lighter-looking shadows)
-        'r.Shadow.MaxCSMResolution 256', --(lower resolution = blurrier = lighter)
-        'r.Shadow.CSM.MaxCascades 1',
-        'r.Shadow.RadiusThreshold 0.001', --to 0.5 (higher threshold = fewer shadows cast)
-    }
-
-    if world and ksl and bHide then
-        for _, c in ipairs(cmds) do
-            ksl:ExecuteConsoleCommand(world, c, nil)
-        end
-        --ksl:ExecuteConsoleCommand(world, "slomo 0.00000001", nil)
-    else
-        --ksl:ExecuteConsoleCommand(world, "slomo 1", nil)
-    end
-
-    local names = {
-        'WaterBodyOceanComponent',
-        'ExponentialHeightFogComponent',
-    }
-
-    for _, name in ipairs(names) do
-        local o = FindFirstOf(name)
-        if o and o:IsValid() and o.SetHiddenInGame then
-            o.SetHiddenInGame(bHide, true)
-        end
-    end
-
-    local time = FindFirstOf("UWETimeOfDayComponent")
-    if time then
-        time:SetTimeOfDay(0.5)
-        --time:FreezeTime(bHide)
-    end
-
-    local sky = FindFirstOf("BP_UWESky_C")
-    if sky then
-        if sky.SunDirectionalLight then
-            sky.SunDirectionalLight:SetIntensity(60.0)
-        end
-    end
-
 end
 
 local function startCapture()
-
     local pc = FindFirstOf("PlayerController")
     local world = pc:GetWorld()
 
@@ -238,7 +142,7 @@ local function startCapture()
 
     cap.ProjectionType = 1
     cap.OrthoWidth = chunkSize
-    cap.CaptureSource = 2 -- 3 means HDR, no postprocessing
+    cap.CaptureSource = 2
     cap.bCaptureEveryFrame = false
 
     local krl = StaticFindObject("/Script/Engine.Default__KismetRenderingLibrary")
@@ -255,59 +159,78 @@ local function startCapture()
         end
     end
 
-    local sizeChunks = math.ceil(cc.size / chunkSize)
-    local cx = math.floor(cc.left / chunkSize)
-    local cy = math.floor(cc.top / chunkSize)
-    local half = math.floor(sizeChunks / 2)
+    local minGX = math.floor(bb.left / chunkSize)
+    local maxGX = math.floor((bb.right - 1) / chunkSize)
 
-    local minX = (cx - half) * chunkSize
-    local minY = (cy - half) * chunkSize
+    local minGY = math.floor(bb.top / chunkSize)
+    local maxGY = math.floor((bb.bottom - 1) / chunkSize)
 
-    local total = sizeChunks * sizeChunks
-    local i = 0
+    local chunks = {}
+
+    for gy = minGY, maxGY do
+        for gx = minGX, maxGX do
+            chunks[#chunks + 1] = {
+                px = (gx + 0.5) * chunkSize,
+                py = (gy + 0.5) * chunkSize,
+                gx = gx,
+                gy = gy
+            }
+        end
+    end
+
+    print("[CAPTURE] Capturing grid", maxGX-minGX+1, maxGY-minGY+1)
+
+
+    local total = #chunks
+    local i = 1
 
     local function step()
-
-        if i >= total then
+        if i > total then
             setScene(false)
             print("[CAPTURE] DONE")
             return
         end
 
-        local x = i % sizeChunks
-        local y = math.floor(i / sizeChunks)
+        local c = chunks[i]
 
-        local px = minX + (x + 0.5) * chunkSize
-        local py = minY + (y + 0.5) * chunkSize
-
-        local gx = math.floor(px / chunkSize)
-        local gy = math.floor(py / chunkSize)
+        local px = c.px
+        local py = c.py
+        local gx = c.gx
+        local gy = c.gy
 
         local file = string.format("Chunk_%d_%dp_%d_%d.png", chunkSize, tileSize, gx, gy)
 
-        print(string.format("[CAPTURE] %d/%d %s", i + 1, total, file))
+        if not forceOverwrite and fileExists(savePath .. file) then
+            print(string.format("[CAPTURE] %d/%d SKIP %s", i, total, file))
+            i = i + 1
+            step()
+            return
+        end
+
+        print(string.format("[CAPTURE] %d/%d %s", i, total, file))
 
         ExecuteInGameThread(function()
-
             capActor:K2_SetActorLocation({ X = px, Y = py, Z = cc.alt }, false, {}, true)
             cap:CaptureScene()
 
             ExecuteWithDelay(delay, function()
-                ExecuteInGameThread(function() -- mandatory or it crashes
-                cap:CaptureScene()
-                krl:ExportRenderTarget(world, rt, savePath, file)
-                i = i + 1
-                step()
+                ExecuteInGameThread(function()
+                    cap:CaptureScene()
+                    cap:CaptureScene()
+                    krl:ExportRenderTarget(world, rt, savePath, file)
+                    i = i + 1
+                    step()
                 end)
             end)
-
         end)
     end
+
     step()
 end
 
 RegisterKeyBind(Key.F, { ModifierKey.CONTROL }, function()
     setScene(true)
+
     ExecuteWithDelay(250, function()
         ExecuteInGameThread(function()
             startCapture()

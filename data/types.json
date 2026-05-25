@@ -17,6 +17,8 @@
 
       "BP_Planetary_C": { "icon": "planetary", "group": "locations", "title":"Planetary"},
 
+      "BP_Clamthulu_C": { "icon": "great_jaw", "group": "locations", "title":"Clam Thulhu"},
+
       "BP_ComputerTextInterface_Terminal_C": { "icon": "terminal", "group": "locations", "title":"NOA Terminal"},
       "BP_BioBed_C": { "icon": "bed", "group": "locations", "title":"Reprint Point"},
       "BP_Black[bB]ox_Clickable_*": { "icon": "blackbox", "group": "collectible", "title":"Blackbox", "weight": -10000 },

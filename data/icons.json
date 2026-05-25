@@ -19,6 +19,7 @@
   "canker": { "class": "fa fa-biohazard", "color": "magenta" },
   "turbine": { "class": "fa fa-fan", "color": "red" },
   "alien_console":{ "class": "fa fa-display", "color": "darkseagreen" },
+  "great_jaw":{ "class": "fa fa-teeth-open", "color": "seagreen" },
 
   "titanium": { "class": "fa fa-cubes", "color": "grey" },
   "silver": { "class": "fa fa-cubes", "color": "lightgrey" },
