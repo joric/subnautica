@@ -1,6 +1,6 @@
 local UEHelpers = require("UEHelpers")
 
-local chunkSize = 10000*8/4
+local chunkSize = 10000
 
 local savePath = "C:\\Temp\\Capture\\"
 
@@ -13,13 +13,13 @@ local locations = {
     all = { left = -222771, top = 432320, alt = 5000, size = 25600*11 }
 }
 
-local tileSize = 4096
+local tileSize = 512
 
 local delay = 50
 
 local forceOverwrite = true
 
-local cc = locations.clam
+local cc = locations.all
 
 
 local bb = {left=cc.left-cc.size/2, top=cc.top-cc.size/2, right=cc.left+cc.size/2, bottom=cc.top+cc.size/2}
