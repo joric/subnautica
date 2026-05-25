@@ -71,7 +71,7 @@ document.head.appendChild(document.getElementById(location.protocol === 'file:' 
 let tileset_base = location.protocol === 'file:' ? '../subnautica2_tileset' : 'https://joric.github.io/subnautica2_tileset';
 </script>
 
-<div tabindex=0 id="map"></div>
+<div tabindex=0 id="map" style="background1: #445232; background: #333; background-size: 100px 100px; background-repeat: repeat; ba1ckground-image: url('data/photo-seamless-texture-calm-ocean-water_950361-43063.jpg')"></div>
 <div class="controls-topleft">
 
   <div class="options-control" tabindex=0>
@@ -121,31 +121,26 @@ let playerMarkerGroup = 'playerPosition';
 let activeMarker = null;
 let infoWindowOpen = false;
 
-//let bb = {left: -400000.0, top: 250000.0, right: -80000.0, bottom: 500000.0};
-//let cc = { left: bb.left + (bb.right-bb.left)/2, top: 300000 + (bb.bottom-bb.top)/2, alt: 0};
-
-//-17,8 to -2,23
-
-//let bb = {left: -400000.0, top: 250000.0, right: -80000.0, bottom: 500000.0};
-
-cb = {left:-17, top:8, right: -1, bottom: 24}
-cs = 25600;
-
+let cb = {left:-17, top:8, right: -1, bottom: 24};
+let cs = 25600;
 let bb = {left: cb.left*cs, top: cb.top*cs, right: cb.right*cs, bottom: cb.bottom*cs};
+let cc = {left: bb.left + (bb.right-bb.left)/2, top: bb.top + (bb.bottom-bb.top)/2, alt: 0};
 
-let cc = { left: bb.left + (bb.right-bb.left)/2, top: bb.top + (bb.bottom-bb.top)/2, alt: 0};
+let bb1=bb; let cc1=cc;
+
+let d = (32-15)/2;
+cb = {left:-41, top:39-d, right: -10+1, bottom: 53+d+1};
+cs = 9375;
+bb = { left: cb.left*cs, top: cb.top*cs, right: cb.right*cs, bottom: cb.bottom*cs };
+cc = { left: bb.left + (bb.right-bb.left)/2, top: bb.top + (bb.bottom-bb.top)/2, alt: 0};
 
 let maps = {
   sn2:  { 
     title: 'Subnautica 2',
-    bounds: bb,
-    center: cc,
     tileSize: 512,
-    maxZoom: 6,
-    tiles: `${tileset_base}/tiles/capture_v1/{z}/{x}_{y}.jpg`,
     versions: {
-      //'113109': { date: '2026-05-14', data: 'data/Subnautica2.113109.json.gz'},
-      '113109': { date: '2026-05-14', data: 'data/markers.json'},
+      '112084': { date: '2026-05-02', data: 'data/Subnautica2.113109.json.gz', tiles: `${tileset_base}/tiles/capture_v1/{z}/{x}_{y}.jpg`, bounds: bb1, center: cc1, maxZoom: 6},
+      '113109': { date: '2026-05-14', data: 'data/markers.json', tiles: `${tileset_base}/tiles/capture_v2/{z}/{y}/{x}.webp`, bounds: bb, center: cc, maxZoom: 8},
     },
    },
 };
@@ -1331,11 +1326,6 @@ function setHeight() {
 function loadMap(mapId) {
   let config = maps[mapId];
   let area = mapId;
-  let tileSize = config.tileSize;
-  let mapSize = config.bounds.right - config.bounds.left;
-  let maxZoom = 19;
-
-  gameTitle = config.title;
 
   for (id in maps) {
     localData[id] = localData[id] || {};
@@ -1347,8 +1337,24 @@ function loadMap(mapId) {
 
   settings = localData[mapId];
 
+  //console.log('ver', config.versions && Object.keys(config.versions)[Object.keys(config.versions).length-1])
+
+  settings.version = settings.version || config.versions && Object.keys(config.versions)[Object.keys(config.versions).length-1];
+
+  let version = config.versions?.[settings.version] || {};
+
+  let tileSize = version.tileSize || config.tileSize;
+  let bounds = version.bounds || config.bounds;
+  let center = version.center || config.center;
+
+  let mapSize = bounds.right - bounds.left;
+  let maxZoom = version.maxZoom || config.maxZoom || 8;
+
+  let tiles = version.tiles || config.tiles;
+
+  gameTitle = config.title;
+
   if (config.versions) {
-    settings.version = settings.version || config.versions && Object.keys(config.versions)[Object.keys(config.versions).length-1];
     document.querySelector('.version').innerHTML = `<select>${Object.entries(config.versions).sort((a,b)=>b[0]-a[0]).map(([key,value])=>`<option value="${key}"${key==settings.version?' selected':''}>Version ${key} (${new Date(value.date).toLocaleDateString("en",{day:"numeric",month:"short",year:"numeric"})})</option>`).join('')}</select>`;
     document.querySelector('.version select').onchange = e=> {
       settings.version = e.target.value;
@@ -1364,11 +1370,11 @@ function loadMap(mapId) {
 
   let tileLayers = Object.entries(maps).map(([name, config])=>
     new maptalks.TileLayer(name, {
-      maxAvailableZoom: config.maxZoom,
-      urlTemplate: config.versions?.[settings.version]?.tiles || config.tiles,
+      maxAvailableZoom: maxZoom,
+      urlTemplate: tiles,
       repeatWorld: false,
       tileSize: tileSize,
-      tileSystem: [1, -1, config.bounds.left, config.bounds.top],
+      tileSystem: [1, -1, bounds.left, bounds.top],
       visible: name==area,
     })
   )
@@ -1376,12 +1382,12 @@ function loadMap(mapId) {
 
   map = new maptalks.Map('map', {
     zoom: 1,
-    center: [config.center.left, config.center.top],
+    center: [center.left, center.top],
     maxZoom: maxZoom,
     spatialReference: {
       projection: 'identity',
       resolutions: Array.from({length: maxZoom + 1},(_,i) => mapSize / tileSize / (1<<i)),
-      fullExtent: config.bounds,
+      fullExtent: bounds,
     },
     zoomControl: {
       position  : {bottom: 70, right: 20},
@@ -1398,7 +1404,7 @@ function loadMap(mapId) {
   });
 
   let gap = mapSize/2;
-  let extent = new maptalks.Extent(config.bounds.left-gap, config.bounds.top-gap, config.bounds.right+gap, config.bounds.bottom+gap);
+  let extent = new maptalks.Extent(bounds.left-gap, bounds.top-gap, bounds.right+gap, bounds.bottom+gap);
   map.setMaxExtent(extent);
 
   let layerSwitcher = new maptalks.control.LayerSwitcher({
@@ -1478,8 +1484,10 @@ function loadMap(mapId) {
     saveSettings();
   });
 
+  settings.center = settings.center || [center.left, center.top];
+
   map.setView({
-    center: settings.center || [config.center.left, config.center.top],
+    center: settings.center,
     zoom: settings.zoom || 0,
     bearing: settings.bearing || 0,
     pitch: settings.pitch || 0,
@@ -1614,7 +1622,7 @@ window.onload = function(event) {
     iconImages = Object.fromEntries(Object.entries(iconData).map(([k,v]) => [k, renderFAIconToImageURL(v.class, v.color, v.background, iconSize)]));
 
     loadMap(mapId);
-  }).catch(error=>alert(`A network error occurred. This might be a CORS issue. Check the browser console for details.\n\nError: ${error}`));
+  });//.catch(error=>alert(`A network error occurred. This might be a CORS issue. Check the browser console for details.\n\nError: ${error}`));
 }
 
 function saveSettings() {
