@@ -1,6 +1,8 @@
 local UEHelpers = require("UEHelpers")
 
-local chunkSize = 12800
+-- local chunkSize = 6400
+
+local chunkSize = 9375 -- 300k bounds / 32
 
 local savePath = "C:\\Temp\\Capture\\"
 
@@ -13,15 +15,16 @@ local locations = {
     all = { left = -222771, top = 432320, alt = 5000, size = 25600*11 }
 }
 
-local tileSize = 1024
+local cc = locations.all
 
-local startDelay = 500
 
-local streamingDelay = 500
+local tileSize = 512
+
+local startDelay = 250
+
+local streamingDelay = 250
 
 local forceOverwrite = true
-
-local cc = locations.clam
 
 local bb = {left=cc.left-cc.size/2, top=cc.top-cc.size/2, right=cc.left+cc.size/2, bottom=cc.top+cc.size/2}
 if cc==locations.all then
@@ -57,7 +60,7 @@ local function setScene(bHide)
         local light = sky.SunDirectionalLight
         light:SetIntensity(bHide and 100.0 or 10.0)
         if sky.SkyLight then
-            sky.SkyLight:SetIntensity(bHide and 10.0 or 1.0) -- value 100 `gives blue-ish tint, doesn't remove shadows
+            sky.SkyLight:SetIntensity(bHide and 50.0 or 1.0) -- value 100 `gives blue-ish tint
         end
     end
 
@@ -67,93 +70,26 @@ local function setScene(bHide)
         local ksl = StaticFindObject("/Script/Engine.Default__KismetSystemLibrary")
 
         if world and world:IsValid() and ksl and ksl:IsValid() then
-            local cmds1 = {
-                'r.AmbientOcclusionLevels 0',
-                'r.ContactShadows 0',
-                'r.DistanceFieldAO 0',
-                'r.Shadow.FilterMethod 1',
-                'r.Shadow.MaxCSMResolution 512',
-                'r.Shadow.CSM.MaxCascades 1',
-                'r.Shadow.RadiusThreshold 0.001',
-                'r.ForceLOD 0',
-                'r.ParticleLODBias -10',
-                'r.HLOD 0',
-                'r.HLOD.DistanceScale 0',
-                'r.LandscapeLODDistributionScale 3',
-                'r.LandscapeLOD0DistributionScale 3',
-                'r.LandscapeLODBias -3',
-                'r.ViewDistanceScale 3',
-                'foliage.ForceLOD 0',
-                'r.Nanite.MaxPixelsPerEdge 0.5',
-                'r.LandscapeLOD0ScreenSize 10',
-                'r.Streaming.FullyLoadUsedTextures 1',
-                'r.Streaming.UseAllMips 1',
-                'r.Nanite.MaxPixelsPerEdge 0.25',
-                'r.Nanite.ViewMeshLODBias.Offset -4',
-                'r.ScreenPercentage 200',
-                'r.ViewDistanceScale 100',
-            }
 
             local cmds = {
-                
-            }
-
-            local cmds0 = {
                 "r.Streaming.FullyLoadUsedTextures 1",
                 "r.Streaming.UseAllMips 1",
 
                 "r.AmbientOcclusionLevels 1",
                 "r.AmbientOcclusionRadiusScale 2",
 
-                "r.ViewDistanceScale 100",
+                "r.ViewDistanceScale 5",
                 "r.ScreenPercentage 200",
                 "r.Nanite.ProjectEnabled 1",
                 "r.Nanite.Tessellation 1",
                 "r.Nanite.MaxPixelsPerEdge 0.1",
                 "r.Nanite.ViewMeshLODBias.Offset -5",
-
-                "r.LandscapeLODBias -5",
-                "r.LandscapeLOD0ScreenSize 100",
 
                 "r.Tonemapper.Quality 0",
-                "r.TonemapperGamma 3.2"
-            }
+                "r.TonemapperGamma 3.2",
 
-            local cmds2 = {
-                "r.ViewDistanceScale 100",
-                "r.Streaming.FullyLoadUsedTextures 1",
-                "r.Streaming.UseAllMips 1",
-
-                "r.Nanite.ProjectEnabled 1",
-                "r.Nanite.Tessellation 1",
-                "r.Nanite.MaxPixelsPerEdge 0.1",
-                "r.Nanite.ViewMeshLODBias.Offset -5",
-                "r.ScreenPercentage 200",
-
-                "r.LandscapeLODBias -5",
-                "r.LandscapeLOD0ScreenSize 100",
-
-                "foliage.ForceLOD 0",
-
-                "r.Tonemapper.Quality 5",
-                'r.AmbientOcclusionLevels=0',
- 
-                "r.DefaultFeature.AutoExposure 0",
-                "r.EyeAdaptationQuality 0",
-
-                "r.SkyLightIntensityMultiplier 6",
-                "r.AmbientOcclusionLevels 0",
-                "r.DistanceFieldAO 0",
-                "r.ContactShadows 0",
-
-                "r.Shadow.MaxCSMResolution 256",
-                "r.Shadow.CSM.MaxCascades 1",
-                "r.Shadow.RadiusThreshold 0.5",
-                "r.Shadow.DistanceScale 0.5",
-                "r.Shadow.Sharpen 0",
-                "r.Shadow.FilterMethod 1",
-
-                "r.TonemapperGamma 3.2"
+                "r.Shadow.Virtual.Enable 0",    -- disable vt shadows
+                "r.Shadow.DistanceScale 0.001", -- completely disable fucking csm shadows
             }
 
             for _, cmd in ipairs(cmds) do
@@ -197,8 +133,9 @@ local function startCapture()
     if scClass then
         local sc = capActor:AddComponentByClass(scClass, false, {}, false)
         if sc then
-            sc.DefaultLoadingRange = chunkSize
-            sc.Priority = 999
+            sc.DefaultLoadingRange = chunkSize*2
+            sc.Priority = 256
+            sc.bEnableStreaming = true
             sc:EnableStreamingSource()
         end
     end
@@ -268,7 +205,7 @@ local function startCapture()
         print(string.format("[CAPTURE] %d/%d %s", i, total, file))
 
         ExecuteInGameThread(function()
-            capActor:K2_SetActorLocation({ X = px + chunkSize/4, Y = py + chunkSize/4, Z = cc.alt }, false, {}, true)
+            capActor:K2_SetActorLocation({ X = px, Y = py, Z = cc.alt }, false, {}, true)
             ExecuteWithDelay(streamingDelay, function()
                 ExecuteInGameThread(function()
                     cap:CaptureScene()
