@@ -1,28 +1,32 @@
 local UEHelpers = require("UEHelpers")
 
-local chunkSize = 100000/2
+local chunkSize = 10000*8/4
 
-local tileSize = 4096
 local savePath = "C:\\Temp\\Capture\\"
-local delay = 250
-local forceOverwrite = true
 
 local locations = {
     lifepod = { left = -337193, top = 433406, alt = 1000, size = chunkSize },
-    planetary = { left = -222771, top = 432320, alt = 500, size = chunkSize * 2 },
     turbine = { left = -160717, top = 436872, alt = 500, size = chunkSize * 2 },
-    the_pit = { left = -344231.96875, top = 449815.84375, alt = 1000, size = chunkSize },
+    bigpit = { left = -344231.96875, top = 449815.84375, alt = 1000, size = chunkSize },
     glyph = { left = -232185.984375, top = 431499.40625, alt = 500, size = chunkSize },
-    all = { left = -222771, top = 432320, alt = -100, size = 25600*11 }
+    clam = { left = -345403, top = 465912, alt = 5000, size = chunkSize},
+    all = { left = -222771, top = 432320, alt = 5000, size = 25600*11 }
 }
 
-local cc = locations.all
+local tileSize = 4096
 
---local bb = {left=cc.left-cc.size/2, top=cc.top-cc.size/2, right=cc.left+cc.size/2, bottom=cc.top+cc.size/2}
+local delay = 50
 
-local bb = { left = -388342, bottom = 511341, top = 363219, right = -73747 }
+local forceOverwrite = true
+
+local cc = locations.clam
 
 
+local bb = {left=cc.left-cc.size/2, top=cc.top-cc.size/2, right=cc.left+cc.size/2, bottom=cc.top+cc.size/2}
+if cc==locations.all then
+--  bb = { left = -388342, bottom = 511341, top = 363219, right = -73747 } -- wider
+    bb = { left = -378513, bottom = 501704, top = 370297, right = -89602 }
+end
 
 local function fileExists(p)
     local f = io.open(p, "r")
@@ -142,8 +146,20 @@ local function startCapture()
 
     cap.ProjectionType = 1
     cap.OrthoWidth = chunkSize
-    cap.CaptureSource = 2
+    cap.CaptureSource = 2 -- 2 -- postprocessed, 3 - rawHDR (need to remove vignetting)
     cap.bCaptureEveryFrame = false
+
+    -- Add PostProcessComponent with default settings (NO vignette by default)
+    local ppClass = StaticFindObject("/Script/Engine.PostProcessComponent")
+    local postProcComp = capActor:AddComponentByClass(ppClass, false, {}, false)
+    postProcComp.bEnabled = true
+    postProcComp.bUnbound = true
+    local postProcSettings = postProcComp.Settings
+    postProcSettings.bOverride_VignetteIntensity = true
+    postProcSettings.VignetteIntensity = 0.0
+
+    -- Optional: Set blend weight to ensure it overrides global post process
+    cap.PostProcessBlendWeight = 1.0
 
     local krl = StaticFindObject("/Script/Engine.Default__KismetRenderingLibrary")
     local rt = krl:CreateRenderTarget2D(world, tileSize, tileSize, 2, { R = 0, G = 0, B = 0, A = 1 }, false, false)
@@ -230,8 +246,7 @@ end
 
 RegisterKeyBind(Key.F, { ModifierKey.CONTROL }, function()
     setScene(true)
-
-    ExecuteWithDelay(250, function()
+    ExecuteWithDelay(2000, function()
         ExecuteInGameThread(function()
             startCapture()
         end)

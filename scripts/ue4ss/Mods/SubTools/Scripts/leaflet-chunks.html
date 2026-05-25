@@ -129,7 +129,7 @@ window.onload = function() {
     zoom: 0,
   });
 
-  if (!settings.zoom || settings.zoom<8) settings.zoom = 8;
+  if (!settings.zoom || settings.zoom<5) settings.zoom = 5;
 
   if (settings.center) {
     map.setView(settings.center, settings.zoom, { animate: false });
@@ -144,7 +144,7 @@ window.onload = function() {
   }).addTo(map);
 
   map.on('mousemove', function(e) {
-    document.title = `${e.latlng.lat} ${e.latlng.lng} z: ${map.getZoom()}`;
+    document.title = `${e.latlng.lng} ${e.latlng.lat} z: ${map.getZoom()}`;
   });
 
   map.on('moveend zoomend', function(e) {
