@@ -1,6 +1,6 @@
 local UEHelpers = require("UEHelpers")
 
-local chunkSize = 10000
+local chunkSize = 12800
 
 local savePath = "C:\\Temp\\Capture\\"
 
@@ -8,24 +8,25 @@ local locations = {
     lifepod = { left = -337193, top = 433406, alt = 1000, size = chunkSize },
     turbine = { left = -160717, top = 436872, alt = 500, size = chunkSize * 2 },
     bigpit = { left = -344231.96875, top = 449815.84375, alt = 1000, size = chunkSize },
-    glyph = { left = -232185.984375, top = 431499.40625, alt = 500, size = chunkSize },
+    glyph = { left = -232185.984375, top = 431499.40625, alt = 5000, size = chunkSize },
     clam = { left = -345403, top = 465912, alt = 5000, size = chunkSize},
     all = { left = -222771, top = 432320, alt = 5000, size = 25600*11 }
 }
 
-local tileSize = 512
+local tileSize = 1024
 
-local delay = 50
+local startDelay = 500
+
+local streamingDelay = 500
 
 local forceOverwrite = true
 
-local cc = locations.all
-
+local cc = locations.clam
 
 local bb = {left=cc.left-cc.size/2, top=cc.top-cc.size/2, right=cc.left+cc.size/2, bottom=cc.top+cc.size/2}
 if cc==locations.all then
 --  bb = { left = -388342, bottom = 511341, top = 363219, right = -73747 } -- wider
-    bb = { left = -378513, bottom = 501704, top = 370297, right = -89602 }
+    bb = { left = -378513, bottom = 501704, top = 370297, right = -89602 } -- with chunks 12800 it's about 23x12, 276 chunks
 end
 
 local function fileExists(p)
@@ -54,7 +55,10 @@ local function setScene(bHide)
     local sky = FindFirstOf("BP_UWESky_C")
     if sky and sky:IsValid() and sky.SunDirectionalLight then
         local light = sky.SunDirectionalLight
-        light:SetIntensity(bHide and 90.0 or 10.0)
+        light:SetIntensity(bHide and 100.0 or 10.0)
+        if sky.SkyLight then
+            sky.SkyLight:SetIntensity(bHide and 10.0 or 1.0) -- value 100 `gives blue-ish tint, doesn't remove shadows
+        end
     end
 
     local pc = UEHelpers.GetPlayerController()
@@ -91,19 +95,46 @@ local function setScene(bHide)
             }
 
             local cmds = {
-                "r.ViewDistanceScale 100",
+                
+            }
+
+            local cmds0 = {
                 "r.Streaming.FullyLoadUsedTextures 1",
                 "r.Streaming.UseAllMips 1",
 
+                "r.AmbientOcclusionLevels 1",
+                "r.AmbientOcclusionRadiusScale 2",
+
+                "r.ViewDistanceScale 100",
+                "r.ScreenPercentage 200",
+                "r.Nanite.ProjectEnabled 1",
+                "r.Nanite.Tessellation 1",
                 "r.Nanite.MaxPixelsPerEdge 0.1",
                 "r.Nanite.ViewMeshLODBias.Offset -5",
 
                 "r.LandscapeLODBias -5",
                 "r.LandscapeLOD0ScreenSize 100",
 
+                "r.Tonemapper.Quality 0",
+                "r.TonemapperGamma 3.2"
+            }
+
+            local cmds2 = {
+                "r.ViewDistanceScale 100",
+                "r.Streaming.FullyLoadUsedTextures 1",
+                "r.Streaming.UseAllMips 1",
+
+                "r.Nanite.ProjectEnabled 1",
+                "r.Nanite.Tessellation 1",
+                "r.Nanite.MaxPixelsPerEdge 0.1",
+                "r.Nanite.ViewMeshLODBias.Offset -5",
+                "r.ScreenPercentage 200",
+
+                "r.LandscapeLODBias -5",
+                "r.LandscapeLOD0ScreenSize 100",
+
                 "foliage.ForceLOD 0",
 
-                "r.ScreenPercentage 200",
                 "r.Tonemapper.Quality 5",
                 'r.AmbientOcclusionLevels=0',
  
@@ -122,7 +153,7 @@ local function setScene(bHide)
                 "r.Shadow.Sharpen 0",
                 "r.Shadow.FilterMethod 1",
 
-                "r.Tonemapper.Gamma 3.2"
+                "r.TonemapperGamma 3.2"
             }
 
             for _, cmd in ipairs(cmds) do
@@ -138,6 +169,15 @@ local function startCapture()
     local pc = FindFirstOf("PlayerController")
     local world = pc:GetWorld()
 
+    local actors = FindAllOf("SceneCapture2D")
+    if actors then
+        for _, actor in ipairs(actors) do
+            if actor and actor:IsValid() then
+                actor:K2_DestroyActor()
+            end
+        end
+    end
+
     local capClass = StaticFindObject("/Script/Engine.SceneCapture2D")
     local capActor = world:SpawnActor(capClass, { X = 0, Y = 0, Z = cc.alt }, { Pitch = 90, Yaw = 0, Roll = 0 })
 
@@ -148,6 +188,21 @@ local function startCapture()
     cap.OrthoWidth = chunkSize
     cap.CaptureSource = 2 -- 2 -- postprocessed, 3 - rawHDR (need to remove vignetting)
     cap.bCaptureEveryFrame = false
+
+    local krl = StaticFindObject("/Script/Engine.Default__KismetRenderingLibrary")
+    local rt = krl:CreateRenderTarget2D(world, tileSize, tileSize, 2, { R = 0, G = 0, B = 0, A = 1 }, false, false)
+    cap.TextureTarget = rt
+
+    local scClass = StaticFindObject("/Script/Engine.WorldPartitionStreamingSourceComponent")
+    if scClass then
+        local sc = capActor:AddComponentByClass(scClass, false, {}, false)
+        if sc then
+            sc.DefaultLoadingRange = chunkSize
+            sc.Priority = 999
+            sc:EnableStreamingSource()
+        end
+    end
+
 
     -- Add PostProcessComponent with default settings (NO vignette by default)
     local ppClass = StaticFindObject("/Script/Engine.PostProcessComponent")
@@ -161,19 +216,6 @@ local function startCapture()
     -- Optional: Set blend weight to ensure it overrides global post process
     cap.PostProcessBlendWeight = 1.0
 
-    local krl = StaticFindObject("/Script/Engine.Default__KismetRenderingLibrary")
-    local rt = krl:CreateRenderTarget2D(world, tileSize, tileSize, 2, { R = 0, G = 0, B = 0, A = 1 }, false, false)
-    cap.TextureTarget = rt
-
-    local scClass = StaticFindObject("/Script/Engine.WorldPartitionStreamingSourceComponent")
-    if scClass then
-        local sc = capActor:AddComponentByClass(scClass, false, {}, false)
-        if sc then
-            sc.DefaultLoadingRange = chunkSize * 10
-            sc.Priority = 999
-            sc:EnableStreamingSource()
-        end
-    end
 
     local minGX = math.floor(bb.left / chunkSize)
     local maxGX = math.floor((bb.right - 1) / chunkSize)
@@ -226,10 +268,8 @@ local function startCapture()
         print(string.format("[CAPTURE] %d/%d %s", i, total, file))
 
         ExecuteInGameThread(function()
-            capActor:K2_SetActorLocation({ X = px, Y = py, Z = cc.alt }, false, {}, true)
-            cap:CaptureScene()
-
-            ExecuteWithDelay(delay, function()
+            capActor:K2_SetActorLocation({ X = px + chunkSize/4, Y = py + chunkSize/4, Z = cc.alt }, false, {}, true)
+            ExecuteWithDelay(streamingDelay, function()
                 ExecuteInGameThread(function()
                     cap:CaptureScene()
                     cap:CaptureScene()
@@ -246,9 +286,10 @@ end
 
 RegisterKeyBind(Key.F, { ModifierKey.CONTROL }, function()
     setScene(true)
-    ExecuteWithDelay(2000, function()
+    ExecuteWithDelay(startDelay, function()
         ExecuteInGameThread(function()
             startCapture()
         end)
     end)
 end)
+
