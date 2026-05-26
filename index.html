@@ -765,7 +765,8 @@ function addMarker(feature, options) {
   line.feature = feature;
 
   let draggable = feature.properties.type == playerMarkerType;
-  let marker = new maptalks.Marker([x,y,z], { draggable: draggable, symbol: getSymbol(feature, opacity), cursor:'pointer' });
+  //nb! since it's mostly underwater, let's set marker Z to zero and avoid all the parallax isues
+  let marker = new maptalks.Marker([x,y,0], { draggable: draggable, symbol: getSymbol(feature, opacity), cursor:'pointer' });
   marker.feature = feature; // leaflet uses marker.feature after loading geojson
 
   layers[t.group] = layers[t.group] || [];
@@ -1247,7 +1248,7 @@ function loadMarkers(data, mapId, legacy=true) {
   for (const [label, prop] of Object.entries(regionMarkers)) {
     let feature = {
       geometry: { 
-        coordinates: [prop.location[0], prop.location[1], 10000] 
+        coordinates: [prop.location[0], prop.location[1], 0] 
       }, 
       properties: {
         name: prop.name,
