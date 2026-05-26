@@ -624,6 +624,7 @@ function popupOnClick(e) {
 
   let feature = marker.feature;
   let o = feature.properties;
+  let t = feature.geometry.coordinates;
 
   const popup = document.querySelector('#popup-template').content.cloneNode(true);
 
@@ -634,7 +635,11 @@ function popupOnClick(e) {
   let id = (info.title||'').replaceAll(' ','_');
   let backlink = getMapURL(id);
 
-  let title = capitalize((o.title || info.title||'undefined') + '&nbsp;' + formatZ(feature.geometry.coordinates));
+  let title = capitalize(o.title || info.title||'undefined');
+
+  if (t[2]!=0) {
+    title += `&nbsp;<span style="font-weight: normal">${formatZ(t)}</span>`;
+   }
 
   popup.querySelector('#popup-title').innerHTML = `<a href="${backlink}" onclick="return showItem('${info.type}')">${title}</a>`;
   popup.querySelector('#popup-title').title = backlink;
@@ -652,7 +657,6 @@ function popupOnClick(e) {
 
   popup.querySelector('#popup-close').onclick = function() {  e.target._infoWindow.hide(); };
 
-  let t = feature.geometry.coordinates;
   let teleport = `XTeleportTo ${t[0]} ${t[1]} ${t[2]+100}` // 1M higher actually
   c = popup.querySelector('#popup-marker-id-link')
   c.href = '#' + teleport;
