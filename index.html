@@ -154,6 +154,7 @@ let defaultPitch = 30;
 let typeData = null;
 let iconData = null;
 let regionData = null;
+let regionDataLoaded = false;
 
 let mapParam = {};
 
@@ -714,16 +715,8 @@ function applyHeightFactor(c, k=8) {
 function addMarker(feature, options) {
   let t = getType(feature.properties);
 
-  //if (t.group=='misc' || t.group=='actors') return;
-
-  const [x,y,z] = applyHeightFactor(feature.geometry.coordinates);
-
-  //console.log(feature.geometry.coordinates);
-
   let getSymbol = function(feature,opacity=1) {
-
     var symbol = 
-
       {
         markerFile   : iconImages[t.icon]||iconImages['misc'],
         markerWidth  : iconSize,
@@ -733,10 +726,14 @@ function addMarker(feature, options) {
         markerOpacity: opacity,
         //markerVerticalAlignment: 'middle',
       };
-
     return symbol;
-
   }
+
+  //if (t.group=='misc' || t.group=='actors') return;
+
+  const [x,y,z] = applyHeightFactor(feature.geometry.coordinates);
+
+  //console.log(feature.geometry.coordinates);
 
   let [layers,counters,icons] = [options.layers, options.counters, options.icons];
 
@@ -848,21 +845,22 @@ function addMarker(feature, options) {
     return polygon;
   }
 
+  let zone_colors = {
+    "DA_CGShallows":      "#ffb3c8",
+    "DA_CGPlateaus":      "#ff6b9a",
+    "DA_CGGraveyard":     "#6a4a52",
+    "DA_CGAnemoneHills":  "#ffd24a",
+    "DA_CGTufaTowers":    "#bd8888",
+    "DA_CGNorthRaceway":  "#ea4c8f",
+    "DA_CGSouthRaceway":  "#c64278",
+    "DA_CGBlightedCoral": "#7a3a5a",
+    "DA_CGLeadzone":      "#4a4a5a",
+    "DA_AR-Observatory": "#7ad06a",
+    "DA_AR-PowerPlant":  "#4ec0a4",
+    "DA_AR-RootCanyon":  "#5a8c46",
+  }
+
   if (o.type == 'UWEBoxWorldZone' && o.extent) {
-    zone_colors = {
-      "DA_CGShallows":      "#ffb3c8",
-      "DA_CGPlateaus":      "#ff6b9a",
-      "DA_CGGraveyard":     "#6a4a52",
-      "DA_CGAnemoneHills":  "#ffd24a",
-      "DA_CGTufaTowers":    "#bd8888",
-      "DA_CGNorthRaceway":  "#ea4c8f",
-      "DA_CGSouthRaceway":  "#c64278",
-      "DA_CGBlightedCoral": "#7a3a5a",
-      "DA_CGLeadzone":      "#4a4a5a",
-      "DA_AR-Observatory": "#7ad06a",
-      "DA_AR-PowerPlant":  "#4ec0a4",
-      "DA_AR-RootCanyon":  "#5a8c46",
-    }
     let color = zone_colors[o.region] || '#444a55';
     addRectangle(feature, x,y,z, o.extent.X, o.extent.Y, 0, color, marker);
   }
@@ -871,30 +869,23 @@ function addMarker(feature, options) {
     addRectangle(feature, x,y,z, o.scale.X*50, o.scale.Y*50, o.rotation.Yaw, '#f00', marker);
   }
 
-/*
-  var symbol = {
-    url: 'js/untitled.glb',
-    rotation: [0, 0, 0],
-    //fixSizeOnZoom: 0,
-    //modelHeight: 5000,
-    scaleX: 1000,
-    scaleY: 1000,
-    scaleZ: 5000,
-  };
 
-  layers.gltf = layers.gltf || [];
-  let gltf = new maptalks.GLTFMarker([x,y,z], { symbol: symbol});
-  layers.gltf.push(gltf);
-  gltf.feature = feature;
-*/
+  if (o.type == 'regionMarker') {
+    // find our poly, assign marker feature to it
+    let groupLayer = map.getLayer('GroupGLLayer');
+    for (const layer of groupLayer.getLayers()) {
+      for (poly of layer._geoList) {
+        if (poly.feature?.properties?.title?.startsWith('poly_')) {
+           if (isPointInsidePolygon(marker._coordinates, poly._coordinates)) {
+            poly.feature = marker.feature;
+           }
+        }
+      }
+    }
 
-  //marker.on('mouseover', showTooltipExt);
-  //marker.on('mouseout', hideTooltipExt);
-
-  //if (t.type =='Inventory_Toothpin_C') console.log(feature);
+  }
 
   icons[t.category] = iconData[t.icon];
-
   counters[t.group] = counters[t.group] || {};
 
   if (getBaseName(t.category)==t.category) {
@@ -902,8 +893,6 @@ function addMarker(feature, options) {
   }
 
   if (t.group=='misc') { marker.hide(); line.hide();}
-
-
 
   return marker;
 }
@@ -937,7 +926,7 @@ function scaleOrigin(coordinates, scaleFactor, origin) {
     return [
       origin[0] + x * scaleFactor + origin[0],
       origin[1] + y * scaleFactor + origin[1],
-      0, // sink region outline a bit (some markers are -3)
+      -3, // sink region outline a bit (some markers are -3)
     ];
   });
 }
@@ -996,21 +985,39 @@ function addRegions(geojson) {
       return polygon;
   });
 
+  function selectPolygon2(polygon, selected){
+    return;// NB!
+    if (selected) {
+      polygon.setSymbol(hoverSymbol);
+    } else {
+      polygon.setSymbol(defaultSymbol);
+    }
+  }
+
   polygons.forEach((polygon, index) => {
-
     if (polygon.getType() === 'Polygon') { // Ensure it's a polygon
-
       polygon.setSymbol(defaultSymbol);
 
       let name = 'poly_'+index;
-
       polygon.properties = {};
-      
       polygon.properties.svgID = '#'+name;
-
       polygon.feature = {properties: {title: name}};
 
       //polygon.on('click', polygonClick); // doesn't work with overlapping labels, use global event for now
+      polygon.on('mouseover',function(e) {
+        selectPolygon2(e.target, true);
+      });
+
+      polygon.on('mouseout',function(e) {
+        selectPolygon2(e.target, false);
+      });
+
+
+      //let feature = AddMarker();
+
+      //polygon.feature = feature;
+
+
     }
   });
 
@@ -1019,7 +1026,7 @@ function addRegions(geojson) {
   map.on('click', polygonClick);
 
   // Add mousemove listener to the map
-  map.on('mousemove', e => {
+  map.on('m1ousemove', e => {
 
     let zoom = map.getZoom();
     let maxZoom = 3;
@@ -1074,21 +1081,9 @@ function addRegions(geojson) {
   let layerId = 'Polygons2'
   let visible = true;//settings.activeItems[layerId.toLowerCase()] == true;
 
-
   let layer = new maptalks.PolygonLayer(layerId, polygons, { visible: visible });
 
-  console.log('loaded', polygons.length, 'polygons', polygons);
-
-
-  let groupLayer = map.getLayer('GroupGLLayer');
-
-
-  //addHandler(layer);
-  //layer.addTo(groupLayer);
-
-  layer.addTo(map);
-
-
+  return layer;
 }
 
 
@@ -1200,11 +1195,25 @@ function loadMarkersBatched(features, options) {
       playerMarker.on('dragstart', function(e) {
         activeMarker?.closeInfoWindow();
       })
+    }
 
+
+    function addPoly(polygon, marker) {
+
+    }
+
+    if (regionData && !regionDataLoaded) {
+      regionDataLoaded = true;
+      let layer = addRegions(regionData);
+      //console.log('loaded', polygons.length, 'polygons', polygons);
+      let groupLayer = map.getLayer('GroupGLLayer');
+      layer.addTo(groupLayer); // filtered
+      //layer.addTo(map); // always visible
     }
 
   }
   setTimeout(processBatch, 0); // Start processing asynchronously
+
 }
 
 function loadMarkers(data, mapId, legacy=true) {
@@ -1232,6 +1241,27 @@ function loadMarkers(data, mapId, legacy=true) {
   data = data.features;
 
   console.log('loaded', data.length, 'features');
+
+  let regionMarkers = {
+    'Anemone Hills' : [-350000,400000],
+    'Plateaus': [-327000,405000],
+    'Leadzone': [-307500, 410000],
+    'Blighted Coral': [-356000, 428000],
+    'Shallows': [-340000, 435000],
+    'North Raceway': [-308000, 434000],
+    'Tufa Towers': [-345600, 460300],
+    'South Raceway': [-320000, 463000],
+    'Graveyard': [-289000, 450000],
+    'Observatory': [-231889, 437387],
+    'Power Plant': [-172092, 447480],
+    'Root Canyon': [-127964, 404053],
+  }
+
+  for (const[label,c] of Object.entries(regionMarkers)) {
+    let feature = {geometry: { coordinates: [c[0],c[1],10000] }, properties: {name: label, type: 'regionMarker', ActorLabel: label}};
+    data.push(feature);
+  }
+
 
   loadMarkersBatched(data, options);
 }
@@ -1518,7 +1548,7 @@ function loadMap(mapId) {
     localData[id].markedItems = localData[id].markedItems || {};
     localData[id].activeLayers = localData[id].activeLayers || {};
     localData[id].filter = localData[id].filter!==undefined ? localData[id].filter : '';
-    localData[id].activeItems = localData[id].activeItems || {'playerPosition': true, 'BP_StaticLifepod_Surface_C':true, 'BP_Blackbox_Clickable_01a_C': true, 'BP_EdgeOfWorldVolume_C':true, 'BP_Nrtv_QuartzChip_C':true};
+    localData[id].activeItems = localData[id].activeItems || {'playerPosition': true, 'regionMarker': true, 'BP_StaticLifepod_Surface_C':true, 'BP_Blackbox_Clickable_01a_C': true, 'BP_EdgeOfWorldVolume_C':true, 'BP_Nrtv_QuartzChip_C':true};
   }
 
   settings = localData[mapId];
@@ -1697,9 +1727,6 @@ function loadMap(mapId) {
   }
 
   let groupLayer = new maptalks.GroupGLLayer('GroupGLLayer').addTo(map);
-
-  addRegions(regionData);
-
 
   let filename = config.versions?.[settings.version]?.data||config.data;
   if (filename.endsWith('.json')) {
@@ -1891,17 +1918,11 @@ function updateItems() {
       let t = getType(marker.feature.properties);
       let type = getBaseName(t.category);
 
-      let isPoly = marker.feature.properties.title?.startsWith('poly_');
-
-      if (settings.activeItems[type] || isPoly) {
+      if (settings.activeItems[type]) {
         marker.show();
         //console.log('show', marker.feature.properties.name);
       } else {
         marker.hide();
-      }
-
-      if (isPoly) {
-        console.log('poly', marker);
       }
 
     }
