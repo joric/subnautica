@@ -175,6 +175,8 @@ let regionMarkers = {
   "DA_AR-RootCanyon":    { "color": "#5a8c46", "name": "Root Canyon",     "location": [-127964, 404053] },
 };
 
+let polygonMaxZoom = 4;
+
 function capitalize(s) {
   return s ? s[0].toUpperCase()+s.slice(1) : '';
 }
@@ -604,7 +606,7 @@ function hideTooltipExt(e) {
 }
 
 function selectPolygon(polygon, selected){
-  if (selected && map.getZoom()<4) {
+  if (selected && map.getZoom()<polygonMaxZoom) {
     polygon.updateSymbol({lineOpacity: 1.0, polygonOpacity: 0.5, lineColor: '#fff' });
   } else {
     polygon.updateSymbol({lineOpacity: 0.75, polygonOpacity: 0.1, lineColor: polygon.options.color });
@@ -830,6 +832,18 @@ function addMarker(feature, options) {
 
     polygon.on('mouseout', function(e) {
       if (!infoWindowOpen) selectPolygon(e.target, false);
+    });
+
+    polygon.on('click', function(e) {
+      let zoom = map.getZoom();
+      if (zoom<polygonMaxZoom) {
+        const extent = e.target.getExtent();
+        if (extent && zoom <= 4) {
+          //map.fitExtent(extent);
+          const center = extent.getCenter();
+          map.animateTo({center: center, zoom: 4});
+        }
+      }
     });
 
     //polygon.setInfoWindow({autoCloseOn: 'click', single: true}).on('click', popupOnClick)
