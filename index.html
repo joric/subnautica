@@ -634,7 +634,7 @@ function popupOnClick(e) {
   let id = (info.title||'').replaceAll(' ','_');
   let backlink = getMapURL(id);
 
-  let title = capitalize((info.title||'undefined') + '&nbsp;' + formatZ(feature.geometry.coordinates));
+  let title = capitalize((o.title || info.title||'undefined') + '&nbsp;' + formatZ(feature.geometry.coordinates));
 
   popup.querySelector('#popup-title').innerHTML = `<a href="${backlink}" onclick="return showItem('${info.type}')">${title}</a>`;
   popup.querySelector('#popup-title').title = backlink;
@@ -1261,6 +1261,7 @@ function loadMarkers(data, mapId, legacy=true) {
         coordinates: [prop.location[0], prop.location[1], 0] 
       }, 
       properties: {
+        title: prop.name,
         name: prop.name,
         type: 'regionMarker', 
         ActorLabel: label
