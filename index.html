@@ -860,10 +860,12 @@ function addMarker(feature, options) {
       let zoom = map.getZoom();
       if (zoom<regionZoom) {
         const marker = e.target.options.ref_marker;
-        if (marker) {
+
+        if (marker && marker.feature.properties.type != 'regionMarker') {
           popupOnClick({target: marker});
           marker.openInfoWindow();
         }
+
         const extent = e.target.getExtent();
         if (extent && zoom <= 4) {
           //map.fitExtent(extent);
