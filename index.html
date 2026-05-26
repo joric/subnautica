@@ -1669,6 +1669,19 @@ function loadMap(mapId) {
 
   map.on('mouseleave',resetTitle);
 
+  map.on('zooming', function(e) {
+    let zoom = map.getZoom();
+    let layer = groupLayer.getLayer('Polygons2');
+    if (layer) {
+      let [minZoom, maxZoom] = [0, 6];
+      if (zoom>=minZoom+0.5 && zoom < maxZoom+0.5) {
+        layer.show();
+      } else {
+        layer.hide();
+      }
+    }
+  });
+
   map.on('click', function(e){
     const p = e.coordinate;
     if (playerMarker) {
