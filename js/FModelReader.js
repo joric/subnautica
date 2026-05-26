@@ -168,9 +168,14 @@ function markerLoader(data, area) {
     // this is the most agressive filter here, use with care
     //if (!o.Type.startsWith('BP_')) continue;
 
-    if (!["BP_", "UWEBoxWorldZone"].some(p => o.Type?.startsWith(p))) continue;
+    if (!["BP_", "UWEBoxWorldZone", "BookMark"].some(p => o.Type?.startsWith(p))) continue;
 
     let c = getLocation(o, area);
+
+    if (o.Properties?.Location) {
+      const t = o.Properties.Location;
+      c = {x:t.X, y:t.Y, z:t.Z};
+    }
 
     if (c.x==0 && c.y==0 && c.z==0) continue;
 

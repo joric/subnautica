@@ -3,6 +3,7 @@
   "lifepod": { "class": "fa fa-life-ring", "color": "orange"},
   "player": { "class": "fa fa-house", "color": "red"},
   "region": { "class": "fa fa-location-crosshairs", "color": "darkcyan"},
+  "bookmark": { "class": "fa fa-bookmark", "color": "chocolate"},
   "chip": { "class": "fa fa-microchip", "color": "royalblue"},
   "databox": { "class": "fa fa-inbox", "color": "steelblue"},
   "supply_crate": { "class": "fa fa-box-open", "color": "darkcyan"},

@@ -5,6 +5,7 @@
     "type": {
       "playerPosition": {"icon": "player", "group": "locations", "title": "Player Position" },
       "regionMarker": {"icon": "region", "group": "regions", "title": "Region Marker" },
+      "BookMark": {"icon": "bookmark", "group": "regions", "title": "Secret Bookmark" },
 
       "BP_StaticLifepod_Surface_C": {"icon": "lifepod", "group": "locations", "title": "Lifepod" },
       "BP_EdgeOfWorldVolume_C": {"icon": "edge_volume", "group": "regions", "title": "Edge Volume" },
