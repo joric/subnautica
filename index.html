@@ -153,6 +153,7 @@ let map;
 let defaultPitch = 30;
 let typeData = null;
 let iconData = null;
+let regionData = null;
 
 let mapParam = {};
 
@@ -907,6 +908,191 @@ function addMarker(feature, options) {
   return marker;
 }
 
+function isPointInsidePolygon(point, polyPoints) {
+  let [x,y] = [point.x, point.y];
+  let inside = false;
+  for (let i = 0, j = polyPoints.length - 1; i < polyPoints.length; j = i++) {
+    var xi = polyPoints[i].x, yi = polyPoints[i].y;
+    var xj = polyPoints[j].x, yj = polyPoints[j].y;
+    var intersect = ((yi > y) != (yj > y))
+        && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+    if (intersect) inside = !inside;
+  }
+  return inside;
+};
+
+function getRegionName(coord, polygons) {
+  if (!polygons || !coord) return null;
+  for (const polygon of polygons) {
+    if (isPointInsidePolygon(coord, polygon.getCoordinates()[0])) {
+      return polygon.properties.svgID.substring(1);
+    }
+  }
+}
+
+
+function scaleOrigin(coordinates, scaleFactor, origin) {
+  return coordinates.map(coord => {
+    const [x, y] = coord;
+    return [
+      origin[0] + x * scaleFactor + origin[0],
+      origin[1] + y * scaleFactor + origin[1],
+      0, // sink region outline a bit (some markers are -3)
+    ];
+  });
+}
+
+function scaleGeoJSON(geojson, scaleFactor, origin) {
+  geojson.features.forEach(feature => {
+    if (feature.geometry) {
+    feature.geometry.coordinates = feature.geometry.coordinates.map(ring =>
+      scaleOrigin(ring, scaleFactor, origin)
+    );
+    }
+  });
+  return geojson;
+}
+
+function addRegions(geojson) {
+  const defaultSymbol = {
+    'lineColor': '#fff',    // Border color
+    'lineWidth': 2.5,            // Border width
+    'polygonFill': '#fff',  // Fill color
+    'polygonOpacity': 0.1,      // Fill opacity
+    'lineOpacity': 0.5,
+  };
+
+  // Define the hover style
+  const hoverSymbol = {
+    'polygonOpacity': 0.5 // Increased opacity
+  };
+
+  //console.log('before',geojson.features[0].geometry.coordinates[0][0]);
+
+  var polygons = maptalks.GeoJSON.toGeometry(scaleGeoJSON(geojson, 73/1, [-191800, 182900]));
+
+  //console.log('after',polygons[0]._coordinates[0]);
+
+  //const polygons = maptalks.GeoJSON.toGeometry(geojson);
+
+  // Store a reference to the currently "hovered" polygon
+  let selectedPolygon = null;
+  let lastZoom = null;
+
+  let polygonClick = e=> {
+    if (selectedPolygon) {
+      const extent = selectedPolygon.getExtent();
+      let zoom = map.getZoom();
+      if (extent && zoom <= 4) {
+        //map.fitExtent(extent);
+        const center = extent.getCenter();
+        map.animateTo({center: center, zoom: 4});
+      }
+    }
+  }
+
+  // filter null geometry
+  polygons = polygons.filter(polygon => {
+      return polygon;
+  });
+
+  polygons.forEach((polygon, index) => {
+
+    if (polygon.getType() === 'Polygon') { // Ensure it's a polygon
+
+      polygon.setSymbol(defaultSymbol);
+
+      let name = 'poly_'+index;
+
+      polygon.properties = {};
+      
+      polygon.properties.svgID = '#'+name;
+
+      polygon.feature = {properties: {title: name}};
+
+      //polygon.on('click', polygonClick); // doesn't work with overlapping labels, use global event for now
+    }
+  });
+
+  //regionsData = polygons;
+
+  map.on('click', polygonClick);
+
+  // Add mousemove listener to the map
+  map.on('mousemove', e => {
+
+    let zoom = map.getZoom();
+    let maxZoom = 3;
+
+    const mouseCoord = e.coordinate; // Geographic coordinate of the mouse
+    //let mouseCoord = map.containerPointToCoord(e.containerPoint); // same
+
+    let found = false;
+
+    // Iterate through polygons to find if the point is inside any
+    for (const polygon of polygons) {
+
+      if (!polygon.isVisible()) continue;
+
+      //if (polygon.containsPoint(mouseCoord)) { // doesn't work for some reason
+      if (isPointInsidePolygon(mouseCoord, polygon.getCoordinates()[0])) {
+
+        found = true;
+
+        if (selectedPolygon !== polygon || lastZoom != zoom) {
+          // New polygon hovered, update appearance
+          if (selectedPolygon) {
+            // Reset the previous polygon
+            selectedPolygon.updateSymbol(defaultSymbol);
+          }
+
+          // Highlight the currently hovered polygon
+          polygon.updateSymbol(zoom > maxZoom ? defaultSymbol : hoverSymbol);
+          selectedPolygon = polygon; // Update reference
+
+          currentRegion = polygon.properties.svgID.substring(1);
+
+          if (zoom>maxZoom) selectedPolygon = null; // uncomment to prevent zoom on click (it's rather glitchy)
+
+          lastZoom = zoom;
+        }
+        break; // Stop checking once a match is found
+      }
+    }
+
+    if (!found && selectedPolygon) {
+      // Mouse is not over any polygon, reset the previous one
+      selectedPolygon.updateSymbol(defaultSymbol);
+      selectedPolygon = null; // Clear reference
+    }
+
+    let name = selectedPolygon?.feature?.properties?.title ?? '';
+
+    //document.title = `${title} (${mouseCoord.x.toFixed(0)}, ${mouseCoord.y.toFixed(0)}) ${name}`;
+  });
+
+  let layerId = 'Polygons2'
+  let visible = true;//settings.activeItems[layerId.toLowerCase()] == true;
+
+
+  let layer = new maptalks.PolygonLayer(layerId, polygons, { visible: visible });
+
+  console.log('loaded', polygons.length, 'polygons', polygons);
+
+
+  let groupLayer = map.getLayer('GroupGLLayer');
+
+
+  //addHandler(layer);
+  //layer.addTo(groupLayer);
+
+  layer.addTo(map);
+
+
+}
+
+
+
 function parabola(start, end, maxHeight = null, steps = 50) {
   const [x0, y0, z0] = start;
   const [x1, y1, z1] = end;
@@ -983,7 +1169,7 @@ function loadMarkersBatched(features, options) {
     }
 
     if (!playerMarker) {
-      console.log('added player marker at', settings.playerPosition);
+      //console.log('added player marker at', settings.playerPosition);
       let feature = {
         "type": "Feature",
         "geometry": {
@@ -1120,7 +1306,7 @@ function toggleItem(name) {
 function addMarkers(markers, options) {
   let [layers,counters,icons] = [options.layers, options.counters, options.icons];
 
-  let groupLayer = new maptalks.GroupGLLayer('GroupGLLayer').addTo(map);
+  let groupLayer = map.getLayer('GroupGLLayer');
 
   for (const [name, geometries] of Object.entries(layers)) {
     if (name=='lines') {
@@ -1381,7 +1567,7 @@ function loadMap(mapId) {
 
 
   map = new maptalks.Map('map', {
-    zoom: 1,
+    zoom: 0,
     center: [center.left, center.top],
     maxZoom: maxZoom,
     spatialReference: {
@@ -1510,6 +1696,11 @@ function loadMap(mapId) {
     settings.version = config.versions && Object.keys(config.versions)[Object.keys(config.versions).length-1];
   }
 
+  let groupLayer = new maptalks.GroupGLLayer('GroupGLLayer').addTo(map);
+
+  addRegions(regionData);
+
+
   let filename = config.versions?.[settings.version]?.data||config.data;
   if (filename.endsWith('.json')) {
     fetch(filename).then(r=>r.json()).then(data=>{
@@ -1613,10 +1804,11 @@ window.onload = function(event) {
   let promises = [
     'data/types.json',
     'data/icons.json',
+    'data/regions.json',
   ].map(url=>fetch(url).then(r=>r.json()));
 
   Promise.all(promises).then(data => {
-    [typeData, iconData] = data;
+    [typeData, iconData, regionData] = data;
     iconData['misc'] = {"class": "fa-solid fa-circle-question", "bg": "grey"};
 
     iconImages = Object.fromEntries(Object.entries(iconData).map(([k,v]) => [k, renderFAIconToImageURL(v.class, v.color, v.background, iconSize)]));
@@ -1699,12 +1891,19 @@ function updateItems() {
       let t = getType(marker.feature.properties);
       let type = getBaseName(t.category);
 
-      if (settings.activeItems[type]) {
+      let isPoly = marker.feature.properties.title?.startsWith('poly_');
+
+      if (settings.activeItems[type] || isPoly) {
         marker.show();
         //console.log('show', marker.feature.properties.name);
       } else {
         marker.hide();
       }
+
+      if (isPoly) {
+        console.log('poly', marker);
+      }
+
     }
   }
 
