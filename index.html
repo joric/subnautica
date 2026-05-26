@@ -609,11 +609,16 @@ function hideTooltipExt(e) {
   tooltipHideTimer = setTimeout(hideTooltip, tooltipHideDelay);
 }
 
+let activePolys = {};
+
 function selectPolygon(polygon, selected){
+  let name = polygon.feature?.properties?.name;
   if (selected && map.getZoom()<regionZoom) {
     polygon.updateSymbol({lineOpacity: 1.0, polygonOpacity: 0.5, lineColor: '#fff' });
+    activePolys[name] = polygon;
   } else {
     polygon.updateSymbol({lineOpacity: 0.75, polygonOpacity: 0.1, lineColor: polygon.options.color });
+    delete activePolys[name];
   }
 }
 
@@ -794,8 +799,15 @@ function addMarker(feature, options) {
   line.feature = feature;
 
   let draggable = feature.properties.type == playerMarkerType;
+
   //nb! since it's mostly underwater, let's set marker Z to zero and avoid all the parallax isues
-  let marker = new maptalks.Marker([x,y,Math.max(0,z)], { draggable: draggable, symbol: getSymbol(feature, opacity), cursor:'pointer' });
+  let marker = new maptalks.Marker([x,y,Math.max(0,z)], {
+    draggable: draggable,
+    symbol: getSymbol(feature, opacity),
+    cursor:'pointer',
+    eventsToStop: true,
+  });
+
   marker.feature = feature; // leaflet uses marker.feature after loading geojson
 
   layers[t.group] = layers[t.group] || [];
@@ -878,15 +890,36 @@ function addMarker(feature, options) {
     });
 
     // Add hover effects
-    polygon.on('mousemove', function(e) {
+    polygon.on('mouseover', function(e) {
       selectPolygon(e.target, true);
     });
 
     polygon.on('mouseout', function(e) {
-      selectPolygon(e.target, false);
+      //selectPolygon(e.target, false);
     });
 
-    //polygon.setInfoWindow({autoCloseOn: 'click', single: true}).on('click', popupOnClick)
+
+    function ptInPoly(point, vertices, tolerance = 1) {
+        const x = point.x, y = point.y;
+        let inside = false;
+        for (let i = 0, j = vertices.length - 1; i < vertices.length; j = i++) {
+            const xi = vertices[i].x, yi = vertices[i].y;
+            const xj = vertices[j].x, yj = vertices[j].y;
+            const dist = Math.abs(( (yj - yi) * x - (xj - xi) * y + xj * yi - yj * xi ) / Math.hypot(yj - yi, xj - xi));
+            if (dist <= tolerance) return true;
+            const intersect = ((yi > y) != (yj > y)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+            if (intersect) inside = !inside;
+        }
+        return inside;
+    }
+
+    map.on('mousemove', function(e) {
+      for (const [name, polygon] of Object.entries(activePolys)) {
+        if (!ptInPoly(e.coordinate, polygon.getCoordinates()[0])) {
+          selectPolygon(polygon, false);
+        }
+      }
+    })
 
     polygon.feature = feature;
 
@@ -1631,7 +1664,7 @@ function loadMap(mapId) {
     let zoom = map.getZoom();
     let layer = groupLayer.getLayer('Polygons2');
     if (layer) {
-      let [minZoom, maxZoom] = [0, 6];
+      let [minZoom, maxZoom] = [0, regionZoom-1];
       if (zoom>=minZoom+0.5 && zoom < maxZoom+0.5) {
         layer.show();
       } else {
