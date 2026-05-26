@@ -830,7 +830,7 @@ function addMarker(feature, options) {
           //map.fitExtent(extent);
           const center = extent.getCenter();
           map.animateTo({center: center, zoom: polygonMaxZoom-1});
-          selectPolygon(e.target, false);
+          //selectPolygon(e.target, false);
         }
       }
       return false;
