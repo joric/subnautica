@@ -613,7 +613,7 @@ let activePolys = {};
 
 function selectPolygon(polygon, selected){
   let name = polygon.feature?.properties?.name;
-  if (selected && map.getZoom()<regionZoom) {
+  if (selected) {
     polygon.updateSymbol({lineOpacity: 1.0, polygonOpacity: 0.5, lineColor: '#fff' });
     activePolys[name] = polygon;
   } else {
@@ -870,7 +870,8 @@ function addMarker(feature, options) {
 
     polygon.on('click',function(e){
       let zoom = map.getZoom();
-      if (zoom<regionZoom) {
+      //if (zoom<regionZoom) 
+      {
         const marker = e.target.options.ref_marker;
 
         if (marker && marker.feature.properties.type != 'regionMarker') {
