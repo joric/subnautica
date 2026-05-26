@@ -175,7 +175,7 @@ let regionMarkers = {
   "DA_AR-RootCanyon":    { "color": "#5a8c46", "name": "Root Canyon",     "location": [-127964, 404053] },
 };
 
-let polygonMaxZoom = 5;
+let regionZoom = 5;
 
 function capitalize(s) {
   return s ? s[0].toUpperCase()+s.slice(1) : '';
@@ -486,7 +486,7 @@ function getDirections(feature) {
 }
 
 function locatePlayer() {
-  map.animateTo({center: playerMarker.getCoordinates()});
+  map.animateTo({center: playerMarker.getCoordinates(), zoom: regionZoom-1});
 }
 
 let tooltipShowTimer = null;
@@ -610,7 +610,7 @@ function hideTooltipExt(e) {
 }
 
 function selectPolygon(polygon, selected){
-  if (selected && map.getZoom()<polygonMaxZoom) {
+  if (selected && map.getZoom()<regionZoom) {
     polygon.updateSymbol({lineOpacity: 1.0, polygonOpacity: 0.5, lineColor: '#fff' });
   } else {
     polygon.updateSymbol({lineOpacity: 0.75, polygonOpacity: 0.1, lineColor: polygon.options.color });
@@ -837,7 +837,7 @@ function addMarker(feature, options) {
 
     polygon.on('click',function(e){
       let zoom = map.getZoom();
-      if (zoom<polygonMaxZoom) {
+      if (zoom<regionZoom) {
         const marker = e.target.options.ref_marker;
         if (marker) {
           popupOnClick({target: marker});
@@ -847,7 +847,7 @@ function addMarker(feature, options) {
         if (extent && zoom <= 4) {
           //map.fitExtent(extent);
           const center = extent.getCenter();
-          map.animateTo({center: center, zoom: polygonMaxZoom-1});
+          map.animateTo({center: center, zoom: regionZoom-1});
           //selectPolygon(e.target, false);
         }
       }
