@@ -772,6 +772,8 @@ function addMarker(feature, options) {
   layers[t.group] = layers[t.group] || [];
   layers[t.group].push(marker);
 
+  let o = feature.properties;
+
   marker.setInfoWindow({autoCloseOn: 'click', single: true})
   .on('click', popupOnClick)
   .on('contextmenu', e=> { if (!mouseMoved) toggleMarked(e.target.feature.properties.name)})
@@ -782,7 +784,16 @@ function addMarker(feature, options) {
   let subtitle = getSubtitle(feature);
   if (subtitle) subtitle = ' - ' + subtitle;
 
-  const tooltip = new maptalks.ui.ToolTip(`${title} (${translate(t.group)})`, {
+  let tooltipTitle = title;
+
+  if (o.type == 'regionMarker') {
+    tooltipTitle = o.name;
+  } else {
+    let cc = marker.feature.geometry.coordinates;
+    tooltipTitle += ' '+formatZ(cc);
+  }
+
+  const tooltip = new maptalks.ui.ToolTip(`${tooltipTitle} (${translate(t.group)})`, {
       showTimeout: 100, // Delay in milliseconds before showing the tooltip
       dx: 10,           // X-offset from the geometry
       dy: -10           // Y-offset from the geometry
@@ -790,7 +801,6 @@ function addMarker(feature, options) {
 
   tooltip.addTo(marker);
 
-  let o = feature.properties;
 
   function rotatePointsInPlace(points, centerX, centerY, angle) {
       const rad = angle * Math.PI / 180;
