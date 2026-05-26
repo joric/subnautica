@@ -189,7 +189,7 @@ function translate(s) {
   return splitCamelCase(String(s).replace('_C','')).map(capitalize).join(' ');
 }
 
-const formatZ = c => { z=(c[2]/100).toFixed(0); return z>0 ? `&UpArrow;${z}`: `&DownArrow;${-z}`};
+const formatZ = c => { z=(c[2]/100).toFixed(0); return z>0 ? `&UpArrow;${z}m`: `&DownArrow;${-z}m`};
 
 function setClass(e, set, c) { set ? e.classList.add(c) : e.classList.remove(c);}
 function toggleClass(e, c) { if (e.classList.contains(c)) { e.classList.remove(c); return false; } else { e.classList.add(c); return true; }}
