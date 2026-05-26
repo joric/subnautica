@@ -1000,39 +1000,10 @@ function addRegions(geojson) {
 
   var polygons = maptalks.GeoJSON.toGeometry(scaleGeoJSON(geojson, 73/1, [-191800, 182900]));
 
-  //console.log('after',polygons[0]._coordinates[0]);
-
-  //const polygons = maptalks.GeoJSON.toGeometry(geojson);
-
-  // Store a reference to the currently "hovered" polygon
-  let selectedPolygon = null;
-  let lastZoom = null;
-
-  let polygonClick = e=> {
-    if (selectedPolygon) {
-      const extent = selectedPolygon.getExtent();
-      let zoom = map.getZoom();
-      if (extent && zoom <= 4) {
-        //map.fitExtent(extent);
-        const center = extent.getCenter();
-        map.animateTo({center: center, zoom: 4});
-      }
-    }
-  }
-
   // filter null geometry
   polygons = polygons.filter(polygon => {
       return polygon;
   });
-
-  function selectPolygon2(polygon, selected){
-    return;// NB!
-    if (selected) {
-      polygon.setSymbol(hoverSymbol);
-    } else {
-      polygon.setSymbol(defaultSymbol);
-    }
-  }
 
   polygons.forEach((polygon, index) => {
     if (polygon.getType() === 'Polygon') { // Ensure it's a polygon
@@ -1042,61 +1013,6 @@ function addRegions(geojson) {
       polygon.properties.svgID = '#'+name;
       polygon.feature = {properties: {title: name}};
     }
-  });
-
-  //map.on('click', polygonClick);
-
-  // Add mousemove listener to the map
-  map.on('m1ousemove', e => {
-
-    let zoom = map.getZoom();
-    let maxZoom = 3;
-
-    const mouseCoord = e.coordinate; // Geographic coordinate of the mouse
-    //let mouseCoord = map.containerPointToCoord(e.containerPoint); // same
-
-    let found = false;
-
-    // Iterate through polygons to find if the point is inside any
-    for (const polygon of polygons) {
-
-      if (!polygon.isVisible()) continue;
-
-      //if (polygon.containsPoint(mouseCoord)) { // doesn't work for some reason
-      if (isPointInsidePolygon(mouseCoord, polygon.getCoordinates()[0])) {
-
-        found = true;
-
-        if (selectedPolygon !== polygon || lastZoom != zoom) {
-          // New polygon hovered, update appearance
-          if (selectedPolygon) {
-            // Reset the previous polygon
-            selectedPolygon.updateSymbol(defaultSymbol);
-          }
-
-          // Highlight the currently hovered polygon
-          polygon.updateSymbol(zoom > maxZoom ? defaultSymbol : hoverSymbol);
-          selectedPolygon = polygon; // Update reference
-
-          currentRegion = polygon.properties.svgID.substring(1);
-
-          if (zoom>maxZoom) selectedPolygon = null; // uncomment to prevent zoom on click (it's rather glitchy)
-
-          lastZoom = zoom;
-        }
-        break; // Stop checking once a match is found
-      }
-    }
-
-    if (!found && selectedPolygon) {
-      // Mouse is not over any polygon, reset the previous one
-      selectedPolygon.updateSymbol(defaultSymbol);
-      selectedPolygon = null; // Clear reference
-    }
-
-    let name = selectedPolygon?.feature?.properties?.title ?? '';
-
-    //document.title = `${title} (${mouseCoord.x.toFixed(0)}, ${mouseCoord.y.toFixed(0)}) ${name}`;
   });
 
   let layerId = 'Polygons2'
@@ -1625,7 +1541,7 @@ function loadMap(mapId) {
       position  : {bottom: 70, right: 20},
       zoomLevel : false,
     },
-    doubleClickZoom: false,
+    doubleClickZoom: true,
 
     //heightFactor: 0.01, // optional (doesn't really work? messes up infowindow)
 
