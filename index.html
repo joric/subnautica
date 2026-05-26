@@ -822,6 +822,17 @@ function addMarker(feature, options) {
         popupOnClick({target: marker});
         marker.openInfoWindow();
       }
+
+      let zoom = map.getZoom();
+      if (zoom<polygonMaxZoom) {
+        const extent = e.target.getExtent();
+        if (extent && zoom <= 4) {
+          //map.fitExtent(extent);
+          const center = extent.getCenter();
+          map.animateTo({center: center, zoom: polygonMaxZoom-1});
+          selectPolygon(e.target, false);
+        }
+      }
       return false;
     });
 
@@ -832,18 +843,6 @@ function addMarker(feature, options) {
 
     polygon.on('mouseout', function(e) {
       if (!infoWindowOpen) selectPolygon(e.target, false);
-    });
-
-    polygon.on('click', function(e) {
-      let zoom = map.getZoom();
-      if (zoom<polygonMaxZoom) {
-        const extent = e.target.getExtent();
-        if (extent && zoom <= 4) {
-          //map.fitExtent(extent);
-          const center = extent.getCenter();
-          map.animateTo({center: center, zoom: 4});
-        }
-      }
     });
 
     //polygon.setInfoWindow({autoCloseOn: 'click', single: true}).on('click', popupOnClick)
