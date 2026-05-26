@@ -1006,33 +1006,14 @@ function addRegions(geojson) {
   polygons.forEach((polygon, index) => {
     if (polygon.getType() === 'Polygon') { // Ensure it's a polygon
       polygon.setSymbol(defaultSymbol);
-
       let name = 'poly_'+index;
       polygon.properties = {};
       polygon.properties.svgID = '#'+name;
       polygon.feature = {properties: {title: name}};
-
-      //polygon.on('click', polygonClick); // doesn't work with overlapping labels, use global event for now
-      polygon.on('mouseover',function(e) {
-        selectPolygon2(e.target, true);
-      });
-
-      polygon.on('mouseout',function(e) {
-        selectPolygon2(e.target, false);
-      });
-
-
-      //let feature = AddMarker();
-
-      //polygon.feature = feature;
-
-
     }
   });
 
-  //regionsData = polygons;
-
-  map.on('click', polygonClick);
+  //map.on('click', polygonClick);
 
   // Add mousemove listener to the map
   map.on('m1ousemove', e => {
@@ -1091,6 +1072,10 @@ function addRegions(geojson) {
   let visible = true;//settings.activeItems[layerId.toLowerCase()] == true;
 
   let layer = new maptalks.PolygonLayer(layerId, polygons, { visible: visible });
+
+  for (marker of layer._geoList) {
+    marker.hide();
+  }
 
   return layer;
 }
