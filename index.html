@@ -158,6 +158,22 @@ let regionDataLoaded = false;
 
 let mapParam = {};
 
+// until we parse it from data. region markers are visual polygon centroids for regions.json
+let regionMarkers = {
+  "DA_CGShallows":       { "color": "#ffb3c8", "name": "Shallows",        "location": [-340000, 435000] },
+  "DA_CGPlateaus":       { "color": "#ff6b9a", "name": "Plateaus",        "location": [-327000, 405000] },
+  "DA_CGGraveyard":      { "color": "#6a4a52", "name": "Graveyard",       "location": [-289000, 450000] },
+  "DA_CGAnemoneHills":   { "color": "#ffd24a", "name": "Anemone Hills",   "location": [-350000, 400000] },
+  "DA_CGTufaTowers":     { "color": "#bd8888", "name": "Tufa Towers",     "location": [-345600, 460300] },
+  "DA_CGNorthRaceway":   { "color": "#ea4c8f", "name": "North Raceway",   "location": [-308000, 434000] },
+  "DA_CGSouthRaceway":   { "color": "#c64278", "name": "South Raceway",   "location": [-320000, 463000] },
+  "DA_CGBlightedCoral":  { "color": "#7a3a5a", "name": "Blighted Coral",  "location": [-356000, 428000] },
+  "DA_CGLeadzone":       { "color": "#4a4a5a", "name": "Leadzone",        "location": [-307500, 410000] },
+  "DA_AR-Observatory":   { "color": "#7ad06a", "name": "Observatory",     "location": [-231889, 437387] },
+  "DA_AR-PowerPlant":    { "color": "#4ec0a4", "name": "Power Plant",     "location": [-172092, 447480] },
+  "DA_AR-RootCanyon":    { "color": "#5a8c46", "name": "Root Canyon",     "location": [-127964, 404053] },
+};
+
 function capitalize(s) {
   return s ? s[0].toUpperCase()+s.slice(1) : '';
 }
@@ -587,10 +603,10 @@ function hideTooltipExt(e) {
 }
 
 function selectPolygon(polygon, selected){
-  if (selected) {
-    polygon.updateSymbol({lineOpacity: 1.0, polygonOpacity: 0.75, lineColor: '#fff' });
+  if (selected && map.getZoom()<4) {
+    polygon.updateSymbol({lineOpacity: 1.0, polygonOpacity: 0.5, lineColor: '#fff' });
   } else {
-    polygon.updateSymbol({lineOpacity: 0.75, polygonOpacity: 0.50, lineColor: polygon.options.color });
+    polygon.updateSymbol({lineOpacity: 0.75, polygonOpacity: 0.1, lineColor: polygon.options.color });
   }
 }
 
@@ -792,28 +808,7 @@ function addMarker(feature, options) {
       }
   }
 
-  function addRectangle(feature, x,y,z, w,h, angle, color, marker) {
-
-    const defaultSymbol = {
-      'lineColor': color,        // Border color
-      'lineWidth': 2.0,          // Border width
-      'polygonFill': color,      // Fill color
-      'polygonOpacity': 0.5,     // Fill opacity
-      'lineOpacity': 0.75,
-    };
-
-    let points = [];
-    points.push([x-w, y-h, z]);
-    points.push([x+w, y-h, z]);
-    points.push([x+w, y+h, z]);
-    points.push([x-w, y+h, z]);
-
-    if (angle!=0) {
-      rotatePointsInPlace(points, x,y, angle);
-    }
-
-    let polygon = new maptalks.Polygon(points, { symbol: defaultSymbol });
-
+  function assignPolygon(feature, polygon, marker, color) {
     polygon.options.color = color;
     polygon.options.ref_marker = marker;
     marker.options.ref_polygon = polygon;
@@ -838,30 +833,41 @@ function addMarker(feature, options) {
 
     //polygon.setInfoWindow({autoCloseOn: 'click', single: true}).on('click', popupOnClick)
 
-    layers.polygons = layers.polygons||[];
-    layers.polygons.push(polygon);
     polygon.feature = feature;
 
     return polygon;
   }
 
-  let zone_colors = {
-    "DA_CGShallows":      "#ffb3c8",
-    "DA_CGPlateaus":      "#ff6b9a",
-    "DA_CGGraveyard":     "#6a4a52",
-    "DA_CGAnemoneHills":  "#ffd24a",
-    "DA_CGTufaTowers":    "#bd8888",
-    "DA_CGNorthRaceway":  "#ea4c8f",
-    "DA_CGSouthRaceway":  "#c64278",
-    "DA_CGBlightedCoral": "#7a3a5a",
-    "DA_CGLeadzone":      "#4a4a5a",
-    "DA_AR-Observatory": "#7ad06a",
-    "DA_AR-PowerPlant":  "#4ec0a4",
-    "DA_AR-RootCanyon":  "#5a8c46",
+  function addRectangle(feature, x,y,z, w,h, angle, color, marker) {
+
+    const defaultSymbol = {
+      'lineColor': color,        // Border color
+      'lineWidth': 2.0,          // Border width
+      'polygonFill': color,      // Fill color
+      'polygonOpacity': 0.1,     // Fill opacity
+      'lineOpacity': 0.5,
+    };
+
+    let points = [];
+    points.push([x-w, y-h, z]);
+    points.push([x+w, y-h, z]);
+    points.push([x+w, y+h, z]);
+    points.push([x-w, y+h, z]);
+
+    if (angle!=0) {
+      rotatePointsInPlace(points, x,y, angle);
+    }
+
+    let polygon = new maptalks.Polygon(points, { symbol: defaultSymbol });
+
+    layers.polygons = layers.polygons||[];
+    layers.polygons.push(polygon);
+
+    return assignPolygon(feature, polygon, marker, color);
   }
 
   if (o.type == 'UWEBoxWorldZone' && o.extent) {
-    let color = zone_colors[o.region] || '#444a55';
+    let color = regionMarkers[o.region]?.color || '#444a55';
     addRectangle(feature, x,y,z, o.extent.X, o.extent.Y, 0, color, marker);
   }
 
@@ -869,15 +875,17 @@ function addMarker(feature, options) {
     addRectangle(feature, x,y,z, o.scale.X*50, o.scale.Y*50, o.rotation.Yaw, '#f00', marker);
   }
 
-
   if (o.type == 'regionMarker') {
     // find our poly, assign marker feature to it
     let groupLayer = map.getLayer('GroupGLLayer');
     for (const layer of groupLayer.getLayers()) {
-      for (poly of layer._geoList) {
-        if (poly.feature?.properties?.title?.startsWith('poly_')) {
-           if (isPointInsidePolygon(marker._coordinates, poly._coordinates)) {
-            poly.feature = marker.feature;
+      for (polygon of layer._geoList) {
+        if (polygon.feature?.properties?.title?.startsWith('poly_')) {
+           if (isPointInsidePolygon(marker._coordinates, polygon._coordinates)) {
+            //poly.feature = marker.feature;
+            let color = regionMarkers[marker.feature.properties.ActorLabel]?.color || '#fff';
+            color = '#fff';
+            assignPolygon(marker.feature, polygon, marker, color);
            }
         }
       }
@@ -1197,11 +1205,7 @@ function loadMarkersBatched(features, options) {
       })
     }
 
-
-    function addPoly(polygon, marker) {
-
-    }
-
+    // preload polygons from regions.json, re-assign later with hit check
     if (regionData && !regionDataLoaded) {
       regionDataLoaded = true;
       let layer = addRegions(regionData);
@@ -1242,23 +1246,17 @@ function loadMarkers(data, mapId, legacy=true) {
 
   console.log('loaded', data.length, 'features');
 
-  let regionMarkers = {
-    'Anemone Hills' : [-350000,400000],
-    'Plateaus': [-327000,405000],
-    'Leadzone': [-307500, 410000],
-    'Blighted Coral': [-356000, 428000],
-    'Shallows': [-340000, 435000],
-    'North Raceway': [-308000, 434000],
-    'Tufa Towers': [-345600, 460300],
-    'South Raceway': [-320000, 463000],
-    'Graveyard': [-289000, 450000],
-    'Observatory': [-231889, 437387],
-    'Power Plant': [-172092, 447480],
-    'Root Canyon': [-127964, 404053],
-  }
-
-  for (const[label,c] of Object.entries(regionMarkers)) {
-    let feature = {geometry: { coordinates: [c[0],c[1],10000] }, properties: {name: label, type: 'regionMarker', ActorLabel: label}};
+  for (const [label, prop] of Object.entries(regionMarkers)) {
+    let feature = {
+      geometry: { 
+        coordinates: [prop.location[0], prop.location[1], 10000] 
+      }, 
+      properties: {
+        name: prop.name,
+        type: 'regionMarker', 
+        ActorLabel: label
+      }
+    };
     data.push(feature);
   }
 
