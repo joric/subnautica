@@ -175,7 +175,7 @@ let regionMarkers = {
   "DA_AR-RootCanyon":    { "color": "#5a8c46", "name": "Root Canyon",     "location": [-127964, 404053] },
 };
 
-let polygonMaxZoom = 4;
+let polygonMaxZoom = 5;
 
 function capitalize(s) {
   return s ? s[0].toUpperCase()+s.slice(1) : '';
@@ -1556,7 +1556,7 @@ function loadMap(mapId) {
     localData[id].markedItems = localData[id].markedItems || {};
     localData[id].activeLayers = localData[id].activeLayers || {};
     localData[id].filter = localData[id].filter!==undefined ? localData[id].filter : '';
-    localData[id].activeItems = localData[id].activeItems || {'playerPosition': true, 'BP_StaticLifepod_Surface_C':true, 'BP_Blackbox_Clickable_01a_C': true, 'BP_EdgeOfWorldVolume_C':true, 'BP_Nrtv_QuartzChip_C':true};
+    localData[id].activeItems = localData[id].activeItems || {'playerPosition': true, 'regionMarker': true, 'BP_StaticLifepod_Surface_C':true, 'BP_Blackbox_Clickable_01a_C': true, 'BP_EdgeOfWorldVolume_C':true, 'BP_Nrtv_QuartzChip_C':true};
   }
 
   settings = localData[mapId];
