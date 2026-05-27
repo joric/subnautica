@@ -1043,9 +1043,10 @@ function addRegions(geojson) {
   const defaultSymbol = {
     lineColor: '#fff',
     polygonFill: '#fff',
+    lineJoin: 'round',
     polygonOpacity: 0.1,
     lineOpacity: 0.5,
-    lineWidth: 5
+    lineWidth: 5,
   };
 
   geojson = scaleGeoJSON(geojson, 73 / 1, [-191800, 182900]);
