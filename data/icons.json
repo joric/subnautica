@@ -22,6 +22,9 @@
   "turbine": { "class": "fa fa-fan", "color": "red" },
   "alien_console":{ "class": "fa fa-display", "color": "darkseagreen" },
   "great_jaw":{ "class": "fa fa-teeth-open", "color": "seagreen" },
+  "glyph": { "class": "fa fa-om", "color": "goldenrod" },
+  "planetary": { "class": "fa fa-globe", "color": "darkcyan" },
+  "upgrade": { "class": "fa fa-wrench", "color": "darkcyan" },
 
   "titanium": { "class": "fa fa-cubes", "color": "grey" },
   "silver": { "class": "fa fa-cubes", "color": "lightgrey" },
@@ -36,8 +39,5 @@
   "lead": { "class": "fa fa-cubes", "color": "silver" },
   "atacamite": { "class": "fa fa-gem", "color": "green" },
   "shark_needles" :{ "class": "fa fa-road-spikes", "color": "darkcyan" },
-  "deep_root": { "class": "fa fa-carrot", "color": "brown" },
-
-  "glyph": { "class": "fa fa-om", "color": "goldenrod" },
-  "planetary": { "class": "fa fa-globe", "color": "darkcyan" }
+  "deep_root": { "class": "fa fa-carrot", "color": "brown" }
 }
