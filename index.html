@@ -765,6 +765,8 @@ function applyHeightFactor(c, k=8) {
 function addMarker(feature, options) {
   let o = feature.properties;
   let t = getType(o);
+  let type = getBaseName(t.category);
+  let visible = settings.activeItems[type];
 
   let getSymbol = function(feature,opacity=1) {
 
@@ -811,7 +813,7 @@ function addMarker(feature, options) {
 
   let opacity = settings.markedItems[getBaseName(feature.properties.name)] ? markedOpacity : 1;
 
-  let line = new maptalks.LineString([[x,y,0],[x,y,z]], { symbol: { lineOpacity: opacity} });
+  let line = new maptalks.LineString([[x,y,0],[x,y,z]], { symbol: { lineOpacity: opacity}, visible: visible });
 
   layers.lines = layers.lines||[];
   layers.lines.push(line);
@@ -825,6 +827,7 @@ function addMarker(feature, options) {
     symbol: getSymbol(feature, opacity),
     cursor:'pointer',
     eventsToStop: true,
+    visible: visible,
   });
 
   marker.feature = feature; // leaflet uses marker.feature after loading geojson
@@ -891,6 +894,7 @@ function addMarker(feature, options) {
 
     if (feature.properties.type=='regionMarker') {
       polygon.updateSymbol( { lineColor: color, polygonFill: color });
+      if (visible) setTimeout(function(e) { polygon.show(); }, 50)
     }
 
     polygon.on('click',function(e){
@@ -957,7 +961,7 @@ function addMarker(feature, options) {
       rotatePointsInPlace(points, x,y, angle);
     }
 
-    let polygon = new maptalks.Polygon(points, { symbol: defaultSymbol });
+    let polygon = new maptalks.Polygon(points, { symbol: defaultSymbol, visible: visible });
 
     layers.polygons = layers.polygons||[];
     layers.polygons.push(polygon);
@@ -1371,9 +1375,9 @@ function addMarkers(markers, options) {
 
   markersControl = new MarkersControl(counters, {theme: theme, icons: icons, weights:{collectible: 1, misc:-2, actors:-1}, groupCallback: toggleGroup, itemCallback: toggleItem, translate: tr });
 
-  console.time('filtering markers');
-
   updateView();
+
+  console.time('filtering markers');
 
   let name = mapParam.markerName;
   mapParam = {};
@@ -1384,7 +1388,7 @@ function addMarkers(markers, options) {
       searchControl._input.value = settings.filter;
       searchItems(settings.filter);
     } else {
-      updateItems();
+      //updateItems(); // pre-filtered already
     }
   }
 
