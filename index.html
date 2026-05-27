@@ -1361,7 +1361,7 @@ function addMarkers(markers, options) {
 
   markersControl = new MarkersControl(counters, {theme: theme, icons: icons, weights:{collectible: 1, misc:-2, actors:-1}, groupCallback: toggleGroup, itemCallback: toggleItem, translate: tr });
 
-  console.time('updating visibility');
+  console.time('filtering markers');
 
   let name = mapParam.markerName;
   mapParam = {};
@@ -1376,7 +1376,7 @@ function addMarkers(markers, options) {
     }
   }
 
-  console.timeEnd('updating visibility');
+  console.timeEnd('filtering markers');
 }
 
 function parseSearchOptions(line) {
