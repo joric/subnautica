@@ -177,6 +177,11 @@ let regionMarkers = {
 
 let regionZoom = 4;
 
+let zoomGroups = {
+  'areas':[0,regionZoom],
+  'labels':[0,regionZoom],
+};
+
 function capitalize(s) {
   return s ? s[0].toUpperCase()+s.slice(1) : '';
 }
@@ -200,6 +205,19 @@ function getLineColor(t){
   let color = iconData[ t.icon ]?.color;
   return color;
 }
+
+function ptInPoly(point, polyPoints) {
+  let [x,y] = [point.x, point.y];
+  let inside = false;
+  for (let i = 0, j = polyPoints.length - 1; i < polyPoints.length; j = i++) {
+    var xi = polyPoints[i].x, yi = polyPoints[i].y;
+    var xj = polyPoints[j].x, yj = polyPoints[j].y;
+    var intersect = ((yi > y) != (yj > y))
+        && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+    if (intersect) inside = !inside;
+  }
+  return inside;
+};
 
 function getType(o) {
   function getTypeRecursive(data, t={}) {
@@ -745,7 +763,8 @@ function applyHeightFactor(c, k=8) {
 }
 
 function addMarker(feature, options) {
-  let t = getType(feature.properties);
+  let o = feature.properties;
+  let t = getType(o);
 
   let getSymbol = function(feature,opacity=1) {
 
@@ -810,10 +829,12 @@ function addMarker(feature, options) {
 
   marker.feature = feature; // leaflet uses marker.feature after loading geojson
 
-  layers[t.group] = layers[t.group] || [];
-  layers[t.group].push(marker);
+  let layerName = t.group;
+  
+  if (o.type == 'regionMarker') layerName = 'labels';
 
-  let o = feature.properties;
+  layers[layerName] = layers[layerName] || [];
+  layers[layerName].push(marker);
 
   marker.setInfoWindow({autoCloseOn: 'click', single: true})
   .on('click', popupOnClick)
@@ -899,21 +920,6 @@ function addMarker(feature, options) {
       //selectPolygon(e.target, false);
     });
 
-
-    function ptInPoly(point, vertices, tolerance = 1) {
-        const x = point.x, y = point.y;
-        let inside = false;
-        for (let i = 0, j = vertices.length - 1; i < vertices.length; j = i++) {
-            const xi = vertices[i].x, yi = vertices[i].y;
-            const xj = vertices[j].x, yj = vertices[j].y;
-            const dist = Math.abs(( (yj - yi) * x - (xj - xi) * y + xj * yi - yj * xi ) / Math.hypot(yj - yi, xj - xi));
-            if (dist <= tolerance) return true;
-            const intersect = ((yi > y) != (yj > y)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
-            if (intersect) inside = !inside;
-        }
-        return inside;
-    }
-
     map.on('mousemove', function(e) {
       for (const [name, polygon] of Object.entries(activePolys)) {
         if (!ptInPoly(e.coordinate, polygon.getCoordinates()[0])) {
@@ -970,12 +976,12 @@ function addMarker(feature, options) {
     for (const layer of groupLayer.getLayers()) {
       for (polygon of layer._geoList) {
         if (polygon.feature?.properties?.title?.startsWith('poly_')) {
-           if (isPointInsidePolygon(marker._coordinates, polygon._coordinates)) {
+          if (ptInPoly(marker._coordinates, polygon._coordinates)) {
             //poly.feature = marker.feature;
             let color = regionMarkers[marker.feature.properties.ActorLabel]?.color || '#fff';
             color = '#fff';
             assignPolygon(marker.feature, polygon, marker, color);
-           }
+          }
         }
       }
     }
@@ -994,23 +1000,10 @@ function addMarker(feature, options) {
   return marker;
 }
 
-function isPointInsidePolygon(point, polyPoints) {
-  let [x,y] = [point.x, point.y];
-  let inside = false;
-  for (let i = 0, j = polyPoints.length - 1; i < polyPoints.length; j = i++) {
-    var xi = polyPoints[i].x, yi = polyPoints[i].y;
-    var xj = polyPoints[j].x, yj = polyPoints[j].y;
-    var intersect = ((yi > y) != (yj > y))
-        && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
-    if (intersect) inside = !inside;
-  }
-  return inside;
-};
-
 function getRegionName(coord, polygons) {
   if (!polygons || !coord) return null;
   for (const polygon of polygons) {
-    if (isPointInsidePolygon(coord, polygon.getCoordinates()[0])) {
+    if (ptInPoly(coord, polygon.getCoordinates()[0])) {
       return polygon.properties.svgID.substring(1);
     }
   }
@@ -1072,7 +1065,7 @@ function addRegions(geojson) {
     }
   });
 
-  let layerId = 'Polygons2'
+  let layerId = 'areas'
   let visible = true;//settings.activeItems[layerId.toLowerCase()] == true;
 
   let layer = new maptalks.PolygonLayer(layerId, polygons, { visible: visible });
@@ -1324,6 +1317,28 @@ function toggleItem(name) {
   updateItems();
 }
 
+function updateView() {
+  let zoom = map.getZoom();
+
+  if (settings.searchText) {
+    return;
+  }
+
+  for(const [layerName, zoomLevel] of Object.entries(zoomGroups)) {
+    let groupLayer = map.getLayer('GroupGLLayer');
+    let layer = groupLayer.getLayer(layerName);
+    if (layer) {
+      let [minZoom, maxZoom] = zoomLevel;
+      if (zoom>=minZoom+0.5 && zoom < maxZoom+0.5) {
+        layer.show();
+      } else {
+        layer.hide();
+      }
+    }
+  }
+
+}
+
 function addMarkers(markers, options) {
   let [layers,counters,icons] = [options.layers, options.counters, options.icons];
 
@@ -1344,7 +1359,7 @@ function addMarkers(markers, options) {
       }).addTo(groupLayer);
     } else {
       new maptalks.PointLayer(name, geometries, {
-        sceneConfig: { depthFunc: '<='}, // = fixes text halo
+        sceneConfig: { depthFunc: '<='}, // <= fixes text halo
         //hitColor: [0, 0, 0, 0], // Color used for hit detection
         //hitTolerance: 1 // Tolerance for hit detection
       }).addTo(groupLayer);
@@ -1362,6 +1377,8 @@ function addMarkers(markers, options) {
   markersControl = new MarkersControl(counters, {theme: theme, icons: icons, weights:{collectible: 1, misc:-2, actors:-1}, groupCallback: toggleGroup, itemCallback: toggleItem, translate: tr });
 
   console.time('filtering markers');
+
+  updateView();
 
   let name = mapParam.markerName;
   mapParam = {};
@@ -1670,16 +1687,7 @@ function loadMap(mapId) {
   map.on('mouseleave',resetTitle);
 
   map.on('zooming', function(e) {
-    let zoom = map.getZoom();
-    let layer = groupLayer.getLayer('Polygons2');
-    if (layer) {
-      let [minZoom, maxZoom] = [0, regionZoom-1];
-      if (zoom>=minZoom+0.5 && zoom < maxZoom+0.5) {
-        layer.show();
-      } else {
-        layer.hide();
-      }
-    }
+    updateView();
   });
 
   map.on('click', function(e){
