@@ -904,7 +904,7 @@ function addMarker(feature, options) {
         if (extent && zoom <= 4) {
           //map.fitExtent(extent);
           const center = extent.getCenter();
-          map.animateTo({center: center, zoom: regionZoom-1});
+          map.animateTo({center: center, zoom: regionZoom});
           //selectPolygon(e.target, false);
         }
       }
@@ -1152,7 +1152,6 @@ function loadMarkersBatched(features, options) {
       setTimeout(processBatch, 0); // Allow time for browser events
     } else {
       console.timeEnd('parsing markers');
-      console.timeEnd('adding markers');
       addMarkers(result, options);
     }
 
@@ -1228,8 +1227,6 @@ function loadMarkers(data, mapId, legacy=true) {
   */
 
   data = data.features;
-
-  console.log('loaded', data.length, 'features');
 
   for (const [label, prop] of Object.entries(regionMarkers)) {
     let feature = {
@@ -1365,8 +1362,6 @@ function addMarkers(markers, options) {
       }).addTo(groupLayer);
     }
   }
-
-  console.timeEnd('adding markers');
 
   // let tr = s=> typeData[s]?.title || (s[0].toUpperCase()+s.slice(1));
   //let tr = s=> typeData[s]?.title || translate(s);
@@ -1748,7 +1743,13 @@ function loadMap(mapId) {
 
   let filename = config.versions?.[settings.version]?.data||config.data;
   if (filename.endsWith('.json')) {
+
+    console.time('loading markers');
     fetch(filename).then(r=>r.json()).then(data=>{
+
+      console.timeEnd('loading markers');
+      console.log('loaded', data.features.length, 'features');
+
       loadMarkers(data, mapId, true);
     })
     return;
@@ -1852,11 +1853,14 @@ window.onload = function(event) {
     'data/regions.json',
   ].map(url=>fetch(url).then(r=>r.json()));
 
+
   Promise.all(promises).then(data => {
     [typeData, iconData, regionData] = data;
     iconData['misc'] = {"class": "fa-solid fa-circle-question", "bg": "grey"};
 
+    console.time('rendering icons');
     iconImages = Object.fromEntries(Object.entries(iconData).map(([k,v]) => [k, renderFAIconToImageURL(v.class, v.color, v.background, iconSize)]));
+    console.timeEnd('rendering icons');
 
     loadMap(mapId);
   });//.catch(error=>alert(`A network error occurred. This might be a CORS issue. Check the browser console for details.\n\nError: ${error}`));
