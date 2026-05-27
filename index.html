@@ -1158,6 +1158,8 @@ function loadMarkersBatched(features, options) {
     if (currentIndex < features.length) {
       setTimeout(processBatch, 0); // Allow time for browser events
     } else {
+      console.timeEnd('parsing markers');
+      console.timeEnd('adding markers');
       addMarkers(result, options);
     }
 
@@ -1251,7 +1253,7 @@ function loadMarkers(data, mapId, legacy=true) {
     data.push(feature);
   }
 
-
+  console.time('parsing markers');
   loadMarkersBatched(data, options);
 }
 
@@ -1349,6 +1351,8 @@ function addMarkers(markers, options) {
     }
   }
 
+  console.timeEnd('adding markers');
+
   // let tr = s=> typeData[s]?.title || (s[0].toUpperCase()+s.slice(1));
   //let tr = s=> typeData[s]?.title || translate(s);
   //let tr = s=> getType({"type": s}).title || s; //getType({"type": s}).title || translate(s)
@@ -1356,6 +1360,8 @@ function addMarkers(markers, options) {
   tr = s=> capitalize(getType({"type": s}).title || s);
 
   markersControl = new MarkersControl(counters, {theme: theme, icons: icons, weights:{collectible: 1, misc:-2, actors:-1}, groupCallback: toggleGroup, itemCallback: toggleItem, translate: tr });
+
+  console.time('updating visibility');
 
   let name = mapParam.markerName;
   mapParam = {};
@@ -1369,6 +1375,8 @@ function addMarkers(markers, options) {
       updateItems();
     }
   }
+
+  console.timeEnd('updating visibility');
 }
 
 function parseSearchOptions(line) {
