@@ -1056,17 +1056,6 @@ function addRegions(geojson) {
   polygons.forEach((polygon, index) => {
     if (polygon.getType() !== 'Polygon') return;
 
-    let c = polygon.getCenter();
-    let k = 1.0;
-    let geom = polygon.getCoordinates().map(ring =>
-      ring.map(p => ([
-        c.x + (p.x - c.x) * k,
-        c.y + (p.y - c.y) * k
-      ]))
-    );
-
-    polygon.setCoordinates(geom);
-
     polygon.setSymbol(defaultSymbol);
 
     let name = 'poly_' + index;
