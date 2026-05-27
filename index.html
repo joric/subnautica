@@ -1389,6 +1389,10 @@ function addMarkers(markers, options) {
       searchItems(settings.filter);
     } else {
       //updateItems(); // pre-filtered already
+
+      updateControls();
+      saveSettings();
+
     }
   }
 
@@ -1933,6 +1937,20 @@ function saveLocalData() {
   }
 }
 
+function updateControls() {
+  document.querySelectorAll('.markers-control-group').forEach(group => {
+    const items = group.parentElement.querySelectorAll('.markers-control-item');
+    let anySelected = false;
+    items.forEach(item => {
+      let type = getBaseName(item.dataset.name);
+      const selected = settings.activeItems[type]==true;
+      item.classList.toggle('selected', selected);
+      anySelected ||= selected;
+    });
+    group.classList.toggle('selected', anySelected);
+  });
+}
+
 function updateItems() {
   searchControl._input.value='';
 
@@ -1953,19 +1971,7 @@ function updateItems() {
 
     }
   }
-
-  document.querySelectorAll('.markers-control-group').forEach(group => {
-    const items = group.parentElement.querySelectorAll('.markers-control-item');
-    let anySelected = false;
-    items.forEach(item => {
-      let type = getBaseName(item.dataset.name);
-      const selected = settings.activeItems[type]==true;
-      item.classList.toggle('selected', selected);
-      anySelected ||= selected;
-    });
-    group.classList.toggle('selected', anySelected);
-  });
-
+  updateControls();
   saveSettings();
 }
 
