@@ -504,7 +504,7 @@ function getDirections(feature) {
 }
 
 function locatePlayer() {
-  map.animateTo({center: playerMarker.getCoordinates(), zoom: regionZoom});
+  map.animateTo({center: playerMarker.getCoordinates(), zoom: regionZoom+1});
 }
 
 let tooltipShowTimer = null;
