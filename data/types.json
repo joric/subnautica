@@ -26,13 +26,12 @@
       "BP_WorldBuildable_C": { "icon": "turbine", "group": "locations", "title":"Turbine"},
       "BP_ResourceDeposit_NeedleSharkNeedles_C": { "icon": "shark_needles", "group": "resources",  "category": "Shark Needles"},
       "BP_ResourceDeposit_DeepRootResonatableResource_C": { "icon": "deep_root", "group": "resources",  "category": "Deep Root"},
-      "BP_WorldPopSpawned_*": { "icon": "spawn", "group": "resources", "category": "unsorted" },
-      "BP_ResourceNode_*": { "icon": "nodes", "group": "resources", "category": "unsorted" },
-      "BP_ResourceDeposit_*": { "icon": "deposit", "group": "resources", "category": "unsorted"},
       "BP_SonicResonatorV2_Scannable_C": { "icon": "gun", "group": "resources", "title":"Feedback Resonator"},
       "BP_UpgradeTerminal_C": {"icon": "upgrade", "group": "locations", "title": "Upgrade Terminal" },
 
-
+      "BP_WorldPopSpawned_*": { "icon": "spawn", "group": "resources", "category": "unsorted" },
+      "BP_ResourceNode_*": { "icon": "nodes", "group": "resources", "category": "unsorted" },
+      "BP_ResourceDeposit_*": { "icon": "deposit", "group": "resources", "category": "unsorted"},
       "BP_Tadpole_.*Fragment*": {"icon": "tadpole", "group": "resources", "category": "Tadpole Fragment"},
       "BP_BiobedFragment*": {"icon": "fragment", "group": "resources", "category": "Biobed Fragment"},
       "BP_BioLab_Fragment*": {"icon": "fragment", "group": "resources", "category": "Biolab Fragment"},
