@@ -667,7 +667,7 @@ function popupOnClick(e) {
   let id = (info.title||'').replaceAll(' ','_');
   let backlink = getMapURL(id);
 
-  let title = capitalize(o.title || info.title||'undefined');
+  let title = capitalize(info.title||o.title||'undefined');
 
   if (t[2]!=0) {
     title += `&nbsp;<span style="font-weight: normal">${formatZ(t)}</span>`;

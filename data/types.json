@@ -3,7 +3,7 @@
   "group": "misc",
   "match": {
     "type": {
-      "playerPosition": {"icon": "player", "group": "locations", "title": "Player Position" },
+      "playerPosition": {"icon": "player", "group": "locations", "title": "Player Position (draggable)" },
       "regionMarker": {"icon": "region", "group": "regions", "title": "Region Marker" },
       "BookMark": {"icon": "bookmark", "group": "regions", "title": "Bookmark" },
       "BP_StaticLifepod_Surface_C": {"icon": "lifepod", "group": "locations", "title": "Lifepod" },
