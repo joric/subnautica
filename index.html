@@ -929,9 +929,11 @@ function addMarker(feature, options) {
       selectPolygon(e.target, true);
     });
 
+    /*
     polygon.on('mouseout', function(e) {
-      //selectPolygon(e.target, false);
+      selectPolygon(e.target, false);
     });
+    */
 
     map.on('mousemove', function(e) {
       for (const [name, polygon] of Object.entries(activePolys)) {
