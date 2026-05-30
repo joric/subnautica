@@ -470,7 +470,7 @@ function getCardinalBearing(deltaX, deltaY) {
 function getCoordinates(feature) {
   const cc = feature.geometry.coordinates;
   let p = cc.map(x=>x && x.toFixed(0) || 0);
-  return `<hr><small style="white-space: nowrap;" title="Marker coordinates">Location: ${p[0]}, ${p[1]}, ${p[2]}</small>`;
+  return `${p[0]}, ${p[1]}, ${p[2]}`;
 }
 
 function getDirections(feature) {
@@ -502,7 +502,7 @@ function getDirections(feature) {
   const cbr = getCardinalBearing(-deltaX, -deltaY);
 
   // Create directions
-  const directions = `<hr><small style="white-space: nowrap;"><b>${cb}</b> / <b>${distanceMeters} m</b> from <a href="javascript:locatePlayer()">Player Position</a></small>`;
+  const directions = `<b>${cb}</b> / <b>${distanceMeters} m</b> from <a href="javascript:locatePlayer()">Player Position</a>`;
 
   return directions;
 }
@@ -676,7 +676,25 @@ function popupOnClick(e) {
   popup.querySelector('#popup-title').innerHTML = `<a href="${backlink}" onclick="return showItem('${info.type}')">${title}</a>`;
   popup.querySelector('#popup-title').title = backlink;
   popup.querySelector('#popup-subtitle').innerHTML = `<a href="#group:${info.group}" onclick="return showGroup('${info.group}')">${translate(info.group)}</a>`;
-  popup.querySelector('#popup-note').innerHTML = `${getSubtitle(feature)}${getCoordinates(feature)}${getDirections(feature)}`;
+
+  let note = getSubtitle(feature);
+  let dir = getDirections(feature);
+  let cc = getCoordinates(feature);
+
+  //<small style="white-space: nowrap;" title="Marker coordinates">Location: 
+
+  note += '<hr>';
+
+  if (dir) {
+    note += `<div style="white-space: nowrap; padding-bottom: 5px;" title="Marker coordinates">${dir}</div>`;
+  }
+
+  if (cc) {
+    note += `<div style="font-size: 12px; white-space: nowrap;" title="Marker coordinates">Location: ${cc}</div>`;
+  }
+
+  popup.querySelector('#popup-note').innerHTML = note;
+
   popup.querySelector('#popup-data').innerHTML = '<hr/><pre>'+JSON.stringify(o, null, 2) + '</pre>';
 
   popup.querySelector('#popup-data-toggle').onclick = function(e) {
