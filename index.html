@@ -1016,9 +1016,9 @@ function addMarker(feature, options) {
     polygon.options.color = color;
     polygon.options.ref_marker = marker;
     marker.options.ref_polygon = polygon;
+    selectPolygon(polygon, false);
 
     if (feature.properties.type=='regionMarker') {
-      selectPolygon(polygon, false);
       if (visible) setTimeout(function(e) { polygon.show(); }, 50)
     }
 
