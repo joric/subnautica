@@ -17,6 +17,8 @@
       "BP_AngelCombCore_C": { "icon": "angel_comb", "group": "locations", "category":"Angel Comb"},
 
       "BP_AxumGlyph_C": { "icon": "glyph", "group": "locations", "category":"Axum Glyph"},
+      "BP_AxumGlyph_NoAdaptation_C": { "icon": "glyph", "group": "locations", "category":"Axum Glyph"},
+
       "BP_Planetary_C": { "icon": "planetary", "group": "locations", "category":"Planetary"},
       "BP_Clamthulu_C": { "icon": "great_jaw", "group": "locations", "category":"Clam Thulhu"},
       "BP_ComputerTextInterface_Terminal_C": { "icon": "terminal", "group": "locations", "category":"NOA Terminal"},

@@ -1620,7 +1620,7 @@ function searchItems(text) {
 
         let mask = {};
         if (!res && terms.length) {
-          for (let s of [t.type, t.title, ...Object.values(o), ...Object.keys(o)]) {
+          for (let s of [t.type, t.title, translate(t.type), translate(t.title), ...Object.values(o), ...Object.keys(o),  ...Object.values(o).map(translate)]) {
             if (!s) continue;
             s = String(s).toLowerCase();
             for (const term of terms) {
