@@ -148,6 +148,8 @@ function markerLoader(data, area) {
     if (o.Type=='BoxComponent') meshes[outer] = o;
     if (o.Type=='CollisionCube') meshes[outer] = o;
 
+    if (o.Type=='BPC_ProximityTextComponent_C') messengers[outer] = o;
+
     components[outer] = components[outer] || {};
     components[outer][o.Name] = o;
   }
@@ -262,6 +264,11 @@ function markerLoader(data, area) {
 
     if ((m = messengers[o.Name]) && (s = m.Properties?.MessageEvents?.[0]?.TargetActor?.SubPathString)) {
       prop.actor = s.split('.').pop();
+    }
+
+    if ((m = messengers[o.Name])  && (s = m.Properties?.VisibleText?.SourceString)) {
+      prop.text_id = [m.Properties.VisibleText.TableId.split('.').pop(), m.Properties.VisibleText.Key].join('/');
+      prop.title = m.Properties.VisibleText.SourceString;
     }
 
     if ((m = targets[o.Name]) && (t = m.Properties?.TargetLocation)) {
