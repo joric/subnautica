@@ -18,7 +18,7 @@
 
       "BP_AxumGlyph_C": { "icon": "glyph", "group": "locations", "category":"Axum Glyph"},
       "BP_Planetary_C": { "icon": "planetary", "group": "locations", "category":"Planetary"},
-      "BP_Clamthulu_C": { "icon": "great_jaw", "group": "misc", "category":"Clam Thulhu"},
+      "BP_Clamthulu_C": { "icon": "great_jaw", "group": "locations", "category":"Clam Thulhu"},
       "BP_ComputerTextInterface_Terminal_C": { "icon": "terminal", "group": "locations", "category":"NOA Terminal"},
       "BP_BioBed_C": { "icon": "bed", "group": "locations", "category":"Reprint Point"},
       "BP_Black[bB]ox_Clickable_*": { "icon": "blackbox", "group": "locations", "category":"Blackbox", "weight": -10000 },
