@@ -199,10 +199,9 @@ function splitCamelCase(s) {
 }
 
 function translate(s) {
-  if (lang) {
-    s = stringData[s] || s;
-    if ((s||'').includes('/')) {
-      const parts = s.split('/');
+  if (lang && typeof s === 'string') {
+    if (typeof stringData[s] === 'string' && stringData[s].includes('/')) {
+      const parts = stringData[s].split('/');
       const section = parts[0];
       const entry = parts[1];
       if (lang[section] && lang[section][entry]) {
@@ -210,6 +209,8 @@ function translate(s) {
         //console.log(s, '=>', res);
         return res;
       }
+    } else if (stringData[s] && stringData[s][settings.language]) {
+      return stringData[s][settings.language];
     }
   }
   return splitCamelCase(String(s).replace('_C','')).map(capitalize).join(' ');
@@ -902,7 +903,7 @@ function addMarker(feature, options) {
 
     if (feature.properties.type=='regionMarker') {
         const textSymbol = {
-            textName : feature.properties.title,
+            textName : translate(feature.properties.title),
             textFaceName : 'sans-serif',
             textFill : '#fff',
             textSize : 16,
