@@ -16,6 +16,12 @@
   "Lifepod": "ST_Lifepod/LifepodPingName",
   "Angel Comb": "ST_BlightCore/AngelComb",
   "Clam Thulhu": "ST_Databank_Motile/GreatJaw",
+  "Axum Glyph": "ST_Ruins_Databanks/AxumGlyph_title",
+  "Reprint Point": "ST_Buildables/Biobed",
+  "Planetary": "ST_Ruins_Databanks/Observatory_title",
+
+  "Observatory": "ST_Ruins_Databanks/Observatory_title",
+  "Power Plant": "ST_Ruins_Databanks/PowerPlant_title",
 
   "Shallows": {
     "en": "Shallows",
@@ -133,32 +139,6 @@
     "ru": "Свинцовая зона",
     "uk": "Свинцева зона",
     "zh": "铅区"
-  },
-  "Observatory": {
-    "en": "Observatory",
-    "de": "Observatorium",
-    "es": "Observatorio",
-    "fr": "Observatoire",
-    "it": "Osservatorio",
-    "ja": "天文台",
-    "ko": "천문대",
-    "pt": "Observatório",
-    "ru": "Обсерватория",
-    "uk": "Обсерваторія",
-    "zh": "天文台"
-  },
-  "Power Plant": {
-    "en": "Power Plant",
-    "de": "Kraftwerk",
-    "es": "Central eléctrica",
-    "fr": "Centrale électrique",
-    "it": "Centrale elettrica",
-    "ja": "発電所",
-    "ko": "발전소",
-    "pt": "Usina elétrica",
-    "ru": "Электростанция",
-    "uk": "Електростанція",
-    "zh": "发电厂"
   },
   "Root Canyon": {
     "en": "Root Canyon",
