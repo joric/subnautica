@@ -199,9 +199,10 @@ function splitCamelCase(s) {
 }
 
 function translate(s) {
-  if (lang && typeof s === 'string') {
-    if (typeof stringData[s] === 'string' && stringData[s].includes('/')) {
-      const parts = stringData[s].split('/');
+  if (lang) {
+    const t = String((typeof stringData[s] === 'string' && stringData[s]) || s);
+    if (t.includes('/')) {
+      const parts = t.split('/');
       const section = parts[0];
       const entry = parts[1];
       if (lang[section] && lang[section][entry]) {
