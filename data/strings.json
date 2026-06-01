@@ -21,10 +21,28 @@
   "Planetary": "ST_Ruins_Databanks/Observatory_title",
 
   "Silver": "ST_Databank_Resources/Databank_Resources_Silver_Title",
+  "Titanium": "ST_Databank_Resources/Databank_Resources_Titanium_Title",
+  "Copper": "ST_Databank_Resources/Databank_Resources_Copper_Title",
+  "Gold": "ST_Databank_Resources/Databank_Resources_Gold_Title",
+  "Salt": "ST_Databank_Resources/Databank_Resources_Salt_Title",
+  "Quartz": "ST_Databank_Resources/Databank_Resources_Quartz_Title",
+  "Sulfur": "ST_Databank_Resources/Databank_Resources_Sulfur_Title",
+  "Lithium": "ST_Databank_Resources/Databank_Resources_Lithium_Title",
+  "Lead": "ST_Databank_Resources/Databank_Resources_Lead_Title",
+  "Atacamite": "ST_Databank_Resources/Databank_Resources_Atacamite_Title",
+  "Sulfur": "ST_Databank_Resources/Sulfur_title",
+
+  "Celestine": "ST_Celestine/Celestine",
+  "Crab Feces": "ST_Resources/CrabFeces",
+  "Deep Root": "ST_Resources/DeepRootResource",
+
+  "Shark Needles": "ST_HardcodedStringReplacementPass_M31/DA_NeedleSharkNeedleDeposit_ResonatableData_Name",
+
+  "Conduit Crystal": "ST_Items/ConduitCrystal",
+  "Feedback Resonator": "ST_Items/SonicResonatorV2",
 
   "Observatory": "ST_Ruins_Databanks/Observatory_title",
   "Power Plant": "ST_Ruins_Databanks/PowerPlant_title",
-
   "Shallows": {
     "en": "Shallows",
     "de": "Flachwasser",

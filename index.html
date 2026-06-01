@@ -1623,11 +1623,10 @@ function searchItems(text) {
         if (!res && terms.length) {
 
           let searchStrings = {};
-          for (let s of [t.type, t.title, t.category, ...Object.values(o), ...Object.keys(o)]) {
+          let props = [t.type, t.title, t.category];
+          for (let s of [...props, ...props.map(translate), ...Object.values(o), ...Object.values(o).map(translate), ...Object.keys(o)]) {
             if (!s) continue;
-            s = String(s);
-            searchStrings[translate(s).toLowerCase()] = true;
-            searchStrings[s.toLowerCase()] = true;
+            searchStrings[String(s).toLowerCase()] = true;
           }
 
           for (const s of Object.keys(searchStrings)) {
