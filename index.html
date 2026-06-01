@@ -977,7 +977,7 @@ function addMarker(feature, options) {
   }
 
   if (o.type == 'regionMarker') {
-    tooltipTitle = o.name;
+    tooltipTitle = translate(o.title);
   } else {
     let cc = marker.feature.geometry.coordinates;
     tooltipTitle += ' '+formatZ(cc);
