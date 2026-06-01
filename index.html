@@ -785,6 +785,10 @@ function popupOnClick(e) {
     note += `<div style="font-size: 12px; white-space: nowrap;" title="Marker coordinates">Location: ${cc}</div>`;
   }
 
+  if (o.text_id) {
+    note += `<hr>${translate(o.text_id)}`;
+  }
+
   popup.querySelector('#popup-note').innerHTML = note;
 
   popup.querySelector('#popup-data').innerHTML = '<hr/><pre>'+JSON.stringify(o, null, 2) + '</pre>';
@@ -973,7 +977,13 @@ function addMarker(feature, options) {
     tooltipTitle += ' '+formatZ(cc);
   }
 
-  const tooltip = new maptalks.ui.ToolTip(`${tooltipTitle} (${translate(t.group)})`, {
+  let note='';
+
+  if (o.text_id) {
+    note += `[${translate(o.text_id)}] `;
+  }
+
+  const tooltip = new maptalks.ui.ToolTip(`${note}${tooltipTitle} (${translate(t.group)})`, {
       showTimeout: 100, // Delay in milliseconds before showing the tooltip
       dx: 10,           // X-offset from the geometry
       dy: -10           // Y-offset from the geometry
