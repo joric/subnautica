@@ -4,7 +4,7 @@
   "player": { "class": "fa fa-person", "color": "red"},
   "region": { "class": "fa fa-location-crosshairs", "color": "darkcyan"},
   "bookmark": { "class": "fa fa-bookmark", "color": "chocolate"},
-  "chip": { "class": "fa fa-microchip", "color": "royalblue"},
+  "chip": { "class": "fa fa-compact-disc", "color": "salmon"},
   "databox": { "class": "fa fa-inbox", "color": "steelblue"},
   "supply_crate": { "class": "fa fa-box-open", "color": "darkcyan"},
   "locker": { "class": "fa fa-box-archive", "color": "darkcyan"},
