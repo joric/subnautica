@@ -26,6 +26,7 @@
   "glyph": { "class": "fa fa-om", "color": "goldenrod" },
   "planetary": { "class": "fa fa-globe", "color": "darkcyan" },
   "upgrade": { "class": "fa fa-wrench", "color": "darkcyan" },
+  "angel_comb": { "class": "fa fa-spa", "color": "hotpink" },
 
   "titanium": { "class": "fa fa-cubes", "color": "grey" },
   "silver": { "class": "fa fa-cubes", "color": "lightgrey" },

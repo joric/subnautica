@@ -14,6 +14,8 @@
       "BP_WorldSupplyLocker_C": { "icon": "locker", "group": "locations", "category":"Supply Locker"},
       "BP_SupplyCrate_C": { "icon": "supply_crate", "group": "locations", "category":"Supply Crate"},
 
+      "BP_AngelCombCore_C": { "icon": "angel_comb", "group": "locations", "category":"Angel Comb"},
+
       "BP_AxumGlyph_C": { "icon": "glyph", "group": "locations", "category":"Axum Glyph"},
       "BP_Planetary_C": { "icon": "planetary", "group": "locations", "category":"Planetary"},
       "BP_Clamthulu_C": { "icon": "great_jaw", "group": "misc", "category":"Clam Thulhu"},
