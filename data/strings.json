@@ -3,22 +3,29 @@
   "locations": "ST_Databank/Points_of_Interest",
   "resources": "ST_Databank/Resources",
   "misc": "ST_Databank/Unknown",
-
   "Supply Crate": "ST_InventoryNames/SupplyCrate" ,
   "Supply Locker": "ST_AutomatedLockerNames/Locker",
   "Blackbox": "ST_Databank/BlackBoxes",
   "Resources": "ST_Databank/Resources",
-
   "Data Box": "ST_Databank/Blueprints",
-
   "Quartz Chip": "ST_Databank/Data_Downloads",
-
   "Bloom Node": "ST_BlightNode/BloomNode",
-
   "Upgrade Terminal": "ST_ScannerStation/UpgradeTerminals",
   "Player Position": "ST_BaseFeedback/Player",
-
   "NOA Terminal": "ST_Buildables/NoATerminal",
+  "Lifepod": "ST_Lifepod/LifepodPingName",
 
-  "Lifepod": "ST_Lifepod/LifepodPingName"
+  "Anemone Hills": {},
+  "Shallows": {},
+  "Plateaus": {},
+  "Graveyard": {},
+  "Anemone Hills": {},
+  "Tufa Towers": {},  
+  "North Raceway": {},
+  "South Raceway": {},
+  "Blighted Coral": {},
+  "Leadzone": {},
+  "Observatory": {},
+  "Power Plant": {},
+  "Root Canyon": {}
 }

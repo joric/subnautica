@@ -2183,14 +2183,14 @@ window.onload = function(event) {
   };
 
   let langSelect = document.querySelector('#language-selector select');
-  langSelect.innerHTML = Object.entries(cc_list).map(([key, value])=>`<option value="${value}"${cc==value?' selected':''}>${key}</option>`).join('');
+  langSelect.innerHTML = Object.entries(cc_list).map(([key, value])=>`<option value="${key}"${cc==key?' selected':''}>${key}</option>`).join('');
   langSelect.onchange = e=> {
     settings.language = e.target.value;
     saveSettings();
     location.reload();
   };
 
-  fetch(`data/Localization/Game/${cc}/Game.json`).then(r=>r.json()).then(data=>{
+  fetch(`data/Localization/Game/${cc_list[cc]}/Game.json`).then(r=>r.json()).then(data=>{
     lang = data;
     //searchControl._input.setAttribute('placeholder', lang['sid_misc_hint_loot'] +'...');
 
