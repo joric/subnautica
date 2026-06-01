@@ -1614,15 +1614,23 @@ function searchItems(text) {
       let res = false;
 
       if (marker.feature) {
-        let t = getType(marker.feature);
+
         let o = marker.feature.properties;
+        let t = getType2(o);
         res = false;
 
         let mask = {};
         if (!res && terms.length) {
-          for (let s of [t.type, t.title, translate(t.type), translate(t.title), ...Object.values(o), ...Object.keys(o),  ...Object.values(o).map(translate)]) {
+
+          let searchStrings = {};
+          for (let s of [t.type, t.title, t.category, ...Object.values(o), ...Object.keys(o)]) {
             if (!s) continue;
-            s = String(s).toLowerCase();
+            s = String(s);
+            searchStrings[translate(s).toLowerCase()] = true;
+            searchStrings[s.toLowerCase()] = true;
+          }
+
+          for (const s of Object.keys(searchStrings)) {
             for (const term of terms) {
               if (mask[term]) continue;
               if (s.includes(term)) {
