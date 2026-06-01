@@ -729,10 +729,10 @@ let activePolys = {};
 function selectPolygon(polygon, selected){
   let name = polygon.feature?.properties?.name;
   if (selected) {
-    polygon.updateSymbol({lineOpacity: 1.0, polygonOpacity: 0.5, lineColor: polygon.options.color });
+    polygon.updateSymbol({lineWidth: 4.0, lineOpacity: 0.75, polygonOpacity: 0.5, lineColor: polygon.options.color, polygonFill: polygon.options.color});
     activePolys[name] = polygon;
   } else {
-    polygon.updateSymbol({lineOpacity: 0.75, polygonOpacity: 0.1, lineColor: polygon.options.color });
+    polygon.updateSymbol({lineWidth: 4.0, lineOpacity: 0.5, polygonOpacity: 0.25, lineColor: polygon.options.color, polygonFill: polygon.options.color });
     delete activePolys[name];
   }
 }
@@ -1018,7 +1018,7 @@ function addMarker(feature, options) {
     marker.options.ref_polygon = polygon;
 
     if (feature.properties.type=='regionMarker') {
-      polygon.updateSymbol( { lineColor: color, polygonFill: color });
+      selectPolygon(polygon, false);
       if (visible) setTimeout(function(e) { polygon.show(); }, 50)
     }
 
@@ -1072,7 +1072,7 @@ function addMarker(feature, options) {
 
     const defaultSymbol = {
       'lineColor': color,        // Border color
-      'lineWidth': 3,          // Border width
+      'lineWidth': 2.0,          // Border width
       'polygonFill': color,      // Fill color
       'polygonOpacity': 0.1,     // Fill opacity
       'lineOpacity': 0.5,
@@ -1168,7 +1168,7 @@ function addRegions(geojson) {
     lineJoin: 'round',
     polygonOpacity: 0.1,
     lineOpacity: 0.5,
-    lineWidth: 3,
+    lineWidth: 2.0,
   };
 
   //geojson = scaleGeoJSON(geojson, 73 / 1, [-191800, 182900]);
