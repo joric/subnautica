@@ -972,10 +972,12 @@ function addMarker(feature, options) {
 
   let tooltipTitle = translate(title);
 
+  const truncate = (str, n=40) => str.length < n ? str : str.slice(0, n) + "...";
+
   let note='';
 
   if (o.text_id) {
-    tooltipTitle += ` - ${translate(o.text_id)}`;
+    tooltipTitle += ` - ${truncate(translate(o.text_id))}`;
   }
 
   if (o.type == 'regionMarker') {
