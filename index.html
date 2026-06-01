@@ -970,17 +970,17 @@ function addMarker(feature, options) {
 
   let tooltipTitle = translate(title);
 
+  let note='';
+
+  if (o.text_id) {
+    tooltipTitle += ` - ${translate(o.text_id)}`;
+  }
+
   if (o.type == 'regionMarker') {
     tooltipTitle = o.name;
   } else {
     let cc = marker.feature.geometry.coordinates;
     tooltipTitle += ' '+formatZ(cc);
-  }
-
-  let note='';
-
-  if (o.text_id) {
-    tooltipTitle += ` - ${translate(o.text_id)}`;
   }
 
   const tooltip = new maptalks.ui.ToolTip(`${tooltipTitle}`, {
