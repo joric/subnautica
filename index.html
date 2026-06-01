@@ -1071,11 +1071,11 @@ function addMarker(feature, options) {
   function addRectangle(feature, x,y,z, w,h, angle, color, marker) {
 
     const defaultSymbol = {
-      'lineColor': color,        // Border color
-      'lineWidth': 2.0,          // Border width
-      'polygonFill': color,      // Fill color
-      'polygonOpacity': 0.1,     // Fill opacity
-      'lineOpacity': 0.5,
+      lineColor: color,        // Border color
+      lineWidth: 2.0,          // Border width
+      polygonFill: color,      // Fill color
+      polygonOpacity: 0.1,     // Fill opacity
+      lineOpacity: 0.5,
     };
 
     let points = [];
@@ -1165,7 +1165,6 @@ function addRegions(geojson) {
   const defaultSymbol = {
     lineColor: '#fff',
     polygonFill: '#fff',
-    lineJoin: 'round',
     polygonOpacity: 0.1,
     lineOpacity: 0.5,
     lineWidth: 2.0,
