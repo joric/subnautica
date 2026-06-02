@@ -2,7 +2,21 @@
   "regions": "ST_Databank/Biomes",
   "locations": "ST_Databank/Points_of_Interest",
   "resources": "ST_Databank/Resources",
-  "misc": "ST_Databank/Unknown",
+
+  "misc": {
+    "en": "Misc",
+    "de": "Verschiedenes",
+    "es": "Varios",
+    "fr": "Divers",
+    "it": "Varie",
+    "ja": "その他",
+    "ko": "기타",
+    "pt": "Diversos",
+    "ru": "Разное",
+    "uk": "Різне",
+    "zh": "其他"
+  },
+
   "Supply Crate": "ST_InventoryNames/SupplyCrate",
   "Supply Locker": "ST_AutomatedLockerNames/Locker",
   "Blackbox": "ST_Databank/BlackBoxes",
