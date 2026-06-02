@@ -754,14 +754,16 @@ function popupOnClick(e) {
 
   const popup = document.querySelector('#popup-template').content.cloneNode(true);
 
-  let info = getType(o);
-
-  //console.log(info);
+  let info = getType2(o);
 
   let id = (info.title||'').replaceAll(' ','_');
   let backlink = getMapURL(id);
 
   let title = translate(info.title||info.category||'undefined');
+
+  if (!info.title) {
+    info.title = title;
+  }
 
   if (t[2]!=0) {
     title += `&nbsp;<span style="font-weight: normal">${formatZ(t)}</span>`;
