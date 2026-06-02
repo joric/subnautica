@@ -38715,7 +38715,9 @@
         "name": "BP_RecipeGainDataCard_Button_C_UAID_C87F54668C7C495702_1762750346",
         "type": "BP_RecipeGainDataCard_Button_C",
         "area": "18HIIUCZJ2M7G1J4XJ7JHQPOP",
-        "spawns": "DA_Nook_ItemBrushData",
+        "unlocks": [
+          "DA_Nook_ItemBrushData"
+        ],
         "ActorLabel": "BP_RecipeGainDataCard_Button4"
       }
     },
@@ -52952,7 +52954,10 @@
         "name": "BP_RecipeGainDataCard_Button_C_UAID_C87F54668C7C4B6202_1249342285",
         "type": "BP_RecipeGainDataCard_Button_C",
         "area": "1TW8JTCWONB670RB13VDLWJL0",
-        "spawns": "DA_Anomaly_ScannerStationFilter",
+        "unlocks": [
+          "DA_Anomaly_ScannerStationFilter",
+          "DA_Upgrades_ScannerStationFilter"
+        ],
         "ActorLabel": "BP_RecipeGainDataCard_Button14"
       }
     },
@@ -59937,7 +59942,11 @@
         "name": "BP_RecipeGainDataCard_Button_C_UAID_3C7C3FF5ADFDED3102_1702697133",
         "type": "BP_RecipeGainDataCard_Button_C",
         "area": "22I3D6NB515ZE53AI82QGY917",
-        "spawns": "DA_Greeble_RoofAntenna_ARecipe",
+        "unlocks": [
+          "DA_Greeble_RoofAntenna_ARecipe",
+          "DA_Greeble_RoofAntenna_BRecipe",
+          "DA_Greeble_RoofAntenna_C_Recipe"
+        ],
         "ActorLabel": "BP_RecipeGainDataCard_RoofAntenna_A_B_C"
       }
     },
@@ -82894,7 +82903,9 @@
         "name": "BP_RecipeGainDataCard_Button_C_UAID_C87F54668C7C495702_1932047348",
         "type": "BP_RecipeGainDataCard_Button_C",
         "area": "2W6PBBMKSYIWJ1F92XO8G0WO6",
-        "spawns": "DA_MoonPool_ItemBrushData",
+        "unlocks": [
+          "DA_MoonPool_ItemBrushData"
+        ],
         "ActorLabel": "BP_RecipeGainDataCard_Button6"
       }
     },
@@ -85609,7 +85620,9 @@
         "name": "BP_RecipeGainDataCard_Button_C_UAID_D8BBC154AD47D92C02_1203485249",
         "type": "BP_RecipeGainDataCard_Button_C",
         "area": "38JK3AAGXDVT32INJP3D01JR7",
-        "spawns": "DA_HalfRoundRoom_ItemBrushData",
+        "unlocks": [
+          "DA_HalfRoundRoom_ItemBrushData"
+        ],
         "ActorLabel": "BP_RecipeGainDataCard_HalfRound Room"
       }
     },
@@ -91491,7 +91504,9 @@
         "name": "BP_RecipeGainDataCard_Button_C_UAID_C87F54668C7C495702_1809192347",
         "type": "BP_RecipeGainDataCard_Button_C",
         "area": "3JTYPL2G4GL2HM4S0G2MBFE4K",
-        "spawns": "DA_Nook_ItemBrushData",
+        "unlocks": [
+          "DA_Nook_ItemBrushData"
+        ],
         "ActorLabel": "BP_RecipeGainDataCard_Button5"
       }
     },
@@ -124512,7 +124527,9 @@
         "name": "BP_RecipeGainDataCard_Button_C_UAID_C87F54668C7C4A5702_1468248533",
         "type": "BP_RecipeGainDataCard_Button_C",
         "area": "4XPKI0QE3ALX463RMY6D6PEDS",
-        "spawns": "DA_HalfRoundRoom_ItemBrushData",
+        "unlocks": [
+          "DA_HalfRoundRoom_ItemBrushData"
+        ],
         "ActorLabel": "BP_RecipeGainDataCard_Button9"
       }
     },
@@ -157004,7 +157021,9 @@
         "name": "BP_RecipeGainDataCard_Button_C_UAID_C87F54668C7C495702_1427141336",
         "type": "BP_RecipeGainDataCard_Button_C",
         "area": "6IQERM73K1LIWFXVWQBMLY5WR",
-        "spawns": "DA_MoonPool_ItemBrushData",
+        "unlocks": [
+          "DA_MoonPool_ItemBrushData"
+        ],
         "ActorLabel": "BP_RecipeGainDataCard_Button3"
       }
     },
@@ -165660,7 +165679,9 @@
         "name": "BP_RecipeGainDataCard_Button_C_UAID_FC5CEE737EB5EA8902_1474856387",
         "type": "BP_RecipeGainDataCard_Button_C",
         "area": "72HMT2MASUL1UCFE9MT5E1JGH",
-        "spawns": "DA_Tadpole_HydraulicMuffler_Recipe",
+        "unlocks": [
+          "DA_Tadpole_HydraulicMuffler_Recipe"
+        ],
         "ActorLabel": "BP_RecipeGainDataCard_Button_tadpolemod_HydraulicMuffler"
       }
     },
@@ -195172,7 +195193,9 @@
         "name": "BP_RecipeGainDataCard_Button_C_UAID_C87F54668C7C65A102_1081458502",
         "type": "BP_RecipeGainDataCard_Button_C",
         "area": "7KCHYVHNIPAR4HJNS6VADLWZD",
-        "spawns": "DA_CicadaDebris_ScannerStationFilter",
+        "unlocks": [
+          "DA_CicadaDebris_ScannerStationFilter"
+        ],
         "ActorLabel": "BP_RecipeGainDataCard_Button18"
       }
     },
@@ -195190,7 +195213,10 @@
         "name": "BP_RecipeGainDataCard_Button_C_UAID_C87F54668C7CF45602_1313930125",
         "type": "BP_RecipeGainDataCard_Button_C",
         "area": "7KCHYVHNIPAR4HJNS6VADLWZD",
-        "spawns": "DA_Room_ItemBrushData_Snap",
+        "unlocks": [
+          "DA_Room_ItemBrushData_Snap",
+          "DA_Ladder_ItemBrushData"
+        ],
         "ActorLabel": "BP_RecipeGainDataCard_Button2"
       }
     },
@@ -203793,7 +203819,9 @@
         "name": "BP_RecipeGainDataCard_Button_C_UAID_345A60C5C11D65B202_2036101272",
         "type": "BP_RecipeGainDataCard_Button_C",
         "area": "7PYH2K823CMGIG86QNE6K8AIN",
-        "spawns": "DA_MediumAirTankRecipe",
+        "unlocks": [
+          "DA_MediumAirTankRecipe"
+        ],
         "ActorLabel": "BP_RecipeGainDataCard_Button_oxytank2_fallback"
       }
     },
@@ -203811,7 +203839,9 @@
         "name": "BP_RecipeGainDataCard_Button_C_UAID_FC5CEE737EB5158C02_1970985919",
         "type": "BP_RecipeGainDataCard_Button_C",
         "area": "7PYH2K823CMGIG86QNE6K8AIN",
-        "spawns": "DA_Tadpole_EngineEfficiency_Recipe",
+        "unlocks": [
+          "DA_Tadpole_EngineEfficiency_Recipe"
+        ],
         "ActorLabel": "BP_RecipeGainDataCard_Button_tadpolemod_EngineEfficiency"
       }
     },
@@ -208453,7 +208483,9 @@
         "name": "BP_RecipeGainDataCard_Button_C_UAID_345A603EC247E3C002_1576072443",
         "type": "BP_RecipeGainDataCard_Button_C",
         "area": "7WT0C76AS5X7IDDJ3M00R5T7A",
-        "spawns": "DA_MediumAirTankRecipe",
+        "unlocks": [
+          "DA_MediumAirTankRecipe"
+        ],
         "ActorLabel": "BP_RecipeGainDataCard_Button_oxytank2_fallback"
       }
     },
@@ -208471,7 +208503,9 @@
         "name": "BP_RecipeGainDataCard_Button_C_UAID_345A603EC247E3C002_1576083444",
         "type": "BP_RecipeGainDataCard_Button_C",
         "area": "7WT0C76AS5X7IDDJ3M00R5T7A",
-        "spawns": "DA_MediumAirTankRecipe",
+        "unlocks": [
+          "DA_MediumAirTankRecipe"
+        ],
         "ActorLabel": "BP_RecipeGainDataCard_Button_oxytank2_fallback2"
       }
     },
@@ -209986,7 +210020,11 @@
         "name": "BP_RecipeGainDataCard_Button_C_UAID_C87F54668C7CF45602_1232964124",
         "type": "BP_RecipeGainDataCard_Button_C",
         "area": "7XVZCSNNUF0EU88QX6A8J6MZR",
-        "spawns": "DA_InteriorWall_ItemBrushData",
+        "unlocks": [
+          "DA_InteriorWall_ItemBrushData",
+          "DA_InteriorArch_ItemBrushData",
+          "DA_InteriorDoor_ItemBrushData"
+        ],
         "ActorLabel": "BP_RecipeGainDataCard_Button"
       }
     },
@@ -221433,7 +221471,10 @@
         "name": "BP_RecipeGainDataCard_Button_C_UAID_345A60C5C11DF6B402_1708612101",
         "type": "BP_RecipeGainDataCard_Button_C",
         "area": "8IUOI6A0B5GF4UF7HKKYSFUZJ",
-        "spawns": "DA_Greeble_RoofFan_SingleRecipe",
+        "unlocks": [
+          "DA_Greeble_RoofFan_SingleRecipe",
+          "DA_Greeble_RoofFan_DoubleRecipe"
+        ],
         "ActorLabel": "BP_RecipeGainDataCard_RoofFan"
       }
     },
@@ -274238,7 +274279,10 @@
         "name": "BP_RecipeGainDataCard_Button_C_UAID_C87F54668C7CA06702_2099416487",
         "type": "BP_RecipeGainDataCard_Button_C",
         "area": "AM0KEJ2C9DZWRAY5ITOJTKNXH",
-        "spawns": "DA_Room_ItemBrushData_Snap",
+        "unlocks": [
+          "DA_Room_ItemBrushData_Snap",
+          "DA_Ladder_ItemBrushData"
+        ],
         "ActorLabel": "BP_RecipeGainDataCard_Button16"
       }
     },
@@ -276296,7 +276340,9 @@
         "name": "BP_RecipeGainDataCard_Button_C_UAID_FC5CEE737EB5EA8902_1496901388",
         "type": "BP_RecipeGainDataCard_Button_C",
         "area": "AQF7CIRIT51YBNU9VUUIWUHL0",
-        "spawns": "DA_Tadpole_PhotovoltaicCharger_Recipe",
+        "unlocks": [
+          "DA_Tadpole_PhotovoltaicCharger_Recipe"
+        ],
         "ActorLabel": "BP_RecipeGainDataCard_Button_tadpolemod_PhotovoltaicCharger"
       }
     },
@@ -291795,7 +291841,11 @@
         "name": "BP_RecipeGainDataCard_Button_C_UAID_C87F54668C7C4A5702_1806471543",
         "type": "BP_RecipeGainDataCard_Button_C",
         "area": "B7NPR0ZLGWQ9W00FU6IY3EM5F",
-        "spawns": "DA_InteriorWall_ItemBrushData",
+        "unlocks": [
+          "DA_InteriorWall_ItemBrushData",
+          "DA_InteriorArch_ItemBrushData",
+          "DA_InteriorDoor_ItemBrushData"
+        ],
         "ActorLabel": "BP_RecipeGainDataCard_Button10"
       }
     },
@@ -301983,7 +302033,10 @@
         "name": "BP_RecipeGainDataCard_Button_C_UAID_345A60C5C11DF6B402_1561868100",
         "type": "BP_RecipeGainDataCard_Button_C",
         "area": "BJVXPO7ZMJ0AHOW2WQ7DQBXX4",
-        "spawns": "DA_Greeble_RoofCylinderRecipe",
+        "unlocks": [
+          "DA_Greeble_RoofCylinderRecipe",
+          "DA_Greeble_RoofPanel_ARecipe"
+        ],
         "ActorLabel": "BP_RecipeGainDataCard_RoofCylinderAndPanel"
       }
     },
@@ -313531,7 +313584,9 @@
         "name": "BP_RecipeGainDataCard_Button_C_UAID_FC5CEE737EB5108902_1258670262",
         "type": "BP_RecipeGainDataCard_Button_C",
         "area": "C5QUC3C32BU40W00B6SNJQG8B",
-        "spawns": "DA_Tadpole_CrushDepthUpgrade_01_Recipe",
+        "unlocks": [
+          "DA_Tadpole_CrushDepthUpgrade_01_Recipe"
+        ],
         "ActorLabel": "BP_RecipeGainDataCard_Button_DepthUpgradeNeedlerNest\\"
       }
     },
@@ -327086,7 +327141,9 @@
         "name": "BP_RecipeGainDataCard_Button_C_UAID_FC5CEE737EB5EA8902_1466933386",
         "type": "BP_RecipeGainDataCard_Button_C",
         "area": "D1BUDCX5JANLPR1ZGEHGORNQ3",
-        "spawns": "DA_Tadpole_HullReinforcement_Recipe",
+        "unlocks": [
+          "DA_Tadpole_HullReinforcement_Recipe"
+        ],
         "ActorLabel": "BP_RecipeGainDataCard_Button_tadpolemod_HullReinforcement"
       }
     },
@@ -349177,7 +349234,9 @@
         "name": "BP_RecipeGainDataCard_Button_C_UAID_C87F54668C7C4A5702_1311489526",
         "type": "BP_RecipeGainDataCard_Button_C",
         "area": "DIGAGH2WNE4W78GQ53ZNGDB55",
-        "spawns": "DA_MoonPool_ItemBrushData",
+        "unlocks": [
+          "DA_MoonPool_ItemBrushData"
+        ],
         "ActorLabel": "BP_RecipeGainDataCard_Button8"
       }
     },
@@ -355519,7 +355578,14 @@
         "name": "BP_RecipeGainDataCard_Button_C_UAID_C87F54668C7C1D7602_1617113228",
         "type": "BP_RecipeGainDataCard_Button_C",
         "area": "DSYFKHOZFMLVMFWJK928ZDV9H",
-        "spawns": "DA_Crate_01_Recipe",
+        "unlocks": [
+          "DA_Crate_01_Recipe",
+          "DA_Greeble_WallUnit_ARecipe",
+          "DA_Greeble_WallUnit_BRecipe",
+          "DA_Greeble_WallVent_B_Recipe",
+          "DA_Greeble_WallVentRecipe",
+          "DA_Greeble_WallPanel_ARecipe"
+        ],
         "ActorLabel": "BP_RecipeGainDataCard_Button17"
       }
     },
@@ -355537,7 +355603,9 @@
         "name": "BP_RecipeGainDataCard_Button_C_UAID_C87F54668C7C4A5702_1243935525",
         "type": "BP_RecipeGainDataCard_Button_C",
         "area": "DSYFKHOZFMLVMFWJK928ZDV9H",
-        "spawns": "DA_HalfRoundRoom_ItemBrushData",
+        "unlocks": [
+          "DA_HalfRoundRoom_ItemBrushData"
+        ],
         "ActorLabel": "BP_RecipeGainDataCard_Button7"
       }
     },
@@ -355555,7 +355623,9 @@
         "name": "BP_RecipeGainDataCard_Button_C_UAID_C87F54668C7C905802_1267884835",
         "type": "BP_RecipeGainDataCard_Button_C",
         "area": "DSYFKHOZFMLVMFWJK928ZDV9H",
-        "spawns": "DA_MoonPool_ItemBrushData",
+        "unlocks": [
+          "DA_MoonPool_ItemBrushData"
+        ],
         "ActorLabel": "BP_RecipeGainDataCard_Button11"
       }
     },
@@ -389843,7 +389913,10 @@
         "name": "BP_RecipeGainDataCard_Button_C_UAID_C87F54668C7CA06702_2026237486",
         "type": "BP_RecipeGainDataCard_Button_C",
         "area": "EWL5N56QKNOL9ZSY24T2RG402",
-        "spawns": "DA_Room_ItemBrushData_Snap",
+        "unlocks": [
+          "DA_Room_ItemBrushData_Snap",
+          "DA_Ladder_ItemBrushData"
+        ],
         "ActorLabel": "BP_RecipeGainDataCard_Button15"
       }
     },
@@ -391818,7 +391891,9 @@
         "name": "BP_RecipeGainDataCard_Button_C_UAID_C87F54668C7C2B5902_1421594078",
         "type": "BP_RecipeGainDataCard_Button_C",
         "area": "F2868YYC8Z8L1N65T4FKJKM7J",
-        "spawns": "DA_MediumAirTankRecipe",
+        "unlocks": [
+          "DA_MediumAirTankRecipe"
+        ],
         "ActorLabel": "BP_RecipeGainDataCard_Button12"
       }
     },

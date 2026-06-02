@@ -191,13 +191,15 @@ function markerLoader(data, area) {
       if (p.Exists==false) prop.exists = false;
       if (p.bHidden==true) prop.hidden = true;
 
-      for (const name of ['Pickup Class', 'CustomShopItem', 'InventoryItem', 'CrateItem', 'AssetToUnlock']) {
+      for (const name of ['Pickup Class', 'CustomShopItem', 'InventoryItem', 'CrateItem']) {
         if (p[name]) {
-          if (Array.isArray(p[name]) && p[name].length>0) {
-            prop.spawns = getObjectName(p[name][0])
-          } else {
-            prop.spawns = getName(p[name]);
-          }
+           prop.spawns = getName(p[name]);
+        }
+      }
+
+      for (const name of ['AssetToUnlock']) {
+        if (Array.isArray(p[name])) {
+          prop.unlocks = p[name].map(getObjectName);
         }
       }
 
