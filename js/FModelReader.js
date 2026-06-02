@@ -191,7 +191,7 @@ function markerLoader(data, area) {
       if (p.Exists==false) prop.exists = false;
       if (p.bHidden==true) prop.hidden = true;
 
-      for (const name of ['Pickup Class', 'CustomShopItem', 'InventoryItem']) {
+      for (const name of ['Pickup Class', 'CustomShopItem', 'InventoryItem', 'CrateItem']) {
         if (p[name]) {
           prop.spawns = getName(p[name]);
         }
