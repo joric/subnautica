@@ -31,7 +31,6 @@
       "BP_WorldBuildable_C": { "icon": "turbine", "group": "locations", "category":"Turbine"},
       "BP_ResourceDeposit_NeedleSharkNeedles_C": { "icon": "shark_needles", "group": "resources",  "category": "Shark Needles"},
       "BP_ResourceDeposit_DeepRootResonatableResource_C": { "icon": "deep_root", "group": "resources",  "category": "Deep Root"},
-      "BP_SonicResonatorV2_Scannable_C": { "icon": "gun", "group": "resources", "category":"Feedback Resonator"},
       "BP_UpgradeTerminal_C": {"icon": "upgrade", "group": "locations", "category": "Upgrade Terminal" },
 
       "BP_ScannerStationSignal_C": {"icon": "signal", "group": "misc", "category": "ST_ScannerStation/ScannerStation" },
@@ -64,6 +63,8 @@
       "BP_BioLab_Fragment*": {"icon": "fragment", "group": "misc", "category": "Biolab Fragment"},
 
       "BP_Base*": {"icon": "fragment", "group": "misc", "category": "Base Module"},
+
+      "BP_SonicResonatorV2_Scannable_C": { "icon": "gun", "group": "misc", "category": "Feedback Resonator"},
 
       ".*(_Scan_|_Scannable_)": {"icon": "fragment", "group": "misc", "category": "Scannable"},
       ".*Fragment*": {"icon": "fragment", "group": "misc", "category": "fragment"},
