@@ -57,12 +57,16 @@
       "BP_WorldPopSpawned_*": { "icon": "spawn", "group": "resources", "category": "unsorted" },
       "BP_ResourceNode_*": { "icon": "nodes", "group": "resources", "category": "unsorted" },
       "BP_ResourceDeposit_*": { "icon": "deposit", "group": "resources", "category": "unsorted"},
-      "BP_Tadpole_.*Fragment*": {"icon": "tadpole", "group": "resources", "category": "Tadpole Fragment"},
-      "BP_BiobedFragment*": {"icon": "fragment", "group": "resources", "category": "Biobed Fragment"},
-      "BP_BioLab_Fragment*": {"icon": "fragment", "group": "resources", "category": "Biolab Fragment"},
+
+      "BP_Tadpole_.*Fragment*": {"icon": "tadpole", "group": "misc", "category": "ST_NoA_Habitat/Communication_TadpolePens_Prompt"},
+
+      "BP_BiobedFragment*": {"icon": "fragment", "group": "misc", "category": "Biobed Fragment"},
+      "BP_BioLab_Fragment*": {"icon": "fragment", "group": "misc", "category": "Biolab Fragment"},
+
       "BP_Base*": {"icon": "fragment", "group": "misc", "category": "Base Module"},
-      ".*(_Scan_|_Scannable_)": {"icon": "fragment", "group": "resources", "category": "Scannable"},
-      ".*Fragment*": {"icon": "fragment", "group": "tech", "category": "fragment"},
+
+      ".*(_Scan_|_Scannable_)": {"icon": "fragment", "group": "misc", "category": "Scannable"},
+      ".*Fragment*": {"icon": "fragment", "group": "misc", "category": "fragment"},
       ".*(Flower|Petal|Anemone|Coral|OxygenPlant|Tree|BP_StiltOrb_).*": {"icon": "vegetation", "group": "misc", "category": "vegetation"},
       ".*(Fish).*": {"icon": "fish", "group": "misc", "category": "fish"}
     }
