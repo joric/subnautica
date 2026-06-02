@@ -39,15 +39,16 @@
       "BP_AbandonedBaseSign_C": {"icon": "base", "group": "locations", "category": "ST_BaseSignal/BaseSignal" },
 
 
-      "BP_Food_C": {"icon": "misc", "group": "misc", "category": "Food" },
-      "BP_CopperWire_C": {"icon": "misc", "group": "misc", "category": "Copper Wire" },
-      "BP_BuilderTool_Scannable_C": {"icon": "misc", "group": "misc", "category": "Builder Tool" },
-      "BP_WiringKit_C": {"icon": "misc", "group": "misc", "category": "Wiring Kit" },
-      "BP_Lead_C": {"icon": "misc", "group": "misc", "category": "Lead" },
-      "BP_Flares_C": {"icon": "misc", "group": "misc", "category": "Flares" },
-      "BP_MedKit_C": {"icon": "misc", "group": "misc", "category": "Medkit" },
-      "BP_TitaniumIngot_C": {"icon": "misc", "group": "misc", "category": "Titanium" },
-      "BP_Water_C": {"icon": "misc", "group": "misc", "category": "Water" },
+      "BP_Food_C": {"icon": "misc", "group": "misc", "category": "ST_Game/Food" },
+      "BP_CopperWire_C": {"icon": "misc", "group": "misc", "category": "ST_Items/CopperWire" },
+      "BP_WiringKit_C": {"icon": "misc", "group": "misc", "category": "ST_Items/WiringKit" },
+      "BP_MedKit_C": {"icon": "medkit", "group": "misc", "category": "ST_Items/RefinedMedigel" },
+      "BP_BuilderTool_Scannable_C": {"icon": "misc", "group": "misc", "category": "ST_CraftingSources/BuilderTool" },
+      "BP_Lead_C": {"icon": "misc", "group": "misc", "category": "ST_Lead/Lead" },
+      "BP_Flares_C": {"icon": "misc", "group": "misc", "category": "ST_Items/Flare" },
+      "BP_TitaniumIngot_C": {"icon": "misc", "group": "misc", "category": "ST_Items/TitaniumIngot" },
+      "BP_Water_C": {"icon": "misc", "group": "misc", "category": "ST_Items/Water" },
+      "BP_BasicBattery_C": {"icon": "misc", "group": "misc", "category": "ST_Items/Battery" },
 
 
       "-BP_CableTool_C": {"icon": "upgrade", "group": "resources", "category": "Cable Tool" },

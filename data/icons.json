@@ -30,6 +30,7 @@
   "signal": { "class": "fa fa-tower-broadcast", "color": "slategrey" },
   "station": { "class": "fa fa-tower-cell", "color": "slategrey" },
   "base": { "class": "fa fa-house", "color": "slategrey" },
+  "medkit": { "class": "fa fa-briefcase-medical", "color": "red" },
 
   "titanium": { "class": "fa fa-cubes", "color": "grey" },
   "silver": { "class": "fa fa-cubes", "color": "lightgrey" },

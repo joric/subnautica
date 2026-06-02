@@ -197,6 +197,10 @@ function markerLoader(data, area) {
         }
       }
 
+      if (p['StartupItems']) { //BP_WorldSupplyLocker_C
+        prop.spawns = getName(p['StartupItems'][0]['Item'])
+      }
+
       for (const name of ['ActorLabel']) {
         if (o[name]) {
           prop[name] = o[name];
