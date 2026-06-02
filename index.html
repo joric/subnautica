@@ -984,7 +984,7 @@ function addMarker(feature, options) {
   
   if (o.spawns) {
     let pt = getType2({...o, 'type': o.spawns, 'name': o.name + ':spawns' });
-    tooltipTitle += ` - ${translate(pt.category)}`;
+    tooltipTitle += ` - ${translate(pt.category||o.spawns)}`;
   }
 
   if (o.type == 'regionMarker') {
