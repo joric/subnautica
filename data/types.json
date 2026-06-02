@@ -34,7 +34,7 @@
       "BP_SonicResonatorV2_Scannable_C": { "icon": "gun", "group": "resources", "category":"Feedback Resonator"},
       "BP_UpgradeTerminal_C": {"icon": "upgrade", "group": "locations", "category": "Upgrade Terminal" },
 
-      "BP_CableTool_C": {"icon": "upgrade", "group": "resources", "category": "Cable Tool" },
+      "-BP_CableTool_C": {"icon": "upgrade", "group": "resources", "category": "Cable Tool" },
 
       ".*titanium*": { "icon": "titanium", "group": "resources", "category": "Titanium"},
       ".*copper*": { "icon": "copper", "group": "resources",  "category": "Copper"},
