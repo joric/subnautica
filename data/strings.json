@@ -1,5 +1,7 @@
 {
-  "regions": "ST_Databank/Biomes",
+  "Region Marker": "ST_Databank/Biomes",
+  "Alien Console": "ST_Databank/Alien_Data",
+
   "locations": "ST_Databank/Points_of_Interest",
   "resources": "ST_Databank/Resources",
 

@@ -33,9 +33,11 @@
       "BP_ResourceDeposit_DeepRootResonatableResource_C": { "icon": "deep_root", "group": "resources",  "category": "Deep Root"},
       "BP_UpgradeTerminal_C": {"icon": "upgrade", "group": "locations", "category": "Upgrade Terminal" },
 
-      "BP_ScannerStationSignal_C": {"icon": "signal", "group": "misc", "category": "ST_ScannerStation/ScannerStation" },
+      "BP_ScannerStationSignal_C": {"icon": "station", "group": "misc", "category": "ST_ScannerStation/ScannerStation" },
+      "BP_NarrativeSignal_C": {"icon": "signal", "group": "misc", "category": "ST_ScannerStation/SelectedSignal" },
 
       "BP_AbandonedBaseSign_C": {"icon": "base", "group": "locations", "category": "ST_BaseSignal/BaseSignal" },
+
 
 
       "-BP_CableTool_C": {"icon": "upgrade", "group": "resources", "category": "Cable Tool" },

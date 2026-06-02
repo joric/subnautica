@@ -271,9 +271,13 @@ function markerLoader(data, area) {
       prop.title = t.SourceString;
     }
 
-    if ((t = o.Properties?.Text)) {
-      prop.text_id = [t.TableId.split('.').pop(), t.Key].join('/');
-      prop.title = t.SourceString;
+    for (const textProp of ['Text','SignalText']) {
+      if ((t = p[textProp])) {
+        if (t.TableId) {
+          prop.text_id = [t.TableId.split('.').pop(), t.Key].join('/');
+          prop.title = t.SourceString;
+        }
+      }
     }
 
     if ((m = targets[o.Name]) && (t = m.Properties?.TargetLocation)) {

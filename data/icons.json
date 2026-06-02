@@ -28,6 +28,7 @@
   "upgrade": { "class": "fa fa-wrench", "color": "darkcyan" },
   "angel_comb": { "class": "fa fa-spa", "color": "hotpink" },
   "signal": { "class": "fa fa-tower-broadcast", "color": "slategrey" },
+  "station": { "class": "fa fa-tower-cell", "color": "slategrey" },
   "base": { "class": "fa fa-house", "color": "slategrey" },
 
   "titanium": { "class": "fa fa-cubes", "color": "grey" },
