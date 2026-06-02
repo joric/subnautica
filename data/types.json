@@ -4,11 +4,11 @@
   "match": {
     "type": {
       "playerPosition": {"icon": "player", "group": "locations", "category": "Player Position" },
-      "regionMarker": {"icon": "region", "group": "regions", "category": "Region Marker" },
+      "regionMarker": {"icon": "region", "group": "locations", "category": "Region Marker" },
       "BookMark": {"icon": "bookmark", "group": "misc", "category": "Bookmark" },
       "BP_StaticLifepod_Surface_C": {"icon": "lifepod", "group": "locations", "category": "Lifepod" },
-      "BP_EdgeOfWorldVolume_C": {"icon": "edge_volume", "group": "regions", "category": "Edge Volume" },
-      "UWEBoxWorldZone": {"icon": "zone_box", "group": "regions", "category": "Zone Box" },
+      "BP_EdgeOfWorldVolume_C": {"icon": "edge_volume", "group": "misc", "category": "Edge Volume" },
+      "UWEBoxWorldZone": {"icon": "zone_box", "group": "misc", "category": "Zone Box" },
       "BP_Nrtv_QuartzChip_C": { "icon": "chip", "group": "locations", "category":"Quartz Chip"},
       "BP_RecipeGainDataCard_Button_C": { "icon": "databox", "group": "locations", "category":"Data Box"},
       "BP_WorldSupplyLocker_C": { "icon": "locker", "group": "locations", "category":"Supply Locker"},
