@@ -1624,7 +1624,7 @@ function searchItems(text) {
 
           let searchStrings = {};
           let props = [t.type, t.title, t.category];
-          for (let s of [...props.map(translate), ...Object.values(o).map(translate), ...Object.keys(o)]) {
+          for (let s of [...props.map(translate), ...Object.values(o).map(translate), ...Object.values(o), ...Object.keys(o)]) {
             if (!s) continue;
             searchStrings[String(s).toLowerCase()] = true;
           }
