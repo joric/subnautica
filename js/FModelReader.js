@@ -266,9 +266,14 @@ function markerLoader(data, area) {
       prop.actor = s.split('.').pop();
     }
 
-    if ((m = messengers[o.Name])  && (s = m.Properties?.VisibleText?.SourceString)) {
-      prop.text_id = [m.Properties.VisibleText.TableId.split('.').pop(), m.Properties.VisibleText.Key].join('/');
-      prop.title = m.Properties.VisibleText.SourceString;
+    if ((m = messengers[o.Name]) && (t = m.Properties?.VisibleText)) {
+      prop.text_id = [t.TableId.split('.').pop(), t.Key].join('/');
+      prop.title = t.SourceString;
+    }
+
+    if ((t = o.Properties?.Text)) {
+      prop.text_id = [t.TableId.split('.').pop(), t.Key].join('/');
+      prop.title = t.SourceString;
     }
 
     if ((m = targets[o.Name]) && (t = m.Properties?.TargetLocation)) {

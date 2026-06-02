@@ -34,6 +34,11 @@
       "BP_SonicResonatorV2_Scannable_C": { "icon": "gun", "group": "resources", "category":"Feedback Resonator"},
       "BP_UpgradeTerminal_C": {"icon": "upgrade", "group": "locations", "category": "Upgrade Terminal" },
 
+      "BP_ScannerStationSignal_C": {"icon": "signal", "group": "misc", "category": "ST_ScannerStation/ScannerStation" },
+
+      "BP_AbandonedBaseSign_C": {"icon": "base", "group": "locations", "category": "ST_BaseSignal/BaseSignal" },
+
+
       "-BP_CableTool_C": {"icon": "upgrade", "group": "resources", "category": "Cable Tool" },
 
       ".*titanium*": { "icon": "titanium", "group": "resources", "category": "Titanium"},
@@ -55,9 +60,10 @@
       "BP_Tadpole_.*Fragment*": {"icon": "tadpole", "group": "resources", "category": "Tadpole Fragment"},
       "BP_BiobedFragment*": {"icon": "fragment", "group": "resources", "category": "Biobed Fragment"},
       "BP_BioLab_Fragment*": {"icon": "fragment", "group": "resources", "category": "Biolab Fragment"},
+      "BP_Base*": {"icon": "fragment", "group": "misc", "category": "Base Module"},
       ".*(_Scan_|_Scannable_)": {"icon": "fragment", "group": "resources", "category": "Scannable"},
       ".*Fragment*": {"icon": "fragment", "group": "tech", "category": "fragment"},
-      ".*(Flower|Petal|Anemone|Coral|OxygenPlant).*": {"icon": "vegetation", "group": "misc", "category": "vegetation"},
+      ".*(Flower|Petal|Anemone|Coral|OxygenPlant|Tree|BP_StiltOrb_).*": {"icon": "vegetation", "group": "misc", "category": "vegetation"},
       ".*(Fish).*": {"icon": "fish", "group": "misc", "category": "fish"}
     }
   }

@@ -978,6 +978,8 @@ function addMarker(feature, options) {
 
   if (o.text_id) {
     tooltipTitle += ` - ${truncate(translate(o.text_id))}`;
+  } else if (o.ActorLabel){
+    //tooltipTitle += ` - ${o.ActorLabel}`;
   }
 
   if (o.type == 'regionMarker') {
