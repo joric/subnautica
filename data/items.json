@@ -1867,5 +1867,955 @@
   },
   "DA_Scrap_SolarPanel_Deconstructable_ItemType": {
     "name": "Can be deconstructed"
-  }
+  },
+  "DA_Basepiece_AqualFarm_DatabankEntry": {},
+  "UWERequiredStoryGoalRule_0": {},
+  "DA_BedSingle_ConstructData": {
+    "name": "Single Bed"
+  },
+  "DA_BioLabConstructData": {
+    "name": "Biolab"
+  },
+  "DA_BioreactorConstructData": {
+    "name": "Bioreactor"
+  },
+  "DA_BiosamplingKitDispenserConstructData": {
+    "name": "Biosampling Kit Dispenser"
+  },
+  "DA_Carryable_WallRack_ConstructData": {
+    "name": "Wall Light Large"
+  },
+  "DA_CeilingLight_Rect_A_ConstructData": {
+    "name": "Rectangular Ceiling Light"
+  },
+  "DA_ChairDining_ConstructData": {
+    "name": "Dining Chair"
+  },
+  "DA_ChairLab_ConstructData": {
+    "name": "Lab Chair"
+  },
+  "DA_ComputerCoreConstructData": {
+    "name": "NOA Terminal"
+  },
+  "DA_FabricatorConstructData": {
+    "name": "Fabricator"
+  },
+  "DA_FloorLockerConstructData": {
+    "name": "Floor Locker"
+  },
+  "DA_GeothermalRechargerConstructData": {
+    "name": "Geothermal Recharge Station"
+  },
+  "DA_HydroelectricTurbineConstructData": {
+    "name": "Hydroelectric Turbine"
+  },
+  "DA_LampCeilingBulb_ConstructData": {
+    "name": "Bulb Ceiling Lamp"
+  },
+  "DA_LampExteriorWallBulb_ConstructData": {
+    "name": "Bulb Exterior Wall Lamp"
+  },
+  "DA_LampFloorBulb_ConstructData": {
+    "name": "Bulb Floor Lamp"
+  },
+  "DA_Light_Wall_Large_ConstructData": {
+    "name": "Wall Light Large"
+  },
+  "DA_Light_Wall_Small_ConstructData": {
+    "name": "Wall Light Small"
+  },
+  "DA_MiningPlatformConstructData": {
+    "name": "Mining Platform"
+  },
+  "DA_MiningPlatformCopperConstructData": {
+    "name": "Mining Platform"
+  },
+  "DA_ModificationStationConstructData": {
+    "name": "Fabricator"
+  },
+  "DA_Poster_Community01_ConstructData": {
+    "name": "Keep Calm Poster"
+  },
+  "DA_Poster_Community02_ConstructData": {
+    "name": "Keep Calm Poster"
+  },
+  "DA_Poster_KeepCalm_ConstructData": {
+    "name": "Keep Calm Poster"
+  },
+  "DA_Poster_KeepSwimming_ConstructData": {
+    "name": "Keep Calm Poster"
+  },
+  "DA_Poster_PaintedTree_ConstructData": {
+    "name": "Keep Calm Poster"
+  },
+  "DA_Poster_PioneerProgram_ConstructData": {
+    "name": "Keep Calm Poster"
+  },
+  "DA_Poster_Reprinting_ConstructData": {
+    "name": "Keep Calm Poster"
+  },
+  "DA_Poster_ScoutRay_ConstructData": {
+    "name": "Keep Calm Poster"
+  },
+  "DA_Poster_Wanted_ConstructData": {
+    "name": "Vintage Wanted Poster"
+  },
+  "DA_Poster_Zezura_01_ConstructData": {
+    "name": "Keep Calm Poster"
+  },
+  "DA_Poster_Zezura_02_ConstructData": {
+    "name": "Keep Calm Poster"
+  },
+  "DA_Poster_Zezura_ConstructData": {
+    "name": "Zezura Poster"
+  },
+  "DA_PowerStorage_ConstructData": {
+    "name": "Power Capacitor"
+  },
+  "DA_PowerTransmitterConstructData": {
+    "name": "Power Transmitter"
+  },
+  "DA_Processor_ConstructData": {
+    "name": "Processor"
+  },
+  "DA_RadioConstructData": {
+    "name": "Radio"
+  },
+  "DA_ResonanceFountain_ConstructData": {
+    "name": "Dining Chair"
+  },
+  "DA_ScannerStation_LongRange_ConstructData": {
+    "name": "Scanner Station"
+  },
+  "DA_SensorPodConstructData": {
+    "name": "Sensor Pod"
+  },
+  "DA_ShelfS_ConstructData": {
+    "name": "S Shelf"
+  },
+  "DA_Sign_ConstructData": {
+    "name": "Wall Light Large"
+  },
+  "DA_SolarPanelConstructData": {
+    "name": "Solar Panel"
+  },
+  "DA_SolarPanel_Medium_ConstructData": {
+    "name": "Solar Panel"
+  },
+  "DA_StoolConstructData": {
+    "name": "Stool"
+  },
+  "DA_StorageCache_ConstructData": {
+    "name": "Floor Locker"
+  },
+  "DA_Table_DiningConstructData": {
+    "name": "Dining Table"
+  },
+  "DA_TadpoleDock_Blister_ItemBrushData": {
+    "name": "-WIP Don't Bug-\" Tadpole Blister Dock"
+  },
+  "DA_TrashcanData": {
+    "name": "Trashcan"
+  },
+  "DA_WallBioLabConstructData": {
+    "name": "Biolab"
+  },
+  "DA_WallLockerConstructData": {
+    "name": "Wall Locker"
+  },
+  "DA_AxumPlanter_ConstructData": {
+    "name": "Axum Pot"
+  },
+  "DA_AxumSeat_ConstructData": {
+    "name": "Axum Seat"
+  },
+  "DA_AxumStreetLamp_ConstructData": {
+    "name": "Axum Street Lamp"
+  },
+  "DA_AxumTrashcanData": {
+    "name": "Trashcan"
+  },
+  "DA_AxumWallLamp_ConstructData": {
+    "name": "Axum Wall Lamp"
+  },
+  "DA_Axum_Jar_ConstructData": {
+    "name": "Axum Seat"
+  },
+  "DA_Axum_Jar_Small_ConstructData": {
+    "name": "Axum Seat"
+  },
+  "DA_Axum_Jar_Tall_ConstructData": {
+    "name": "Axum Seat"
+  },
+  "DA_Axum_TreeRelic_ConstructData": {
+    "name": "Axum Seat"
+  },
+  "DA_Axum_Drums_ConstructData": {
+    "name": "Small Crate"
+  },
+  "DA_BaseSignalConstructData": {
+    "name": "Roof Radar Antenna"
+  },
+  "DA_BasicBatteryTerminalConstructData": {
+    "name": "Basic Battery Terminal"
+  },
+  "DA_BioBedConstructData": {
+    "name": "BioBed"
+  },
+  "DA_Crate_01ConstructData": {
+    "name": "Small Crate"
+  },
+  "DA_Display_TimeOfDay_ConstructData": {
+    "name": "Power Cell Terminal"
+  },
+  "DA_FabricatorPillarConstructData": {
+    "name": "Fabricator Pillar"
+  },
+  "DA_MedKitDispenserConstructData": {
+    "name": "Med Kit Dispenser"
+  },
+  "DA_PowerCellTerminalConstructData": {
+    "name": "Power Cell Terminal"
+  },
+  "DA_SpotLightConstructData": {
+    "name": "Power Cell Terminal"
+  },
+  "DA_HullPlate_Preorder_01_ConstructData": {
+    "name": "Keep Calm Poster"
+  },
+  "DA_Poster_Preorder_01_ConstructData": {
+    "name": "Keep Calm Poster"
+  },
+  "DA_Poster_Preorder_02_ConstructData": {
+    "name": "Keep Calm Poster"
+  },
+  "DA_Poster_Preorder_03_ConstructData": {
+    "name": "Keep Calm Poster"
+  },
+  "DA_Poster_Preorder_04_ConstructData": {
+    "name": "Keep Calm Poster"
+  },
+  "DA_Reaper_Preorder_01_ConstructData": {
+    "name": "Keep Calm Poster"
+  },
+  "DA_Seamoth_Preorder_01_ConstructData": {
+    "name": "Keep Calm Poster"
+  },
+  "DA_FarmableAcidAnemone_ConstructData": {
+    "name": "Axum Pot"
+  },
+  "DA_FarmableCradleShootRoot_ConstructData": {
+    "name": "Axum Pot"
+  },
+  "DA_Farmable_CherimoyaRotsac_ConstructData": {
+    "name": "Axum Pot"
+  },
+  "DA_Farmable_CoralPad_ConstructData": {
+    "name": "Axum Pot"
+  },
+  "DA_Farmable_CoralWafer_ConstructData": {
+    "name": "Axum Pot"
+  },
+  "DA_Farmable_FeelerTree_ConstructData": {
+    "name": "Axum Pot"
+  },
+  "DA_Farmable_Freesia_ConstructData": {
+    "name": "Axum Pot"
+  },
+  "DA_ScrapDeconstruct_ConstructData": {
+    "name": "Axum Pot"
+  },
+  "DA_Scrap_CicadaDrbris_01a_Deconstruct_ConstructData": {
+    "name": "Axum Pot"
+  },
+  "DA_Scrap_HydroElectricTurbine_Deconstruct_ConstructData": {
+    "name": "Axum Pot"
+  },
+  "DA_Scrap_SolarPanel_Deconstruct_ConstructData": {
+    "name": "Axum Pot"
+  },
+  "DA_GreebleTest_ConstructData": {
+    "name": "Decal Test"
+  },
+  "DA_Greeble_RoofAntenna_A": {
+    "name": "Roof Antenna"
+  },
+  "DA_Greeble_RoofAntenna_B": {
+    "name": "Large Roof Antenna"
+  },
+  "DA_Greeble_RoofAntenna_C": {
+    "name": "Roof Radar Antenna"
+  },
+  "DA_Greeble_RoofCylinder_ConstructionData": {
+    "name": "Roof Cylinder"
+  },
+  "DA_Greeble_RoofFan_Double": {
+    "name": "Roof Fan Double"
+  },
+  "DA_Greeble_RoofFan_Single": {
+    "name": "Roof Fan Single"
+  },
+  "DA_Greeble_RoofPanel_A": {
+    "name": "Large Roof Panel"
+  },
+  "DA_Greeble_WallPanel_A": {
+    "name": "Wall Unit"
+  },
+  "DA_Greeble_WallUnit_A": {
+    "name": "Wall Unit"
+  },
+  "DA_Greeble_WallUnit_B": {
+    "name": "Wall Unit Large"
+  },
+  "DA_Greeble_WallVent": {
+    "name": "Wall Vent"
+  },
+  "DA_Greeble_WallVent_B": {
+    "name": "Wall Vent Large"
+  },
+  "DA_BayDoor_ItemBrushData": {
+    "name": "-WIP Don't Bug- Bay Door"
+  },
+  "DA_Corridor_ItemBrushData": {
+    "text_id": "ST_Buildables/Corridor"
+  },
+  "DA_Foundation_ItemBrushData": {
+    "text_id": "ST_Buildables/FoundationStandard"
+  },
+  "DA_HalfRoundRoom_ItemBrushData": {
+    "text_id": "ST_Buildables/RoomHalfRound"
+  },
+  "DA_Hatch_ItemBrushData": {
+    "text_id": "ST_Buildables/Hatch"
+  },
+  "DA_InteriorArch_ItemBrushData": {
+    "text_id": "ST_Buildables/InteriorArch"
+  },
+  "DA_InteriorDoor_ItemBrushData": {
+    "text_id": "ST_Buildables/DoorInterior"
+  },
+  "DA_InteriorWall_ItemBrushData": {
+    "text_id": "ST_Buildables/InteriorWall"
+  },
+  "DA_Ladder_ItemBrushData": {
+    "text_id": "ST_Buildables/Ladder"
+  },
+  "DA_MoonPoolDock_ItemBrushData": {
+    "text_id": "ST_Buildables/TadpoleDock"
+  },
+  "DA_MoonPool_ItemBrushData": {
+    "text_id": "ST_Buildables/Moonpool"
+  },
+  "DA_Nook_ItemBrushData": {
+    "text_id": "ST_Buildables/Nook"
+  },
+  "DA_Planter_ItemBrushData": {
+    "text_id": "ST_Ruins_Databanks/Aquafarm_title"
+  },
+  "DA_PowerFoundation_ItemBrushData": {
+    "text_id": "ST_Buildables/FoundationPower"
+  },
+  "DA_Room_ItemBrushData": {
+    "name": "-WIP Dont Bug- Room Clay Style!"
+  },
+  "DA_Room_ItemBrushData_Snap": {
+    "text_id": "ST_Buildables/Room"
+  },
+  "DA_Shrink_ItemBrushData": {},
+  "DA_Sofa_ItemBrushData": {
+    "name": "-WIP Dont Bug- Sofa"
+  },
+  "DA_StackedRoom_ItemBrushData": {
+    "name": "Stacked Room"
+  },
+  "DA_VehicleFabricator_ItemBrushData": {
+    "text_id": "ST_Buildables/VehicleFabricator"
+  },
+  "DA_Window_ItemBrushData": {
+    "text_id": "ST_Buildables/Window"
+  },
+  "DA_PowerPlant_BuildingProject_A_ConstructData": {
+    "name": "Geothermal Recharge Station"
+  },
+  "DA_FloatingSupportConstructData": {
+    "name": "Solar Panel"
+  },
+  "DA_FloatingSupportData": {
+    "name": "-WIP Don't Bug- Floating Support"
+  },
+  "DA_SupportConstructData": {
+    "name": "Solar Panel"
+  },
+  "DA_SupportData": {
+    "name": "-WIP Don't Bug- Support Pillar"
+  },
+  "DA_Tailing_Barrel_ConstructData": {
+    "name": "Axum Seat"
+  },
+  "DA_Tailing_Chest_ConstructData": {
+    "name": "Axum Seat"
+  },
+  "DA_Tailing_Jar_ConstructData": {
+    "name": "Axum Seat"
+  },
+  "DA_Tailing_Jar_Coral_ConstructData": {
+    "name": "Axum Seat"
+  },
+  "DA_Tailing_Jar_Coral_Small_ConstructData": {
+    "name": "Axum Seat"
+  },
+  "DA_Tailing_Jar_Hanging_ConstructData": {
+    "name": "Axum Seat"
+  },
+  "DA_Tailing_Rug_ConstructData": {
+    "name": "Axum Seat"
+  },
+  "DA_Tailing_Table_ConstructData": {
+    "name": "Axum Seat"
+  },
+  "DA_HaulChassis_ConstructData": {
+    "name": "BioBed"
+  },
+  "DA_ScoutChassis_ConstructData": {
+    "name": "BioBed"
+  },
+  "DA_Tadpole_ConstructData": {
+    "name": "BioBed"
+  },
+  "DA_Beacon_ConstructData": {
+    "name": "Current Generator"
+  },
+  "DA_CurrentRingConstructData": {
+    "name": "Current Generator"
+  },
+  "DA_DeployableElevator_ConstructData": {
+    "name": "Current Generator"
+  },
+  "DA_FloatingLockerCarryable_ConstructData": {
+    "name": "Current Generator"
+  },
+  "DA_HeavyFloatingLockerCarryable_ConstructData": {
+    "name": "Current Generator"
+  },
+  "DA_MetalFarm_ConstructData": {
+    "name": "Thermal Plant"
+  },
+  "DA_OxygenGeneratorCarryable_ConstructData": {
+    "name": "Current Generator"
+  },
+  "DA_PowerCellBankCarryable_ConstructData": {
+    "name": "Current Generator"
+  },
+  "DA_SuperHeavyFloatingLockerCarryable_ConstructData": {
+    "name": "Current Generator"
+  },
+  "DA_ThermalPlantConstructData": {
+    "name": "Thermal Plant"
+  },
+  "DA_WorkLightCarryable_ConstructData": {
+    "name": "Current Generator"
+  },
+  "DA_RemovableCreature": {},
+  "DA_RemovableProp": {},
+  "DA_CorridorEndBaseSupport": {},
+  "DA_CorridorEndGroundSupport": {},
+  "DA_CorridorEndNoSupport": {},
+  "DA_FoundationCornerBaseSupport": {},
+  "DA_FoundationCornerGroundSupport": {},
+  "DA_FoundationCornerNoSupport": {},
+  "DA_HalfRoundRoomBaseSupport": {},
+  "DA_HalfRoundRoomCornerLBaseSupport": {},
+  "DA_HalfRoundRoomCornerLGroundSupport": {},
+  "DA_HalfRoundRoomCornerLNoSupport": {},
+  "DA_HalfRoundRoomCornerRBaseSupport": {},
+  "DA_HalfRoundRoomCornerRGroundSupport": {},
+  "DA_HalfRoundRoomCornerRNoSupport": {},
+  "DA_HalfRoundRoomGroundSupport": {},
+  "DA_HalfRoundRoomNoSupport": {},
+  "DA_RoomCornerBaseSupport": {},
+  "DA_RoomCornerDiagonalToBaseGroundSupport": {},
+  "DA_RoomCornerDiagonalToBaseGroundSupport2": {},
+  "DA_RoomCornerGroundSupport": {},
+  "DA_RoomCornerNoSupport": {},
+  "DA_Corridor_L_JunctionRing": {},
+  "DA_Corridor_Straight_JunctionRing": {},
+  "DA_Corridor_T_JunctionRing": {},
+  "DA_Corridor_X_JunctionRing": {},
+  "DA_Corridor_X_JunctionRing_E": {},
+  "DA_Corridor_X_JunctionRing_N": {},
+  "DA_Corridor_X_JunctionRing_S": {},
+  "DA_Corridor_X_JunctionRing_W": {},
+  "DA_RoomCornerDecal_Left": {},
+  "DA_RoomCornerDecal_Right": {},
+  "DA_RoomGrate_Medium": {},
+  "DA_RoomLight_Large": {},
+  "DA_RoomPanel_Medium": {},
+  "DA_RoomPanel_Small": {},
+  "DA_RoomTopVent_Left": {},
+  "DA_RoomTopVent_Right": {},
+  "DA_Room_SmallVent_Left": {},
+  "DA_Room_SmallVent_Right": {},
+  "DA_RoomWindowMediumLight_L": {},
+  "DA_RoomWindowMediumLight_M": {},
+  "DA_RoomWindowSmallLight_Single": {},
+  "DA_PlanterCornerSupport": {},
+  "DA_PlanterEdgeSupport": {},
+  "DA_PlanterSupportOverlap": {},
+  "DA_PlanterUnsupported": {},
+  "DA_FoundationPowerCornerBaseSupport": {},
+  "DA_FoundationPowerCornerGroundSupport": {},
+  "DA_FoundationPowerCornerNoSupport": {},
+  "DA_FoundationPower_LargeCorner": {},
+  "DA_RoomCorner_Bot_PanelLines_Left": {},
+  "DA_RoomCorner_Bot_PanelLines_LeftRight": {},
+  "DA_RoomCorner_Bot_PanelLines_Right": {},
+  "DA_RoomCorner_Bot_PanelLines_Room_Left": {},
+  "DA_RoomCorner_Bot_PanelLines_Room_Right": {},
+  "DA_RoomCorner_Mid_PanelLines_Left": {},
+  "DA_RoomCorner_Mid_PanelLines_LeftRight": {},
+  "DA_RoomCorner_Mid_PanelLines_Right": {},
+  "DA_RoomCorner_Mid_PanelLines_Room_Left": {},
+  "DA_RoomCorner_Mid_PanelLines_Room_Right": {},
+  "DA_RoomCorner_Top_PanelLines_Left": {},
+  "DA_RoomCorner_Top_PanelLines_LeftRight": {},
+  "DA_RoomCorner_Top_PanelLines_Right": {},
+  "DA_RoomCorner_Top_PanelLines_Room_Left": {},
+  "DA_RoomCorner_Top_PanelLines_Room_Right": {},
+  "DA_Room_FloorGrate_Hatch": {},
+  "DA_Room_FloorGrate_InteriorDoor": {},
+  "DA_Room_FloorGrate_InteriorDoor_South": {},
+  "DA_Room_InsideCornerCap_Deco": {},
+  "DA_CorridorHatch_Side_InitialPiece": {},
+  "DA_CorridorInitialPiece": {},
+  "DA_FoundationInitialPiece": {},
+  "DA_Foundation_Power_InitialPiece": {},
+  "DA_HalfRoundRoom_InitialPieceData": {},
+  "DA_InteriorWall": {},
+  "DA_Ladder_InitialPieceData": {},
+  "DA_MoonPool_InitialPiece": {},
+  "DA_NookInitialPiece": {},
+  "DA_Planter_InitialPieceData": {},
+  "DA_Planter_InitialPieceSmallData": {},
+  "DA_Planter_InitialPiece_Corridor_Data": {},
+  "DA_RoomInitialPiece": {},
+  "DA_SofaGrow_PieceData": {},
+  "DA_Sofa_PieceData": {},
+  "DA_StackedRoom_InitialPiece": {},
+  "DA_SupportInitialPiece": {},
+  "DA_TadpoleDock_Blister_InitialPieceData": {},
+  "DA_TWallTest": {},
+  "DA_BayDoor_EndLeft": {},
+  "DA_BayDoor_EndLeft_DoorOnly": {},
+  "DA_BayDoor_EndRight": {},
+  "DA_Corridor_EndCap": {},
+  "DA_Corridor_L_Junction": {},
+  "DA_Corridor_L_Junction_Wall": {},
+  "DA_Corridor_L_Junction_Wall_InsideCorner": {},
+  "DA_Corridor_L_Junction_Wall_InsideCorner_Window": {},
+  "DA_Corridor_L_Junction_Window": {},
+  "DA_Corridor_RoomJunction": {},
+  "DA_Corridor_Single": {},
+  "DA_Corridor_Wall_BottomEnd": {},
+  "DA_Corridor_Wall_BottomMid": {},
+  "DA_Corridor_Wall_EndLeft": {},
+  "DA_Corridor_Wall_EndRight": {},
+  "DA_Corridor_Wall_Mid": {},
+  "DA_Corridor_Wall_TopEndLeft": {},
+  "DA_Corridor_Wall_TopMid": {},
+  "DA_Corridor_TJunction": {},
+  "DA_Corridor_TJunction_Back_Bottom": {},
+  "DA_Corridor_TJunction_Back_Top": {},
+  "DA_Corridor_TJunction_EndCap_Bottom": {},
+  "DA_Corridor_TJunction_EndCap_Top": {},
+  "DA_Corridor_TJunction_Offset": {},
+  "DA_Corridor_TJunction_OnePiece": {},
+  "DA_Corridor_TJunction_Wall_EndLeft": {},
+  "DA_Corridor_TJunction_Wall_EndRight": {},
+  "DA_Corridor_TJunction_Wall_Mid": {},
+  "DA_Corridor_XJunction": {},
+  "DA_Hatch_CorridorEnd": {},
+  "DA_Hatch_CorridorJunction": {},
+  "DA_Hatch_Corridor_BottomEnd": {},
+  "DA_Hatch_Corridor_TopEnd": {},
+  "DA_Hatch_Corridor_WallEndLeft": {},
+  "DA_Hatch_Corridor_WallEndRight": {},
+  "DA_Foundation_Center": {},
+  "DA_Foundation_Edge_EndLeft": {},
+  "DA_Foundation_Edge_EndRight": {},
+  "DA_Foundation_Edge_Mid": {},
+  "DA_Foundation_Edge_Single": {},
+  "DA_Foundation_InsideCorner": {},
+  "DA_Foundation_OutsideCorner": {},
+  "DA_Foundation_OutsideCorner_Floor": {},
+  "DA_Foundation_OutsideCorner_Left": {},
+  "DA_Foundation_OutsideCorner_Right": {},
+  "DA_Foundation_OutsideCorner_Short": {},
+  "DA_Foundation_OutsideCorner_Short1": {},
+  "DA_Foundation_OutsideCorner_Short2": {},
+  "DA_Foundation_Power_Center": {},
+  "DA_Foundation_Power_Edge_EndLeft": {},
+  "DA_Foundation_Power_Edge_EndRight": {},
+  "DA_Foundation_Power_Edge_Mid": {},
+  "DA_Foundation_Power_Edge_Single": {},
+  "DA_Foundation_Power_InsideCorner": {},
+  "DA_Foundation_Power_OutsideCorner": {},
+  "DA_Foundation_Power_OutsideCorner_Floor": {},
+  "DA_Foundation_Edge_EndLeft_RoomNeighbor": {},
+  "DA_Foundation_Edge_EndRight_RoomNeighbor": {},
+  "DA_Foundation_Edge_Mid_RoomNeighbor": {},
+  "DA_Foundation_Edge_Single_RoomNeighbor": {},
+  "DA_Foundation_OutsideCorner_Left_RoomNeighbor": {},
+  "DA_Foundation_OutsideCorner_Right_RoomNeighbor": {},
+  "DA_Foundation_OutsideCorner_RoomNeighbor_Left": {},
+  "DA_Foundation_OutsideCorner_RoomNeighbor_LeftRight": {},
+  "DA_Foundation_OutsideCorner_RoomNeighbor_Right": {},
+  "DA_Greeble_RoofCylinder": {},
+  "DA_HalfRoundRoom": {},
+  "DA_Hatch": {},
+  "DA_Hatch_RoomJunction": {},
+  "DA_InteriorArch_Bot": {},
+  "DA_InteriorArch_Edge": {},
+  "DA_InteriorArch_EdgeRom_Mid": {},
+  "DA_InteriorArch_EdgeRoom_Bottom": {},
+  "DA_InteriorArch_EdgeRoom_Top": {},
+  "DA_InteriorArch_EdgeTop_Top": {},
+  "DA_InteriorArch_Edge_Bottom": {},
+  "DA_InteriorArch_Edge_Mid": {},
+  "DA_InteriorArch_Edge_Top": {},
+  "DA_InteriorArch_Mid": {},
+  "DA_InteriorDoor_Single": {},
+  "DA_InteriorWall_EndRoom_Bottom": {},
+  "DA_InteriorWall_EndRoom_Bottom_Double": {},
+  "DA_InteriorWall_EndRoom_Bottom_Single": {},
+  "DA_InteriorWall_EndRoom_Mid": {},
+  "DA_InteriorWall_EndRoom_Mid_Double": {},
+  "DA_InteriorWall_EndRoom_Mid_Single": {},
+  "DA_InteriorWall_EndRoom_Top": {},
+  "DA_InteriorWall_EndRoom_Top_Double": {},
+  "DA_InteriorWall_EndRoom_Top_Single": {},
+  "DA_InteriorWall_End_Bottom": {},
+  "DA_InteriorWall_End_Mid": {},
+  "DA_InteriorWall_End_Top": {},
+  "DA_InteriorWall_InsideCorner_Bottom": {},
+  "DA_InteriorWall_InsideCorner_End_Bottom": {},
+  "DA_InteriorWall_InsideCorner_End_Mid": {},
+  "DA_InteriorWall_InsideCorner_End_Top": {},
+  "DA_InteriorWall_InsideCorner_Flipped_Bottom": {},
+  "DA_InteriorWall_InsideCorner_Flipped_End_Bottom": {},
+  "DA_InteriorWall_InsideCorner_Flipped_End_Mid": {},
+  "DA_InteriorWall_InsideCorner_Flipped_End_Top": {},
+  "DA_InteriorWall_InsideCorner_Flipped_Mid": {},
+  "DA_InteriorWall_InsideCorner_Flipped_Top": {},
+  "DA_InteriorWall_InsideCorner_Mid": {},
+  "DA_InteriorWall_InsideCorner_Top": {},
+  "DA_InteriorWall_LJunction_Bottom": {},
+  "DA_InteriorWall_LJunction_Mid": {},
+  "DA_InteriorWall_LJunction_Top": {},
+  "DA_InteriorWall_Mid_Bottom": {},
+  "DA_InteriorWall_Mid_Mid": {},
+  "DA_InteriorWall_Mid_Top": {},
+  "DA_InteriorWall_Single_Bottom": {},
+  "DA_InteriorWall_Single_Mid": {},
+  "DA_InteriorWall_Single_Top": {},
+  "DA_InteriorWall_TJunction_Bottom": {},
+  "DA_InteriorWall_TJunction_Mid": {},
+  "DA_InteriorWall_TJunction_Top": {},
+  "DA_InteriorWall_XJunction_Bottom": {},
+  "DA_InteriorWall_XJunction_Mid": {},
+  "DA_InteriorWall_XJunction_Top": {},
+  "DA_Room_InsideCorner_EndWallShort_Flipped_Bot": {},
+  "DA_Room_InsideCorner_EndWallShort_Flipped_Mid": {},
+  "DA_Room_InsideCorner_EndWallShort_Flipped_Top": {},
+  "DA_Room_Wall_EndShort_Bottom": {},
+  "DA_Room_Wall_EndWallShort_Mid": {},
+  "DA_Room_Wall_EndWallShort_Top": {},
+  "DA_Room_OutsideCorner_Bottom_NoInterior": {},
+  "DA_Room_OutsideCorner_Horizontal_InteriorWallBottom": {},
+  "DA_Room_OutsideCorner_Horizontal_InteriorWallTop": {},
+  "DA_Room_WallBottom_NoInterior": {},
+  "DA_Room_Wall_NoInterior": {},
+  "DA_InteriorWall_InsideCorner_Double_Bot": {},
+  "DA_InteriorWall_InsideCorner_Double_EndLeft_Bot": {},
+  "DA_InteriorWall_InsideCorner_Double_EndLeft_Mid": {},
+  "DA_InteriorWall_InsideCorner_Double_EndLeft_Top": {},
+  "DA_InteriorWall_InsideCorner_Double_EndRight_Bot": {},
+  "DA_InteriorWall_InsideCorner_Double_EndRight_Mid": {},
+  "DA_InteriorWall_InsideCorner_Double_EndRight_Top": {},
+  "DA_InteriorWall_InsideCorner_Double_End_Bot": {},
+  "DA_InteriorWall_InsideCorner_Double_End_Mid": {},
+  "DA_InteriorWall_InsideCorner_Double_End_Top": {},
+  "DA_InteriorWall_InsideCorner_Double_Mid": {},
+  "DA_InteriorWall_InsideCorner_Double_Top": {},
+  "DA_Ladder_Bottom": {},
+  "DA_Ladder_Junction": {},
+  "DA_Ladder_Middle": {},
+  "DA_Ladder_Top": {},
+  "DA_MoonPool_Edge": {},
+  "DA_MoonPool_EdgeLadder": {},
+  "DA_MoonPool_Edge_Left": {},
+  "DA_MoonPool_Edge_Mid": {},
+  "DA_MoonPool_Edge_Single": {},
+  "DA_MoonPool_InsideCorner": {},
+  "DA_MoonPool_OutsideCorner": {},
+  "DA_MoonPool_OutsideCorner_04": {},
+  "DA_MoonPool_OutsideCorner_05": {},
+  "DA_MoonPool_OutsideCorner_Single": {},
+  "DA_MoonPool_OutsideCorner_Single_02": {},
+  "DA_MoonPool_OutsideCorner_Single_03": {},
+  "DA_MoonPool_PoolInterior": {},
+  "DA_MoonPool_Edge_Simple": {},
+  "DA_MoonPool_InsideCorner_Simple": {},
+  "DA_MoonPool_OutsideCorner_Simple": {},
+  "DA_Nook": {},
+  "DA_Planter_Center": {},
+  "DA_Planter_Center_1": {},
+  "DA_Planter_Center_2Diagonal": {},
+  "DA_Planter_Center_2_Aligned": {},
+  "DA_Planter_Center_3": {},
+  "DA_Planter_Center_X": {},
+  "DA_Planter_Edge_Corner": {},
+  "DA_Planter_Edge_L_Inside": {},
+  "DA_Planter_Edge_Middle": {},
+  "DA_Planter_Edge_T": {},
+  "DA_Planter_Edge_T_Left": {},
+  "DA_Planter_Edge_T_Right": {},
+  "DA_Planter_Single": {},
+  "DA_Planter_Single_End": {},
+  "DA_Planter_Single_Mid": {},
+  "DA_Room_InsideCornerCap_Bottom": {},
+  "DA_Room_InsideCornerCap_Top": {},
+  "DA_Room_InsideCornerVertical": {},
+  "DA_Room_OutsideCornerCap_Bottom": {},
+  "DA_Room_OutsideCornerCap_Top": {},
+  "DA_Room_OutsideCornerHorizontal_Bottom": {},
+  "DA_Room_OutsideCornerHorizontal_Top": {},
+  "DA_Room_OutsideCornerVertical": {},
+  "DA_Room_Wall": {},
+  "DA_Room_WallBottom": {},
+  "DA_Room_WallTop": {},
+  "DA_Room_OutsideCornerHorizontal_Top_GreebleLightSingle": {},
+  "DA_Room_OutsideCornerHorizontal_Top_GreebleLightSingle_Left": {},
+  "DA_Room_WallBottom_Corner": {},
+  "DA_Room_WallBottom_Straight": {},
+  "DA_Room_WallTop_Corner": {},
+  "DA_Room_WallTop_Straight": {},
+  "DA_Room_OutsideCornerCap_Example": {},
+  "DA_Room_OutsideCornerHorizontal_Example": {},
+  "DA_Room_OutsideCornerVertical_Example": {},
+  "DA_Room_WallBottom_Example": {},
+  "DA_Room_WallTop_Example": {},
+  "DA_Room_WallVertical_Example": {},
+  "DA_Room_OutsideCornerCap_Top_FoundationNeightbor": {},
+  "DA_Room_OutsideCornerCap_Top_FoundationNeightbor_02": {},
+  "DA_Room_OutsideCornerCap_Top_FoundationNeightbor_03": {},
+  "DA_Room_OutsideCornerHorizontal_Top_FoundationNeighbor": {},
+  "DA_Sofa_EdgeLeft": {},
+  "DA_Sofa_EdgeRight": {},
+  "DA_Sofa_InnerCorner": {},
+  "DA_Sofa_OuterCorner": {},
+  "DA_Sofa_OuterCorner_EdgeLeft": {},
+  "DA_Sofa_OuterCorner_EdgeRight": {},
+  "DA_Sofa_OuterCorner_Left": {},
+  "DA_Sofa_OuterCorner_Right": {},
+  "DA_Sofa_Straight": {},
+  "DA_StackedRoom_InsideCornerCap_Bottom": {},
+  "DA_StackedRoom_InsideCornerCap_Top": {},
+  "DA_StackedRoom_InsideCornerVertical": {},
+  "DA_StackedRoom_InsideCornerVertical_Bottom": {},
+  "DA_StackedRoom_InsideCornerVertical_Middle": {},
+  "DA_StackedRoom_InsideCornerVertical_Top": {},
+  "DA_StackedRoom_OutsideCornerCap_Bottom": {},
+  "DA_StackedRoom_OutsideCornerCap_Top": {},
+  "DA_StackedRoom_OutsideCornerHorizontal_Bottom": {},
+  "DA_StackedRoom_OutsideCornerHorizontal_Top": {},
+  "DA_StackedRoom_OutsideCornerVertical": {},
+  "DA_StackedRoom_OutsideCornerVertical_Bottom": {},
+  "DA_StackedRoom_OutsideCornerVertical_Mid": {},
+  "DA_StackedRoom_OutsideCornerVertical_Top": {},
+  "DA_StackedRoom_Wall": {},
+  "DA_StackedRoom_WallBottom": {},
+  "DA_StackedRoom_WallTop": {},
+  "DA_StackedRoom_Wall_Bottom": {},
+  "DA_StackedRoom_Wall_Mid": {},
+  "DA_StackedRoom_Wall_Top": {},
+  "DA_SR_Basic_InsideCornerCap_Bottom": {},
+  "DA_SR_Basic_InsideCornerCap_Top": {},
+  "DA_SR_Basic_InsideCornerVertical_Bottom": {},
+  "DA_SR_Basic_InsideCornerVertical_Mid": {},
+  "DA_SR_Basic_InsideCornerVertical_Top": {},
+  "DA_SR_Basic_OutsideCornerCap_Bottom": {},
+  "DA_SR_Basic_OutsideCornerCap_Top": {},
+  "DA_SR_Basic_OutsideCornerHorizontal_Bottom": {},
+  "DA_SR_Basic_OutsideCornerHorizontal_Top": {},
+  "DA_SR_Basic_OutsideCornerVertical_Bottom": {},
+  "DA_SR_Basic_OutsideCornerVertical_Mid": {},
+  "DA_SR_Basic_OutsideCornerVertical_Top": {},
+  "DA_SR_Basic_WallBottom": {},
+  "DA_SR_Basic_WallTop": {},
+  "DA_SR_Basic_Wall_Bottom": {},
+  "DA_SR_Basic_Wall_Mid": {},
+  "DA_SR_Basic_Wall_Top": {},
+  "DA_SR_Inset_Bottom_InsideCornerCap": {},
+  "DA_SR_Inset_Bottom_InsideCornerCap_Floor": {},
+  "DA_SR_Inset_Bottom_OutsideCornerCap": {},
+  "DA_SR_Inset_Bottom_OutsideCornerCap_Floor": {},
+  "DA_SR_Inset_Bottom_OutsideCornerHorizontal": {},
+  "DA_SR_Inset_Bottom_OutsideCornerHorizontal_Floor": {},
+  "DA_SR_InsetStackedJunction_InsideCornerCap_Bottom": {},
+  "DA_SR_InsetStackedJunction_InsideCornerCap_Top": {},
+  "DA_SR_InsetStackedJunction_InsideCornerCap_Top_A": {},
+  "DA_SR_InsetStackedJunction_InsideCornerCap_Top_B": {},
+  "DA_SR_InsetStackedJunction_InsideCornerCap_Top_C": {},
+  "DA_SR_InsetStackedJunction_InsideCornerCap_Top_D": {},
+  "DA_SR_InsetStackedJunction_InsideCornerCap_Top_E": {},
+  "DA_SR_InsetStackedJunction_InsideCornerCap_Top_F": {},
+  "DA_SR_InsetStackedJunction_InsideCornerCap_Top_G": {},
+  "DA_SR_InsetStackedJunction_OutsideCornerCap_Bottom": {},
+  "DA_SR_InsetStackedJunction_OutsideCornerCap_Bottom_B": {},
+  "DA_SR_InsetStackedJunction_Top_Corner_Botton": {},
+  "DA_SR_InsetStackedJunction_Top_Mid_Botton": {},
+  "DA_SR_InsetStackedJunction_Top_OutsideCornerHorizontal_Bottom": {},
+  "DA_SR_InsetStackedJunction_Top_OutsideCornerHorizontal_EdgeLeft_Top": {},
+  "DA_SR_InsetStackedJunction_Top_OutsideCornerHorizontal_EdgeRight_Top": {},
+  "DA_StackedRoom_OutsideCornerCap_Top_B": {},
+  "DA_StackedRoom_OutsideCornerVertical_Bottom_A": {},
+  "DA_StackedRoom_OutsideCornerVertical_Mid_B": {},
+  "DA_StackedRoom_OutsideCornerVertical_Top_B": {},
+  "DA_StackedRoom_StackedJunction_InsideCornerCap_Top": {},
+  "DA_SR_Inset_Top_InsideCornerCap_Bottom": {},
+  "DA_SR_Inset_Top_InsideCornerCap_Ceiling": {},
+  "DA_SR_Inset_Top_OutsideCornerCap_Bottom": {},
+  "DA_SR_Inset_Top_OutsideCornerCap_Ceiling": {},
+  "DA_SR_Inset_Top_OutsideCornerHorizontal_Bottom": {},
+  "DA_SR_Inset_Top_OutsideCornerHorizontal_Ceiling": {},
+  "DA_SR_Matching_InsideCornerCap_Bottom": {},
+  "DA_SR_Matching_InsideCornerCap_Top": {},
+  "DA_SR_Matching_OutsideCornerCap_Bottom": {},
+  "DA_SR_Matching_OutsideCornerCap_Top": {},
+  "DA_SR_Matching_Wall_Bottom": {},
+  "DA_SR_Matching_Wall_Top": {},
+  "DA_StackedRoom_Overhang_InsideCornerCap_Bottom_Both": {},
+  "DA_StackedRoom_Overhang_InsideCornerCap_Bottom_Left": {},
+  "DA_StackedRoom_Overhang_InsideCornerCap_Bottom_Right": {},
+  "DA_StackedRoom_Overhang_Junction_Left_Top": {},
+  "DA_StackedRoom_Overhang_Junction_Right_Top": {},
+  "DA_StackedRoom_Overhang_OutsideCornerCap_Bottom": {},
+  "DA_StackedRoom_Overhang_OutsideCornerHorizontal_Bottom_Mid": {},
+  "DA_StackedRoom_Overhang_OutsideCornerHorizontal_Top_Mid": {},
+  "DA_StackedRoom_InsideCornerCap_Bottom_Left_Stacked": {},
+  "DA_StackedRoom_InsideCornerCap_Bottom_Right_Stacked": {},
+  "DA_StackedRoom_OutsideCornerHorizontal_BottomStacked": {},
+  "DA_StackedRoom_OutsideCornerHorizontal_TopStacked": {},
+  "DA_StackedRoom_StackedJunction_OutsideCornerHorizontal_TopLeft": {},
+  "DA_StackedRoom_StackedJunction_OutsideCornerHorizontal_TopRight": {},
+  "DA_FoundationSupport": {},
+  "DA_Support": {},
+  "DA_Support_Corridor": {},
+  "DA_Support_HalfRoundRoom": {},
+  "DA_Support_Nook": {},
+  "DA_MoonPool_Dock": {},
+  "DA_TadpoleDock_Blister": {},
+  "DA_VehicleBay": {},
+  "DA_VehicleFabricator": {},
+  "DA_Corridor_Window_EndLeft": {},
+  "DA_Corridor_Window_EndLeftEdgeSmall": {},
+  "DA_Corridor_Window_EndRight": {},
+  "DA_Corridor_Window_EndRightEdgeSmall": {},
+  "DA_Corridor_Window_Mid": {},
+  "DA_Corridor_Window_Mid_EndDoubeEdge": {},
+  "DA_Corridor_Window_Mid_EndLeft": {},
+  "DA_Corridor_Window_Mid_EndLeftEdge": {},
+  "DA_Corridor_Window_Mid_EndRight": {},
+  "DA_Corridor_Window_Mid_EndRightEdge": {},
+  "DA_Corridor_Window_SingleSmall_EndLeft": {},
+  "DA_Corridor_Window_SingleSmall_EndRight": {},
+  "DA_Corridor_Window_Single_EndLeft": {},
+  "DA_Corridor_Window_Single_EndRight": {},
+  "DA_Corridor_Window_Single_Mid": {},
+  "DA_Corridor_TJunction_Window_EndLeft": {},
+  "DA_Corridor_TJunction_Window_EndRight": {},
+  "DA_Corridor_TJunction_Window_Mid": {},
+  "DA_Corridor_TJunction_Window_Mid_EndLeft": {},
+  "DA_Corridor_TJunction_Window_Mid_EndRight": {},
+  "DA_Corridor_TJunction_Window_Single_EndLeft": {},
+  "DA_Corridor_TJunction_Window_Single_EndRight": {},
+  "DA_Window_CornerLeft_Bottom": {},
+  "DA_Window_CornerLeft_InsideCorner_Bottom": {},
+  "DA_Window_CornerLeft_InsideCorner_Top": {},
+  "DA_Window_CornerLeft_Top": {},
+  "DA_Window_CornerRight_Bottom": {},
+  "DA_Window_CornerRight_InsideCorner_Bottom": {},
+  "DA_Window_CornerRight_InsideCorner_Top": {},
+  "DA_Window_CornerRight_Top": {},
+  "DA_Window_Edge_Bottom": {},
+  "DA_Window_Edge_DoubleInsideCorner_Left": {},
+  "DA_Window_Edge_DoubleInsideCorner_Right": {},
+  "DA_Window_Edge_DoubleInsideCorner_Top": {},
+  "DA_Window_Edge_DoubleInsideCroner_Bottom": {},
+  "DA_Window_Edge_InsideCornerBottom_Left": {},
+  "DA_Window_Edge_InsideCornerBottom_Right": {},
+  "DA_Window_Edge_InsideCornerLeft_Top": {},
+  "DA_Window_Edge_InsideCornerRight_Top": {},
+  "DA_Window_Edge_InsideCornerTop_Left": {},
+  "DA_Window_Edge_InsideCornerTop_Right": {},
+  "DA_Window_Edge_InsideCronerLeft_Bottom": {},
+  "DA_Window_Edge_InsideCronerRight_Bottom": {},
+  "DA_Window_Edge_Left": {},
+  "DA_Window_Edge_Right": {},
+  "DA_Window_Edge_Top": {},
+  "DA_Window_FullGlass": {},
+  "DA_Window_InsideCornerDiagonalLeft": {},
+  "DA_Window_InsideCornerDiagonalRight": {},
+  "DA_Window_InsideCornerFour": {},
+  "DA_Window_InsideCornerLeftBottom": {},
+  "DA_Window_InsideCornerLeftTop": {},
+  "DA_Window_InsideCornerRightBottom": {},
+  "DA_Window_InsideCornerRightTop": {},
+  "DA_Window_InsideCornerThreeBottomLeft": {},
+  "DA_Window_InsideCornerThreeBottomRight": {},
+  "DA_Window_InsideCornerThreeTopLeft": {},
+  "DA_Window_InsideCornerThreeTopRight": {},
+  "DA_Window_InsideCornerTwoBottom": {},
+  "DA_Window_InsideCornerTwoLeft": {},
+  "DA_Window_InsideCornerTwoRight": {},
+  "DA_Window_InsideCornerTwoTop": {},
+  "DA_Window_Single": {},
+  "DA_Window_Single_EndLeft": {},
+  "DA_Window_Single_EndRight": {},
+  "DA_Window_Single_EndVert_Bottom": {},
+  "DA_Window_Single_EndVert_Top": {},
+  "DA_Window_Single_Mid": {},
+  "DA_Window_Single_MidVert": {},
+  "DA_Window_OutsideCorner_Single": {},
+  "DA_AbandonedBase_Example": {},
+  "DA_AB_CampOneSurveyRoom": {},
+  "DA_AB_CampOne_SalvageOfficeA": {},
+  "DA_BigBase": {},
+  "DA_CampOne": {},
+  "DA_ConceptFinal": {},
+  "DA_CorridorFullTest": {},
+  "DA_CorridorJunctionTest": {},
+  "DA_CubeRoom": {},
+  "DA_ElbowTest": {},
+  "DA_ElbowTest4": {},
+  "DA_FogTestRoom": {},
+  "DA_glasshouse": {},
+  "DA_InitialCorridor": {},
+  "DA_InitialRoom": {},
+  "DA_InsideCorner": {},
+  "DA_InteriorWalls": {},
+  "DA_InternalArchTest": {},
+  "DA_JumpStartBase_01": {},
+  "DA_JumpStartBase_2": {},
+  "DA_PhotoTour_Large": {},
+  "DA_PhotoTour_Normal": {},
+  "DA_PhotoTour_Windows": {},
+  "DA_TJunctionTest": {},
+  "DA_VehicleBaseBay": {},
+  "DA_VehicleBaseObservationBay": {},
+  "DA_VolumeNightmare": {},
+  "DA_WelcomeCenter": {},
+  "DA_WindowsTest": {},
+  "DA_XTest": {},
+  "DA_XTest2": {}
 }
