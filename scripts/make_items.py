@@ -1,9 +1,10 @@
 exports='C:/Temp/Exports/'
 
 dirs = [
-    'Subnautica2/Content/Data/CraftingRecipes',
-    'Subnautica2/Content/Data/ItemType',
-    'Subnautica2/Content/Data/BaseBuilding',
+    #'Subnautica2/Content/Data/CraftingRecipes',
+    #'Subnautica2/Content/Data/ItemType',
+    #'Subnautica2/Content/Data/BaseBuilding',
+    'Subnautica2/Content/Data',
     ]
 
 outfile = '../data/items.json'
@@ -28,15 +29,17 @@ def read_files(directory, extensions=['.json']):
 
                 for o in data:
                     key = o['Name']
-                    p = o['Properties']
-                    prop = {}
-                    #prop['file'] = file
-                    if 'Name' in p:
-                        if 'TableId' in p['Name']:
-                            prop['text_id'] = p['Name']['TableId'].split('.')[-1] + '/' + p['Name']['Key']
-                        elif 'LocalizedString' in p['Name']:
-                            prop['name'] = p['Name']['LocalizedString']
-                    out[key] = prop
+                    if 'Properties' in o:
+                        p = o['Properties']
+                        prop = {}
+                        #prop['file'] = file
+                        if 'Name' in p:
+                            if 'TableId' in p['Name']:
+                                prop['text_id'] = p['Name']['TableId'].split('.')[-1] + '/' + p['Name']['Key']
+                            elif 'LocalizedString' in p['Name']:
+                                prop['name'] = p['Name']['LocalizedString']
+                        if prop:
+                            out[key] = prop
 
 if __name__ == '__main__':
 
