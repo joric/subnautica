@@ -22,10 +22,6 @@ def read_files(directory, extensions=['.json']):
             filepath = os.path.join(root, file)
             with open(filepath, 'r', encoding='utf-8-sig', errors='ignore') as f:
                 data = json.load(f)
-                #print(f"--- {filepath} ---")
-                #print(content[:500])  # preview first 500 chars
-                #print()
-                #print(filepath)
 
                 for o in data:
                     key = o['Name']

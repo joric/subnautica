@@ -2,3 +2,4 @@ Subnautica2/Content/Maps/Main/L_Main.umap
 Subnautica2/Content/Maps/Main/L_Main/_Generated_/*.umap
 Subnautica2/Content/Localization/*
 Subnautica2/Content/Data/*
+Subnautica2/Content/Blueprints/*

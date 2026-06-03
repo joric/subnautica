@@ -25,7 +25,7 @@
       "BP_AxumGlyph_NoAdaptation_C": { "icon": "glyph", "group": "locations", "category":"Axum Glyph"},
 
       "BP_Planetary_C": { "icon": "planetary", "group": "locations", "category":"Planetary"},
-      "BP_Clamthulu_C": { "icon": "great_jaw", "group": "locations", "category":"Clam Thulhu"},
+      "BP_Clamthulu_C": { "icon": "great_jaw", "group": "locations", "category":"ST_Databank/Mobile_Life"},
       "BP_ComputerTextInterface_Terminal_C": { "icon": "terminal", "group": "locations", "category":"NOA Terminal"},
       "BP_BioBed_C": { "icon": "bed", "group": "locations", "category":"Reprint Point"},
       "BP_Black[bB]ox_Clickable_*": { "icon": "blackbox", "group": "locations", "category":"Blackbox", "weight": -10000 },
@@ -54,6 +54,9 @@
       "BP_TitaniumIngot_C": {"icon": "titanium", "group": "misc", "category": "ST_Items/TitaniumIngot" },
       "BP_Water_C": {"icon": "food", "resource": "misc", "category": "ST_Items/Water" },
       "BP_BasicBattery_C": {"icon": "resource", "group": "misc", "category": "ST_Items/Battery" },
+
+
+      ".*(_Scan_|_Scannable_)": {"icon": "fragment", "group": "locations", "category": "fragment"},
 
 
       "-BP_CableTool_C": {"icon": "upgrade", "group": "resources", "category": "Cable Tool" },
@@ -87,8 +90,8 @@
 
       "BP_SonicResonatorV2_Scannable_C": { "icon": "gun", "group": "misc", "category": "fragment", "title": "Feedback Resonator"},
 
-      ".*(_Scan_|_Scannable_)": {"icon": "fragment", "group": "misc", "category": "fragment"},
       ".*Fragment*": {"icon": "fragment", "group": "misc", "category": "fragment"},
+
       ".*(Flower|Petal|Anemone|Coral|OxygenPlant|Tree|BP_StiltOrb_).*": {"icon": "vegetation", "group": "misc", "category": "vegetation"},
       ".*(Fish).*": {"icon": "fish", "group": "misc", "category": "fish"}
     }

@@ -1,0 +1,779 @@
+{
+  "BP_Clamthulu_C": {
+    "item": "DA_Clamthulu_ScanData"
+  },
+  "BP_CollectorLeviathan_C": {
+    "item": "DA_CollectorLeviathan_ScanData1"
+  },
+  "BP_CollectorLeviathan_FirstEncounter_C": {
+    "item": "DA_CollectorLeviathan_ScanData1"
+  },
+  "BP_DeepWingLeviathan_C": {
+    "item": "DA_Deepwing_ScanData1"
+  },
+  "BP_Hammerhead_C": {
+    "item": "DA_Hammerhead_ScanData"
+  },
+  "BP_NeedlerShark_C": {
+    "item": "DA_NeedlerShark_ScanData"
+  },
+  "BP_Marrowbreach_C": {
+    "item": "DA_Marrowbreach_ScanData"
+  },
+  "BP_TwinEel_C": {
+    "item": "DA_TwinEels_ScanData1"
+  },
+  "BP_JetoCaris_C": {
+    "item": "DA_Jetocaris_ScanData"
+  },
+  "BP_JetoCaris_Juvenile_C": {
+    "item": "DA_Jetocaris_ScanData"
+  },
+  "BP_Cerathecan_01_C": {
+    "item": "DA_Cerathecan_ScanData1"
+  },
+  "BP_Epicurean_C": {
+    "item": "DA_Epicurean_ScanData1"
+  },
+  "BP_CoralCrab_C": {
+    "item": "DA_CoralCrab_ScanData"
+  },
+  "BP_NibblerShark_C": {
+    "item": "DA_NibblerMango_ScanData"
+  },
+  "BP_SurgeJelly_C": {
+    "item": "DA_SurgeJelly_ScanData"
+  },
+  "BP_JellyFisher_C": {
+    "item": "DA_Jellyfisher_ScanData"
+  },
+  "BP_Sandspear_C": {
+    "item": "DA_Sandspear_ScanData"
+  },
+  "BP_Sandspear_Juvenile_C": {
+    "item": "DA_Sandspear_ScanData"
+  },
+  "BP_ScourgeHive_C": {
+    "item": "DA_ScourgeHive_ScanData"
+  },
+  "BP_JellyRing_C": {
+    "item": "DA_JellyRing_ScanData"
+  },
+  "BP_Waxmoon_C": {
+    "item": "DA_Waxmoon_ScanData"
+  },
+  "BP_ResourceNode_PearlClamthuluPrototype_C": {
+    "item": "DA_Copper_ScanData"
+  },
+  "BP_ElusiveLeviathan_C": {
+    "item": "DA_Halfmoon_ScanData"
+  },
+  "BP_Quadrate_C": {
+    "item": "DA_Quadrate_ScanData"
+  },
+  "BP_Geordie_C": {
+    "item": "DA_Geordie_ScanData"
+  },
+  "BP_ElectricGeordie_C": {
+    "item": "DA_ElectricGeordie_ScanData"
+  },
+  "BP_Houndgar_C": {
+    "item": "DA_Houndgar_ScanData"
+  },
+  "BP_SeaOlive_C": {
+    "item": "DA_SeaOlive_ScanData"
+  },
+  "BP_Halfmoon_C": {
+    "item": "DA_Halfmoon_ScanData"
+  },
+  "BP_Halfmoon_variant01_C": {
+    "item": "DA_HalfmoonVariant01_ScanData"
+  },
+  "BP_Halfmoon_variant02_C": {
+    "item": "DA_HalfmoonVariant02_ScanData"
+  },
+  "BP_Bullethead_C": {
+    "item": "DA_Bullethead_ScanData"
+  },
+  "BP_FlashFish_C": {
+    "item": "DA_FlashFish_ScanData"
+  },
+  "BP_EpicureanSymbiote_C": {
+    "item": "DA_EpicureanSymbiote_ScanData"
+  },
+  "BP_BlightParasite_C": {
+    "item": "DA_BlightParasite_ScanData"
+  },
+  "BP_AnemoneCrab_C": {
+    "item": "DA_AnemoneCrab_ScanData"
+  },
+  "BP_AnemoneCrabDark_C": {
+    "item": "DA_AnemoneCrab_ScanData"
+  },
+  "BP_FourEye_C": {
+    "item": "DA_FourEye_ScanData"
+  },
+  "BP_Pneumo_C": {
+    "item": "DA_Pneumo_ScanData"
+  },
+  "BP_SpineyTail_C": {
+    "item": "DA_SpineyTail_ScanData"
+  },
+  "BP_SpineyTail_Variant01_C": {
+    "item": "DA_SpineyTailVariant01_ScanData"
+  },
+  "BP_VoidLeviathanChild_C": {
+    "item": "DA_VoidLeviathan_ScanData"
+  },
+  "BP_VoidLeviathanMother_C": {
+    "item": "DA_VoidLeviathan_ScanData"
+  },
+  "BP_BlightSap_C": {
+    "item": "DA_BlightSap_ScanData"
+  },
+  "BP_BioLab_C": {
+    "item": "DA_BioLab_Fragment_ScanData"
+  },
+  "BP_BioLab_WelcomeCenter_C": {
+    "item": "DA_BioLab_Fragment_ScanData"
+  },
+  "BP_FarmableAcidAnemone_C": {
+    "item": "DA_AcidRaion_ScanData"
+  },
+  "BP_FarmableCradleShootRoot_C": {
+    "item": "DA_CradleShootroot_ScanData"
+  },
+  "BP_FarmableNecroleiCyst_C": {
+    "item": "DA_StiltOrb_ScanData"
+  },
+  "BP_Freesia_BasePlant_Farmable_C": {
+    "item": "DA_FreesiaPlant_ScanData"
+  },
+  "BP_BlightCore_C": {
+    "item": "DA_BlightCore_ScanData"
+  },
+  "BP_BlightNode_C": {
+    "item": "DA_BlightNode_ScanData"
+  },
+  "BP_BlightNodeDamagePoint_C": {
+    "item": "DA_BlightCanker_ScanData"
+  },
+  "BP_HealthyAdultAngelComb_C": {
+    "item": "DA_BlightCore_Remediated_ScanData"
+  },
+  "BP_AH_Anemone_Tower_Large_02_C": {
+    "item": "DA_AnemoneTower_ScanData"
+  },
+  "BP_AH_Anemone_Tower_Medium_01_C": {
+    "item": "DA_AnemoneTower_ScanData"
+  },
+  "BP_AH_Anemone_Tower_Small_01_C": {
+    "item": "DA_AnemoneTower_ScanData"
+  },
+  "BP_AH_Anemone_Tower_Small_02_C": {
+    "item": "DA_AnemoneTower_ScanData"
+  },
+  "BP_CG_BulbFlower_C": {
+    "item": "DA_CradleShootroot_ScanData"
+  },
+  "BP_CG_CoralDomeMedium_01_C": {
+    "item": "DA_CoralDome_ScanData"
+  },
+  "BP_CG_CoralDomeMedium_02_C": {
+    "item": "DA_CoralDome_ScanData"
+  },
+  "BP_CG_CoralDomeMedium_03_C": {
+    "item": "DA_CoralDome_ScanData"
+  },
+  "BP_CavePlantTendrils_01a_C": {
+    "item": "DA_DanglingSalp_ScanData"
+  },
+  "BP_CavePlantTendrils_01b_C": {
+    "item": "DA_DanglingSalp_ScanData"
+  },
+  "BP_CavePlantTendrils_01c_C": {
+    "item": "DA_DanglingSalp_ScanData"
+  },
+  "BP_CoralSeaWhip_02a_C": {
+    "item": "DA_SeaWhip_ScanData"
+  },
+  "BP_FeelerTree_01a_C": {
+    "item": "DA_MimicPylon_ScanData"
+  },
+  "BP_Freesia_BasePlant_C": {
+    "item": "DA_FreesiaPlant_ScanData"
+  },
+  "BP_Freesia_CuttableRegrowingFlower_C": {
+    "item": "DA_FreesiaPlant_ScanData"
+  },
+  "BP_GlowLettuce_01a_C": {
+    "item": "DA_GlowLettuce_ScanData"
+  },
+  "BP_JellyRIng_01a_C": {
+    "item": "DA_JellyRing_ScanData"
+  },
+  "BP_GatewaySpire_Booster_C": {
+    "item": "DA_GatewaySpire_ScanData"
+  },
+  "BP_Food_C": {
+    "item": "DA_NutrientBlock_ScanData"
+  },
+  "BP_PowerCell_C": {
+    "item": "DA_PowerCell_ScanData"
+  },
+  "BP_WaterSlug_C": {
+    "item": "DA_Waterslug_ScanData"
+  },
+  "BP_WaterSlugWorldPopProxy_C": {
+    "item": "DA_Waterslug_ScanData"
+  },
+  "BP_FloatingLocker_Carryable_C": {
+    "item": "DA_Tools_DeployableLocker_ScanData"
+  },
+  "BP_AcidSacResource_C": {
+    "item": "DA_AcidRaion_ScanData"
+  },
+  "BP_Atacamite_C": {
+    "item": "DA_Atacamite_ScanData"
+  },
+  "BP_AxumAlloyIngot_C": {
+    "item": "DA_AxumAlloyIngot_ScanData"
+  },
+  "BP_Celestine_C": {
+    "item": "DA_Celestine_ScanData"
+  },
+  "BP_ConduitCrystal_C": {
+    "item": "DA_Fulgurite_ScanData"
+  },
+  "BP_Copper_C": {
+    "item": "DA_Copper_ScanData"
+  },
+  "BP_CopperIngot_C": {
+    "item": "DA_Copper_ScanData"
+  },
+  "BP_Enamel_C": {
+    "item": "DA_Enamel_ScanData"
+  },
+  "BP_GermaniumIngot_C": {
+    "item": "DA_Germanium_ScanData"
+  },
+  "BP_Gold_C": {
+    "item": "DA_Gold_ScanData"
+  },
+  "BP_GoldIngot_C": {
+    "item": "DA_Gold_ScanData"
+  },
+  "BP_Lead_C": {
+    "item": "DA_Lead_ScanData"
+  },
+  "BP_Lithium_C": {
+    "item": "DA_Lithium_ScanData"
+  },
+  "BP_LuciferRotsac_C": {
+    "item": "DA_LuciferRotsac_ScanData"
+  },
+  "BP_MetalSalvage_C": {
+    "item": "DA_MetalSalvage_ScanData"
+  },
+  "BP_MetalSalvage_DroppedItem_C": {
+    "item": "DA_MetalSalvage_ScanData"
+  },
+  "BP_MetalSalvage_Small_C": {
+    "item": "DA_MetalSalvage_ScanData"
+  },
+  "BP_NecroleiEgg_Item_C": {
+    "item": "DA_StiltOrb_ScanData"
+  },
+  "BP_PentResource_01a_C": {
+    "item": "DA_Pent_ScanData"
+  },
+  "BP_PentResource_02a_C": {
+    "item": "DA_Pent_ScanData"
+  },
+  "BP_PlantMatter_C": {
+    "item": "DA_PlantMatter_ScanData"
+  },
+  "BP_PlasteelIngot_C": {
+    "item": "DA_Plasteel_ScanData"
+  },
+  "BP_PlateCoralItem_C": {
+    "item": "DA_PlateCoral_ScanData"
+  },
+  "BP_Quartz_C": {
+    "item": "DA_Quartz_ScanData"
+  },
+  "BP_Salt_C": {
+    "item": "DA_Salt_ScanData"
+  },
+  "BP_Silver_C": {
+    "item": "DA_Silver_ScanData"
+  },
+  "BP_SilverIngot_C": {
+    "item": "DA_Silver_ScanData"
+  },
+  "BP_Strontium_C": {
+    "item": "DA_Strontium_ScanData"
+  },
+  "BP_Sulfur_C": {
+    "item": "DA_Sulfur_ScanData"
+  },
+  "BP_Titanium_C": {
+    "item": "DA_Titanium_ScanData"
+  },
+  "BP_TitaniumIngot_C": {
+    "item": "DA_Titanium_ScanData"
+  },
+  "BP_Troilite_C": {
+    "item": "DA_Troilite_ScanData"
+  },
+  "BP_WorldPopSpawnedCopper_C": {
+    "item": "DA_Copper_ScanData"
+  },
+  "BP_WorldPopSpawnedQuartz_C": {
+    "item": "DA_Quartz_ScanData"
+  },
+  "BP_WorldPopSpawnedResourceItem_BaseClass_C": {
+    "item": "DA_Titanium_ScanData"
+  },
+  "BP_WorldPopSpawnedSilver_C": {
+    "item": "DA_Silver_ScanData"
+  },
+  "BP_WorldPopSpawnedSilverLoose_C": {
+    "item": "DA_Silver_ScanData"
+  },
+  "BP_WorldPopSpawnedSulfurLoose_C": {
+    "item": "DA_Sulfur_ScanData"
+  },
+  "BP_WorldPopSpawnedTitanium_C": {
+    "item": "DA_Titanium_ScanData"
+  },
+  "BP_AirFruitResource_C": {
+    "item": "DA_AirFruit_ScanData"
+  },
+  "BP_AxumRebar_C": {
+    "item": "DA_AxumRebar_ScanData"
+  },
+  "BP_FerrofluidCrystalResource_C": {
+    "item": "DA_FerrofluidCrystal_ScanData"
+  },
+  "BP_Nickel_C": {
+    "item": "DA_Nickel_ScanData"
+  },
+  "BP_PrismaticShellPiece_C": {
+    "item": "DA_PrismaticShell_ScanData"
+  },
+  "BP_PuddingUrchinResource_C": {
+    "item": "DA_PuddingUrchin_ScanData"
+  },
+  "BP_ShellPiece_C": {
+    "item": "DA_ShellPiece_ScanData"
+  },
+  "BP_Salvage_Biobed_01_C": {
+    "item": "DA_BasePiece_BioBed_ScanData"
+  },
+  "BP_Salvage_RepairTool_01_C": {
+    "item": "DA_Salvage_RepairTool_01_ScanData"
+  },
+  "BP_Salvage_Tadpole_01_C": {
+    "item": "DA_Salvage_Tadpole_01_ScanData"
+  },
+  "BP_Salvage_Tadpole_02_C": {
+    "item": "DA_Salvage_Tadpole_02_ScanData"
+  },
+  "BP_Salvage_Tadpole_03_C": {
+    "item": "DA_Salvage_Tadpole_03_ScanData"
+  },
+  "BP_Salvage_Wakemaker_02_C": {
+    "item": "DA_Tools_Wakemaker_ScanData"
+  },
+  "BP_lightstick_PROTOTYPE_C": {
+    "item": "DA_Lightstick_ScanData"
+  },
+  "BP_Lighting_Alterra_Spotlight_01_C": {
+    "item": "DA_BasePiece_Spotlight_ScanData"
+  },
+  "BP_AxumTech_MetalChunk_01_C": {
+    "item": "DA_AxumTech_MetalChunk_01_ScanData"
+  },
+  "BP_AxumTech_WireBundle_C": {
+    "item": "DA_AxumTech_WireBundle_ScanData"
+  },
+  "BP_Observatory_AxumGraffiti_PurposeOfLab_C": {
+    "item": "DA_Observatory_AxumGraffiti_PurposeOfLab_ScanData"
+  },
+  "BP_Observatory_Exterior_Terminal_C": {
+    "item": "DA_Axum_Observatory_EntranceTerminal_ScanData"
+  },
+  "BP_Observatory_MainGates_C": {
+    "item": "DA_Observatory_MainEntrance_ScanData"
+  },
+  "BP_PlayerSpaceSuit_Story_C": {
+    "item": "DA_PlayerSpaceSuit_ScanData"
+  },
+  "BP_GreenshinePillar_Coils_C": {
+    "item": "DA_GreenshinePillar_Coils_ScanData"
+  },
+  "BP_GreenshinePillar_Fruits_C": {
+    "item": "DA_GreenshinePillar_Coils_ScanData"
+  },
+  "BP_AxumWallLamp_Scannable_C": {
+    "item": "DA_AxumWallLamp_ScanData"
+  },
+  "BP_CeilingLight_Rectangle_Scannable_C": {
+    "item": "DA_BasePiece_CeilingLightSmall_ScanData"
+  },
+  "BP_Interior_LightWall_Long_Scannable_C": {
+    "item": "DA_Interior_LightWall_ScanData"
+  },
+  "BP_Interior_LightWall_Small_Scannable_C": {
+    "item": "DA_Interior_LightWall_ScanData"
+  },
+  "BP_Shelf_S_A_Scannable_C": {
+    "item": "DA_Shelf_S_A_ScanData"
+  },
+  "BP_SingleBed_Scannable_C": {
+    "item": "DA_BasePiece_SingleBed_ScanData"
+  },
+  "BP_Spotlight_Scannable_C": {
+    "item": "DA_BasePiece_Spotlight_ScanData"
+  },
+  "BP_Stool_Scannable_C": {
+    "item": "DA_Stool_ScanData"
+  },
+  "BP_TrashCan_Scannable_C": {
+    "item": "DA_TrashCan_ScanData"
+  },
+  "BP_BatteryCharger_Scannable_C": {
+    "item": "DA_BasePiece_BatteryTerminal_ScanData"
+  },
+  "BP_BiobedFragmentA_Scan_C": {
+    "item": "DA_BasePiece_BioBed_ScanData"
+  },
+  "BP_BiobedFragmentB_Scan_C": {
+    "item": "DA_BasePiece_BioBed_ScanData"
+  },
+  "BP_BiobedFragmentC_Scan_C": {
+    "item": "DA_BasePiece_BioBed_ScanData"
+  },
+  "BP_Biobed_Scan_C": {
+    "item": "DA_BasePiece_BioBed_ScanData"
+  },
+  "BP_Bioreactor_Scannable_C": {
+    "item": "DA_BasePiece_Bioreactor_ScanData"
+  },
+  "BP_CarryableWallRack_Scannable_C": {
+    "item": "DA_BasePiece_CarryableWallRack_ScanData"
+  },
+  "BP_ChairDining_Scannable_C": {
+    "item": "DA_DiningChair_ScanData"
+  },
+  "BP_ChairLab_Scannable_C": {
+    "item": "DA_LabChair_ScanData"
+  },
+  "BP_ComputerCore_Scan_C": {
+    "item": "DA_BrokenComputerCore_ScanData"
+  },
+  "BP_DiveElevator_Scannable_C": {
+    "item": "DA_BasePiece_DiveElevator_ScanData"
+  },
+  "BP_FloorLocker_Scannable_C": {
+    "item": "DA_BasePiece_FloorLocker_ScanData"
+  },
+  "BP_FoundationAssembly_Scannable_C": {
+    "item": "DA_Foundation_ScanData"
+  },
+  "BP_HydroelectricTurbine_Scannable_C": {
+    "item": "DA_BasePiece_HydroelectricTurbine_ScanData"
+  },
+  "BP_ModificationStation_Scannable_C": {
+    "item": "DA_Interior_ModificationStation_ScanData"
+  },
+  "BP_OfficeTable01_Scannable_C": {
+    "item": "DA_DiningTable_ScanData"
+  },
+  "BP_PowerCellTerminal_Scannable_C": {
+    "item": "DA_BasePiece_PowerCellTerminal_ScanData"
+  },
+  "BP_PowerGridCapacitor_Scan_C": {
+    "item": "DA_BasePiece_PowerCapacitor_ScanData"
+  },
+  "BP_Processor_Scannable_C": {
+    "item": "DA_BasePiece_Processor_ScanData"
+  },
+  "BP_ScannerStation_Scannable_C": {
+    "item": "DA_BasePiece_ScannerStationLR_ScanData"
+  },
+  "BP_Stabilizer_Scan_C": {
+    "item": "DA_Stabilizer_ScanData"
+  },
+  "BP_ThermalPlantBody_Scan_C": {
+    "item": "DA_BasePiece_ThermalPlant_ScanData"
+  },
+  "BP_ThermalPlantHead_Scan_C": {
+    "item": "DA_BasePiece_ThermalPlant_ScanData"
+  },
+  "BP_Transmitter_Scannable_C": {
+    "item": "DA_BasePiece_PowerTransmitter_ScanData"
+  },
+  "BP_Window_Scannable_C": {
+    "item": "DA_BasePiece_Window_ScanData"
+  },
+  "BP_Axum_Drum_Scan_C": {
+    "item": "DA_Axum_Drum_ScanData"
+  },
+  "BP_Axum_Jar_Scannable_C": {
+    "item": "DA_Axum_Jar_ScanData"
+  },
+  "BP_Axum_Jar_Small_Scannable_C": {
+    "item": "DA_Axum_Jar_Small_ScanData"
+  },
+  "BP_Axum_Jar_Tall_Scannable_C": {
+    "item": "DA_Axum_Jar_Tall_ScanData"
+  },
+  "BP_Tailing_Barrel_Scannable_C": {
+    "item": "DA_Tailing_Barrel_ScanData"
+  },
+  "BP_Tailing_Chest_Scannable_C": {
+    "item": "DA_Tailing_Chest_ScanData"
+  },
+  "BP_Tailing_Jar_Coral_Scannable_C": {
+    "item": "DA_Tailing_Jar_Coral_ScanData"
+  },
+  "BP_Tailing_Jar_Coral_Small_Scannable_C": {
+    "item": "DA_Tailing_Jar_Coral_Small_ScanData"
+  },
+  "BP_Tailing_Jar_Hanging_Scannable_C": {
+    "item": "DA_Tailing_Jar_Hanging_ScanData"
+  },
+  "BP_Tailing_Jar_Scannable_C": {
+    "item": "DA_Tailing_Jar_ScanData"
+  },
+  "BP_Tailing_Rug_Scannable_C": {
+    "item": "DA_Tailing_Rug_ScanData"
+  },
+  "BP_Tailing_Table_Scannable_C": {
+    "item": "DA_Tailing_Table_ScanData"
+  },
+  "BP_Poster_Community01_Scannable_C": {
+    "item": "DA_BasePiece_Community01Poster_ScanData"
+  },
+  "BP_Poster_KeepCalm_Scannable_C": {
+    "item": "DA_BasePiece_KeepCalmPoster_ScanData"
+  },
+  "BP_Poster_KeepSwimming_Scannable_C": {
+    "item": "DA_Poster_KeepSwimming_ScanData"
+  },
+  "BP_Poster_PaintedTree_Scannable_C": {
+    "item": "DA_Poster_PaintedTree_ScanData"
+  },
+  "BP_Poster_PioneerProgram_Scannable_C": {
+    "item": "DA_BasePiece_Poster_PioneerProgram_ScanData"
+  },
+  "BP_Poster_Reprinting_Scannable_C": {
+    "item": "DA_Poster_Reprinting_ScanData"
+  },
+  "BP_Poster_ScoutRay_Scannable_C": {
+    "item": "DA_Poster_ScoutRay_ScanData"
+  },
+  "BP_Poster_Zezura_01_Scannable_C": {
+    "item": "DA_Poster_Zezura_01_ScanData"
+  },
+  "BP_Poster_Zezura_02_Scannable_C": {
+    "item": "DA_Poster_Zezura_02_ScanData"
+  },
+  "BP_POI_FlashLightArt_HumanShape_C": {
+    "item": "DA_FlashLightArt_HumanShape_ScanData"
+  },
+  "BP_POI_GardenOfFeelers_C": {
+    "item": "DA_ColumnofFeelers_ScanData"
+  },
+  "BP_BatteryV2_Scannable_C": {
+    "item": "DA_BatteryV2_ScanData"
+  },
+  "BP_Beacon_Scannable_C": {
+    "item": "DA_Tools_Beacon_ScanData"
+  },
+  "BP_BuilderTool_Scannable_C": {
+    "item": "DA_Tools_HabitatBuilder_ScanData"
+  },
+  "BP_Display_TimeOfDay_Scannable_C": {
+    "item": "DA_Display_TimeOfDay_ScanData"
+  },
+  "BP_Fins_Scannable_C": {
+    "item": "DA_Fins_ScanData"
+  },
+  "BP_Flashlight_Scan_C": {
+    "item": "DA_Tools_Flashlight_ScanData"
+  },
+  "BP_Glowstick_Scannable_C": {
+    "item": "DA_Tools_Flare_ScanData"
+  },
+  "BP_HighCapacityOxygenTank_Scannable_C": {
+    "item": "DA_LargeAirTank_ScanData"
+  },
+  "BP_ImprovedFins_Scannable_C": {
+    "item": "DA_ImprovedFins_ScanData"
+  },
+  "BP_Lightstick_Scannable_C": {
+    "item": "DA_Lightstick_ScanData"
+  },
+  "BP_OxygenGeneratorCarryable_Scannable_C": {
+    "item": "DA_OxygenGeneratorCarryable_ScanData"
+  },
+  "BP_PowerCellV2_Scannable_C": {
+    "item": "DA_PowerCellV2_ScanData"
+  },
+  "BP_Rebreather_Scannable_C": {
+    "item": "DA_Rebreather_ScanData"
+  },
+  "BP_RepairTool_Scannable_C": {
+    "item": "DA_Tools_RepairTool_ScanData"
+  },
+  "BP_ScannerV2_Scannable_C": {
+    "item": "DA_Tools_SuperScanner_ScanData"
+  },
+  "BP_SmallOxygenTank_Scannable_C": {
+    "item": "DA_SmallAirTank_ScanData"
+  },
+  "BP_SonicResonatorV2_Scannable_C": {
+    "item": "DA_Tools_ModdedResonator_ScanData"
+  },
+  "BP_SonicResonator_Scan_C": {
+    "item": "DA_Salvage_SonicResonator_01_ScanData"
+  },
+  "BP_Tadpole_Fragment_01_C": {
+    "item": "DA_Tadpole_Fragment_ScanData"
+  },
+  "BP_Tadpole_Fragment_02_C": {
+    "item": "DA_Tadpole_Fragment_ScanData"
+  },
+  "BP_Tadpole_HAUL_Fragment_C": {
+    "item": "DA_Tadpole_HAUL_Fragment_ScanData"
+  },
+  "BP_Tadpole_ScoutRay_Fragment_C": {
+    "item": "DA_Tadpole_ScoutRay_Fragment_ScanData"
+  },
+  "BP_WakeMaker_Scan_C": {
+    "item": "DA_Tools_Wakemaker_ScanData"
+  },
+  "BP_WorkLightCarryable_Scannable_C": {
+    "item": "DA_WorkLightCarryable_ScanData"
+  },
+  "BP_SnapshotScreenPrototype_C": {
+    "item": "DA_SnapshotScreenPrototype_ScanData"
+  },
+  "BP_AcidAnemone_C": {
+    "item": "DA_AcidRaion_ScanData"
+  },
+  "BP_AcidAnemoneFruit_C": {
+    "item": "DA_AcidRaion_ScanData"
+  },
+  "BP_AcidAnemone_MedigelSac_C": {
+    "item": "DA_AcidRaion_ScanData"
+  },
+  "BP_AcidAnemone_MedigelSac_Dropped_C": {
+    "item": "DA_AcidRaion_ScanData"
+  },
+  "BP_NecroleiCystFruit_C": {
+    "item": "DA_StiltOrb_ScanData"
+  },
+  "BP_BlightWall_C": {
+    "item": "DA_BlightWall_ScanData"
+  },
+  "BP_UpgradeTerminal_C": {
+    "item": "DA_BasePiece_BioBed_ScanData"
+  },
+  "BP_Tadpole_C": {
+    "item": "DA_Tadpole_ScanData"
+  },
+  "BP_Haul_TadpoleChassis_C": {
+    "item": "DA_Tadpole_HAUL_ScanData"
+  },
+  "BP_ScoutRay_TadpoleChassis_C": {
+    "item": "DA_Tadpole_ScoutRay_ScanData"
+  },
+  "BP_OxygenPlant_C": {
+    "item": "DA_OxygenTunic_ScanData"
+  },
+  "BP_OxygenPlant_Parent_C": {
+    "item": "DA_OxygenTunic_ScanData"
+  },
+  "BP_ResourceDeposit_Atacamite_C": {
+    "item": "DA_Atacamite_ScanData"
+  },
+  "BP_ResourceDeposit_AxumRebar_C": {
+    "item": "DA_AxumRebar_ScanData"
+  },
+  "BP_ResourceDeposit_Celestine_C": {
+    "item": "DA_Celestine_ScanData"
+  },
+  "BP_ResourceDeposit_Copper_C": {
+    "item": "DA_Copper_ScanData"
+  },
+  "BP_ResourceDeposit_DeepRootResonatableResource_C": {
+    "item": "DA_DeepRootResource_ScanData"
+  },
+  "BP_ResourceDeposit_Fulgurite_C": {
+    "item": "DA_Fulgurite_ScanData"
+  },
+  "BP_ResourceDeposit_Gold_C": {
+    "item": "DA_Gold_ScanData"
+  },
+  "BP_ResourceDeposit_Lead_C": {
+    "item": "DA_Lead_ScanData"
+  },
+  "BP_ResourceDeposit_Lithium_C": {
+    "item": "DA_Lithium_ScanData"
+  },
+  "BP_ResourceDeposit_LithiumPearl_ClamthuluOnly_C": {
+    "item": "DA_Lithium_ScanData"
+  },
+  "BP_ResourceDeposit_NeedleSharkNeedles_C": {
+    "item": "DA_NeedlerSHarkNeedle_ScanData"
+  },
+  "BP_ResourceDeposit_Quartz_C": {
+    "item": "DA_Quartz_ScanData"
+  },
+  "BP_ResourceDeposit_Salt_C": {
+    "item": "DA_Salt_ScanData"
+  },
+  "BP_ResourceDeposit_Silver_C": {
+    "item": "DA_Silver_ScanData"
+  },
+  "BP_ResourceDeposit_Sulfur_C": {
+    "item": "DA_Sulfur_ScanData"
+  },
+  "BP_ResourceDeposit_Titanium_C": {
+    "item": "DA_Titanium_ScanData"
+  },
+  "BP_ResourceNode_Celestine_C": {
+    "item": "DA_Celestine_ScanData"
+  },
+  "BP_ResourceNode_Copper_C": {
+    "item": "DA_Copper_ScanData"
+  },
+  "BP_ResourceNode_Gold_C": {
+    "item": "DA_Gold_ScanData"
+  },
+  "BP_ResourceNode_Lead_C": {
+    "item": "DA_Lead_ScanData"
+  },
+  "BP_ResourceNode_Quartz_C": {
+    "item": "DA_Quartz_ScanData"
+  },
+  "BP_ResourceNode_Salt_C": {
+    "item": "DA_Salt_ScanData"
+  },
+  "BP_ResourceNode_Shell_C": {
+    "item": "DA_PrismaticShell_ScanData"
+  },
+  "BP_ResourceNode_Silver_C": {
+    "item": "DA_Silver_ScanData"
+  },
+  "BP_ResourceNode_Sulfur_C": {
+    "item": "DA_Sulfur_ScanData"
+  },
+  "BP_ResourceNode_Titanium_C": {
+    "item": "DA_Titanium_ScanData"
+  }
+}

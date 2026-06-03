@@ -176,6 +176,8 @@ let iconData = {};
 let stringData =  {};
 let regionData = {};
 let itemsData = {};
+let blueprintsData = {};
+
 let regionDataLoaded = false;
 
 let mapParam = {};
@@ -797,6 +799,10 @@ function popupOnClick(e) {
     note += `<hr>${translate(o.text_id)}`;
   }
 
+  if (blueprintsData[o.type]) {
+    note += '<hr>' + translate(blueprintsData[o.type].item);
+  }
+
   if (o.spawns) {
     let pt = getType2({...o, 'type': o.spawns, 'name': o.name + ':spawns' });
     note += '<hr>' + translate(pt.name || pt.category || o.spawns);
@@ -993,6 +999,10 @@ function addMarker(feature, options) {
 
   if (o.text_id) {
     note += ' - ' + translate(o.text_id);
+  }
+
+  if (blueprintsData[o.type]) {
+    note += ' - ' + translate(blueprintsData[o.type].item);
   }
   
   if (o.spawns) {
@@ -2231,11 +2241,12 @@ window.onload = function(event) {
       'data/strings.json',
       'data/regions.json',
       'data/items.json',
+      'data/blueprints.json',
       'data/markers.json',
     ].map(url=>fetch(url).then(r=>r.json()));
 
     Promise.all(promises).then(data => {
-      [typeData, iconData, stringData, regionData, itemsData, markersData] = data;
+      [typeData, iconData, stringData, regionData, itemsData, blueprintsData, markersData] = data;
 
       iconData['misc'] = {"class": "fa-solid fa-circle-question", "bg": "grey"};
       console.time('rendering icons');
