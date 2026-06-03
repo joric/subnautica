@@ -5,7 +5,7 @@
     "type": {
       "playerPosition": {"icon": "player", "group": "locations", "category": "Player Position" },
       "regionMarker": {"icon": "region", "group": "locations", "category": "Region Marker" },
-      "BookMark": {"icon": "bookmark", "group": "misc", "category": "Bookmark" },
+      "BookMark": {"icon": "bookmark", "group": "misc", "category": "ST_PDA/Signals" },
       "BP_StaticLifepod_Surface_C": {"icon": "lifepod", "group": "locations", "category": "Lifepod" },
       "BP_EdgeOfWorldVolume_C": {"icon": "edge_volume", "group": "misc", "category": "Edge Volume" },
       "UWEBoxWorldZone": {"icon": "zone_box", "group": "misc", "category": "Zone Box" },
