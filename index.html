@@ -797,6 +797,12 @@ function popupOnClick(e) {
     note += `<hr>${translate(o.text_id)}`;
   }
 
+  if (o.spawns) {
+    let pt = getType2({...o, 'type': o.spawns, 'name': o.name + ':spawns' });
+    note += '<hr>' + translate(pt.name || pt.category || o.spawns);
+  }
+
+
   if (o.unlocks) {
     note += '<hr>' + o.unlocks.map(translate).join('<br>');
   }
