@@ -48,7 +48,7 @@
       "BP_CopperWire_C": {"icon": "resource", "group": "misc", "category": "ST_Items/CopperWire" },
       "BP_WiringKit_C": {"icon": "resource", "group": "misc", "category": "ST_Items/WiringKit" },
       "BP_MedKit_C": {"icon": "medkit", "group": "misc", "category": "ST_Items/RefinedMedigel" },
-      "BP_BuilderTool_Scannable_C": {"icon": "resource", "group": "misc", "category": "fragment", "title": "ST_CraftingSources/BuilderTool" },
+
       "BP_Lead_C": {"icon": "lead", "group": "misc", "category": "ST_Lead/Lead" },
       "BP_Flares_C": {"icon": "resource", "group": "misc", "category": "ST_Items/Flare" },
       "BP_TitaniumIngot_C": {"icon": "titanium", "group": "misc", "category": "ST_Items/TitaniumIngot" },
@@ -57,6 +57,7 @@
 
 
       ".*(_Scan_|_Scannable_)": {"icon": "fragment", "group": "locations", "category": "fragment"},
+      ".*Fragment*": {"icon": "fragment", "group": "locations", "category": "fragment"},
 
 
       "-BP_CableTool_C": {"icon": "upgrade", "group": "resources", "category": "Cable Tool" },
@@ -81,16 +82,8 @@
       "BP_ResourceNode_*": { "icon": "nodes", "group": "resources", "category": "unsorted" },
       "BP_ResourceDeposit_*": { "icon": "deposit", "group": "resources", "category": "unsorted"},
 
-      "BP_Tadpole_.*Fragment*": {"icon": "tadpole", "group": "misc", "category": "fragment", "title": "ST_NoA_Habitat/Communication_TadpolePens_Prompt"},
-
-      "BP_BiobedFragment*": {"icon": "fragment", "group": "misc", "category": "fragment", "title": "Biobed Fragment"},
-      "BP_BioLab_Fragment*": {"icon": "fragment", "group": "misc", "category": "fragment", "title": "Biolab Fragment"},
 
       "BP_Base*": {"icon": "blueprint", "group": "misc", "category": "ST_BaseMenuCategories/BasePieces"},
-
-      "BP_SonicResonatorV2_Scannable_C": { "icon": "gun", "group": "misc", "category": "fragment", "title": "Feedback Resonator"},
-
-      ".*Fragment*": {"icon": "fragment", "group": "misc", "category": "fragment"},
 
       ".*(Flower|Petal|Anemone|Coral|OxygenPlant|Tree|BP_StiltOrb_).*": {"icon": "vegetation", "group": "misc", "category": "vegetation"},
       ".*(Fish).*": {"icon": "fish", "group": "misc", "category": "fish"}
