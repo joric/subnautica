@@ -1017,8 +1017,12 @@ function addMarker(feature, options) {
   }
   
   if (o.spawns) {
-    let pt = getType2({...o, 'type': o.spawns, 'name': o.name + ':spawns' });
-    note += ' - ' + translate(pt.name || pt.category || o.spawns);
+    if (blueprintsData[o.spawns]) {
+      note += ' - ' + translate(blueprintsData[o.spawns].item);
+    } else {
+      let pt = getType2({...o, 'type': o.spawns, 'name': o.name + ':spawns' });
+      note += ' - ' + translate(pt.name || pt.category || o.spawns);
+    }
   }
 
   if (o.unlocks) {
