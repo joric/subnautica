@@ -62,7 +62,7 @@
 
       "-BP_CableTool_C": {"icon": "upgrade", "group": "resources", "category": "Cable Tool" },
 
-      "BP_AcidAnemone_C": {"icon": "acid_anemone", "group": "misc", "category": "vegetation", "title": "ST_Databank_Sessile/AcidRaion"},
+      "BP_AcidAnemone_C": {"icon": "acid_anemone", "group": "misc", "category": "vegetation"},
 
 
       ".*titanium*": { "icon": "titanium", "group": "resources", "category": "Titanium"},
