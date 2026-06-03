@@ -21,8 +21,8 @@
 
       "BP_AngelCombCore_C": { "icon": "angel_comb", "group": "locations", "title":"Angel Comb"},
 
-      "BP_AxumGlyph_C": { "icon": "glyph", "group": "locations", "category":"AxumGlyph"},
-      "BP_AxumGlyph_NoAdaptation_C": { "icon": "glyph", "group": "locations", "category":"AxumGlyph"},
+      "BP_AxumGlyph_C": { "icon": "glyph", "group": "locations", "category": "Axum Glyph"},
+      "BP_AxumGlyph_NoAdaptation_C": { "icon": "glyph", "group": "locations", "category": "Axum Glyph"},
 
       "BP_Planetary_C": { "icon": "planetary", "group": "locations", "title":"Planetary"},
       "BP_Clamthulu_C": { "icon": "great_jaw", "group": "locations", "title":"ST_Databank/Mobile_Life"},
