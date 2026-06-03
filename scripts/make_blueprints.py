@@ -29,7 +29,7 @@ def read_files(directory, extensions=['.json']):
                     elif o['Type']=='UWEAssetUserData':
                         assets = o.get('Properties', {}).get('DataAssets', [])
                         if isinstance(assets, list):
-                            matches = [da['ObjectName'].split("'")[-2] for da in assets if da and 'ObjectName' in da and 'ScanData' in da['ObjectName']]
+                            matches = [da['ObjectName'].split("'")[-2] for da in assets if da and 'ObjectName' in da and ('ScanData' in da['ObjectName'] or 'ItemType' in  da['ObjectName'])]
                             if matches:
                                 prop['item'] = matches[0]
                                 break
