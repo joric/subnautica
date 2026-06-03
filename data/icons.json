@@ -34,6 +34,7 @@
   "acid_anemone": { "class": "fa fa-plant-wilt", "color": "magenta" },
   "resource": { "class": "fa fa-screwdriver-wrench", "color": "darkcyan" },
   "food": { "class": "fa fa-utensils", "color": "darkcyan" },
+  "monster": { "class": "fa fa-dragon", "color": "red" },
 
   "titanium": { "class": "fa fa-cubes", "color": "grey" },
   "silver": { "class": "fa fa-cubes", "color": "lightgrey" },
