@@ -175,6 +175,7 @@ let typeData = {};
 let iconData = {};
 let stringData =  {};
 let regionData = {};
+let itemsData = {};
 let regionDataLoaded = false;
 
 let mapParam = {};
@@ -199,7 +200,9 @@ function splitCamelCase(s) {
 }
 
 function translate(s) {
+  if (!s || !typeof(s) === 'string') return s;
   if (lang) {
+    if (itemsData && itemsData[s]) return translate([itemsData[s].text_id] || itemsData[s].name);
     const t = String((typeof stringData[s] === 'string' && stringData[s]) || s);
     if (t.includes('/')) {
       const parts = t.split('/');
@@ -795,7 +798,7 @@ function popupOnClick(e) {
   }
 
   if (o.unlocks) {
-    note += '<hr>' + o.unlocks.join('<br>');
+    note += '<hr>' + o.unlocks.map(translate).join('<br>');
   }
 
 
@@ -976,31 +979,29 @@ function addMarker(feature, options) {
   let subtitle = getSubtitle(feature);
   if (subtitle) subtitle = ' - ' + subtitle;
 
-  let title = t.title || t.category || feature.properties.type;
-
-  let tooltipTitle = translate(title);
+  let title = translate(t.title || t.category || feature.properties.type);
 
   const truncate = (str, n=40) => str.length < n ? str : str.slice(0, n) + "...";
 
   let note='';
 
   if (o.text_id) {
-    tooltipTitle += ` - ${truncate(translate(o.text_id))}`;
+    note += ' - ' + translate(o.text_id);
   }
   
   if (o.spawns) {
     let pt = getType2({...o, 'type': o.spawns, 'name': o.name + ':spawns' });
-    tooltipTitle += ` - ${translate(pt.category||o.spawns)}`;
+    note += ' - ' + translate(pt.name || pt.category || o.spawns);
   }
 
-  if (o.type == 'regionMarker') {
-    tooltipTitle = translate(o.title);
-  } else {
-    let cc = marker.feature.geometry.coordinates;
-    tooltipTitle += ' '+formatZ(cc);
+  if (o.unlocks) {
+    note += ' - ' + o.unlocks.map(translate).join(', ');
   }
 
-  const tooltip = new maptalks.ui.ToolTip(`${tooltipTitle}`, {
+  let cc = marker.feature.geometry.coordinates;
+  let depth = ' '+formatZ(cc);
+
+  const tooltip = new maptalks.ui.ToolTip(`${title}${truncate(note)}${depth}`, {
       showTimeout: 100, // Delay in milliseconds before showing the tooltip
       dx: 10,           // X-offset from the geometry
       dy: -10           // Y-offset from the geometry
@@ -1330,21 +1331,14 @@ function loadMarkersBatched(features, options) {
       playerMarker.on('dragstart', function(e) {
         activeMarker?.closeInfoWindow();
       })
-
-
-      // preload polygons from regions.json, re-assign later with hit check
-      if (regionData && !regionDataLoaded) {
-        regionDataLoaded = true;
-        let layer = addRegions(regionData);
-        //console.log('loaded', polygons.length, 'polygons', polygons);
-        let groupLayer = map.getLayer('GroupGLLayer');
-        layer.addTo(groupLayer); // filtered
-        //layer.addTo(map); // always visible
-      }
     }
   }
   setTimeout(processBatch, 0); // Start processing asynchronously
 
+  // preload polygons from regions.json, re-assign later with hit check
+  if (regionData) {
+    addRegions(regionData).addTo(map.getLayer('GroupGLLayer'));
+  }
 }
 
 function loadMarkers(data, mapId, legacy=true) {
@@ -2228,11 +2222,12 @@ window.onload = function(event) {
       'data/icons.json',
       'data/strings.json',
       'data/regions.json',
+      'data/items.json',
       'data/markers.json',
     ].map(url=>fetch(url).then(r=>r.json()));
 
     Promise.all(promises).then(data => {
-      [typeData, iconData, stringData, regionData, markersData] = data;
+      [typeData, iconData, stringData, regionData, itemsData, markersData] = data;
 
       iconData['misc'] = {"class": "fa-solid fa-circle-question", "bg": "grey"};
       console.time('rendering icons');

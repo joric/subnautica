@@ -1,3 +1,5 @@
 Subnautica2/Content/Maps/Main/L_Main.umap
 Subnautica2/Content/Maps/Main/L_Main/_Generated_/*.umap
-Subnautica2/Content/Localization/*.*
+Subnautica2/Content/Localization/*
+Subnautica2/Content/Data/CraftingRecipes/*
+Subnautica2/Content/Data/ItemType/*
