@@ -31,6 +31,9 @@
   "station": { "class": "fa fa-tower-cell", "color": "slategrey" },
   "base": { "class": "fa fa-house", "color": "slategrey" },
   "medkit": { "class": "fa fa-briefcase-medical", "color": "red" },
+  "acid_anemone": { "class": "fa fa-plant-wilt", "color": "magenta" },
+  "resource": { "class": "fa fa-screwdriver-wrench", "color": "darkcyan" },
+  "food": { "class": "fa fa-utensils", "color": "darkcyan" },
 
   "titanium": { "class": "fa fa-cubes", "color": "grey" },
   "silver": { "class": "fa fa-cubes", "color": "lightgrey" },

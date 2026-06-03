@@ -25,7 +25,7 @@
       "BP_BioBed_C": { "icon": "bed", "group": "locations", "category":"Reprint Point"},
       "BP_Black[bB]ox_Clickable_*": { "icon": "blackbox", "group": "locations", "category":"Blackbox", "weight": -10000 },
       "BP_CrabFeces_C": { "icon": "poop", "group": "resources", "category":"Crab Feces"},
-      "BP_WaterSlugWorldPopProxy_C": { "icon": "water_slug", "group": "misc", "category":"Water Slug"},
+      "BP_WaterSlugWorldPopProxy_C": { "icon": "water_slug", "group": "misc", "category": "ST_Databank_Motile/WaterSlug"},
       "BP_BlightNode_C": { "icon": "canker", "group": "locations", "category":"Bloom Node"},
       "BP_ActivateConsoleButton_C": { "icon": "alien_console", "group": "locations", "category":"Alien Console"},
       "BP_WorldBuildable_C": { "icon": "turbine", "group": "locations", "category":"Turbine"},
@@ -39,19 +39,22 @@
       "BP_AbandonedBaseSign_C": {"icon": "base", "group": "locations", "category": "ST_BaseSignal/BaseSignal" },
 
 
-      "BP_Food_C": {"icon": "misc", "group": "misc", "category": "ST_Game/Food" },
-      "BP_CopperWire_C": {"icon": "misc", "group": "misc", "category": "ST_Items/CopperWire" },
-      "BP_WiringKit_C": {"icon": "misc", "group": "misc", "category": "ST_Items/WiringKit" },
+      "BP_Food_C": {"icon": "food", "group": "misc", "category": "ST_Game/Food" },
+      "BP_CopperWire_C": {"icon": "resource", "group": "misc", "category": "ST_Items/CopperWire" },
+      "BP_WiringKit_C": {"icon": "resource", "group": "misc", "category": "ST_Items/WiringKit" },
       "BP_MedKit_C": {"icon": "medkit", "group": "misc", "category": "ST_Items/RefinedMedigel" },
-      "BP_BuilderTool_Scannable_C": {"icon": "misc", "group": "misc", "category": "ST_CraftingSources/BuilderTool" },
-      "BP_Lead_C": {"icon": "misc", "group": "misc", "category": "ST_Lead/Lead" },
-      "BP_Flares_C": {"icon": "misc", "group": "misc", "category": "ST_Items/Flare" },
-      "BP_TitaniumIngot_C": {"icon": "misc", "group": "misc", "category": "ST_Items/TitaniumIngot" },
-      "BP_Water_C": {"icon": "misc", "group": "misc", "category": "ST_Items/Water" },
-      "BP_BasicBattery_C": {"icon": "misc", "group": "misc", "category": "ST_Items/Battery" },
+      "BP_BuilderTool_Scannable_C": {"icon": "resource", "group": "misc", "category": "fragment", "title": "ST_CraftingSources/BuilderTool" },
+      "BP_Lead_C": {"icon": "lead", "group": "misc", "category": "ST_Lead/Lead" },
+      "BP_Flares_C": {"icon": "resource", "group": "misc", "category": "ST_Items/Flare" },
+      "BP_TitaniumIngot_C": {"icon": "titanium", "group": "misc", "category": "ST_Items/TitaniumIngot" },
+      "BP_Water_C": {"icon": "food", "resource": "misc", "category": "ST_Items/Water" },
+      "BP_BasicBattery_C": {"icon": "resource", "group": "misc", "category": "ST_Items/Battery" },
 
 
       "-BP_CableTool_C": {"icon": "upgrade", "group": "resources", "category": "Cable Tool" },
+
+      "BP_AcidAnemone_C": {"icon": "acid_anemone", "group": "misc", "category": "vegetation", "title": "ST_Databank_Sessile/AcidRaion"},
+
 
       ".*titanium*": { "icon": "titanium", "group": "resources", "category": "Titanium"},
       ".*copper*": { "icon": "copper", "group": "resources",  "category": "Copper"},
@@ -70,16 +73,16 @@
       "BP_ResourceNode_*": { "icon": "nodes", "group": "resources", "category": "unsorted" },
       "BP_ResourceDeposit_*": { "icon": "deposit", "group": "resources", "category": "unsorted"},
 
-      "BP_Tadpole_.*Fragment*": {"icon": "tadpole", "group": "misc", "category": "ST_NoA_Habitat/Communication_TadpolePens_Prompt"},
+      "BP_Tadpole_.*Fragment*": {"icon": "tadpole", "group": "misc", "category": "fragment", "title": "ST_NoA_Habitat/Communication_TadpolePens_Prompt"},
 
-      "BP_BiobedFragment*": {"icon": "fragment", "group": "misc", "category": "Biobed Fragment"},
-      "BP_BioLab_Fragment*": {"icon": "fragment", "group": "misc", "category": "Biolab Fragment"},
+      "BP_BiobedFragment*": {"icon": "fragment", "group": "misc", "category": "fragment", "title": "Biobed Fragment"},
+      "BP_BioLab_Fragment*": {"icon": "fragment", "group": "misc", "category": "fragment", "title": "Biolab Fragment"},
 
-      "BP_Base*": {"icon": "fragment", "group": "misc", "category": "Base Module"},
+      "BP_Base*": {"icon": "fragment", "group": "misc", "category": "ST_BaseMenuCategories/BasePieces"},
 
-      "BP_SonicResonatorV2_Scannable_C": { "icon": "gun", "group": "misc", "category": "Feedback Resonator"},
+      "BP_SonicResonatorV2_Scannable_C": { "icon": "gun", "group": "misc", "category": "fragment", "title": "Feedback Resonator"},
 
-      ".*(_Scan_|_Scannable_)": {"icon": "fragment", "group": "misc", "category": "Scannable"},
+      ".*(_Scan_|_Scannable_)": {"icon": "fragment", "group": "misc", "category": "fragment"},
       ".*Fragment*": {"icon": "fragment", "group": "misc", "category": "fragment"},
       ".*(Flower|Petal|Anemone|Coral|OxygenPlant|Tree|BP_StiltOrb_).*": {"icon": "vegetation", "group": "misc", "category": "vegetation"},
       ".*(Fish).*": {"icon": "fish", "group": "misc", "category": "fish"}

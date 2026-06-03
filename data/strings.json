@@ -5,6 +5,12 @@
   "locations": "ST_Databank/Points_of_Interest",
   "resources": "ST_Databank/Resources",
 
+  "vegetation": "ST_BaseMenuCategories/Plants",
+
+  "fish": "ST_Databank_Motile/Fish",
+
+  "fragment": "ST_Databank/Blueprints",
+
   "misc": {
     "en": "Misc",
     "de": "Verschiedenes",
