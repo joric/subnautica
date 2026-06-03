@@ -976,7 +976,7 @@ function addMarker(feature, options) {
   let subtitle = getSubtitle(feature);
   if (subtitle) subtitle = ' - ' + subtitle;
 
-  let title = t.title || capitalize(t.category) || feature.properties.type;
+  let title = t.title || t.category || feature.properties.type;
 
   let tooltipTitle = translate(title);
 
