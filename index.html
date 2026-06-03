@@ -804,8 +804,12 @@ function popupOnClick(e) {
   }
 
   if (o.spawns) {
-    let pt = getType2({...o, 'type': o.spawns, 'name': o.name + ':spawns' });
-    note += '<hr>' + translate(pt.name || pt.category || o.spawns);
+    if (blueprintsData[o.spawns]) {
+      note += '<hr>' + translate(blueprintsData[o.spawns].item);
+    } else {
+      let pt = getType2({...o, 'type': o.spawns, 'name': o.name + ':spawns' });
+      note += '<hr>' + translate(pt.name || pt.category || o.spawns);
+    }
   }
 
 
