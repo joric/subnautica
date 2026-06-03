@@ -973,10 +973,10 @@ function addMarker(feature, options) {
   .on('contextmenu', e=> { if (!mouseMoved) toggleMarked(e.target.feature.properties.name)})
   //.on('dragend', onDragEnd)
 
-  let title = t.title || capitalize(t.category) || feature.properties.type;
-
   let subtitle = getSubtitle(feature);
   if (subtitle) subtitle = ' - ' + subtitle;
+
+  let title = t.title || capitalize(t.category) || feature.properties.type;
 
   let tooltipTitle = translate(title);
 

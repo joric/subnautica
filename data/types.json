@@ -83,7 +83,7 @@
       "BP_BiobedFragment*": {"icon": "fragment", "group": "misc", "category": "fragment", "title": "Biobed Fragment"},
       "BP_BioLab_Fragment*": {"icon": "fragment", "group": "misc", "category": "fragment", "title": "Biolab Fragment"},
 
-      "BP_Base*": {"icon": "fragment", "group": "misc", "category": "ST_BaseMenuCategories/BasePieces"},
+      "BP_Base*": {"icon": "blueprint", "group": "misc", "category": "ST_BaseMenuCategories/BasePieces"},
 
       "BP_SonicResonatorV2_Scannable_C": { "icon": "gun", "group": "misc", "category": "fragment", "title": "Feedback Resonator"},
 
