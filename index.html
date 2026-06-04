@@ -852,8 +852,8 @@ function popupOnClick(e) {
 
   let dir = getDirections(marker.feature);
   if (dir) {
-    note += `<hr><div style="white-space: nowrap; padding-bottom: 0px;" title="Marker coordinates">${dir}</div>`;
-    note += 'Location: '+ cc.map(x=>x.toFixed(0)).map(String).join(', ');;
+    let loc = cc.map(x=>x.toFixed(0)).map(String).join(', ');;
+    note += `<hr><div style="white-space: nowrap; padding-bottom: 0px;" title="${loc}">${dir}</div>`;
   }
 
   if (info.items) {
