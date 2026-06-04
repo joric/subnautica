@@ -34,9 +34,11 @@
   "medkit": { "class": "fa fa-briefcase-medical", "color": "red" },
   "acid_anemone": { "class": "fa fa-plant-wilt", "color": "magenta" },
   "plant": { "class": "fa fa-seedling", "color": "darkcyan" },
+  "pent": { "class": "fa fa-spa", "color": "chocolate" },
   "resource": { "class": "fa fa-screwdriver-wrench", "color": "darkcyan" },
   "food": { "class": "fa fa-utensils", "color": "darkcyan" },
   "monster": { "class": "fa fa-dragon", "color": "red" },
+  "oxygen": { "class": "fa fa-sun-plant-wilt", "color": "royalblue" },
 
   "titanium": { "class": "fa fa-cubes", "color": "grey" },
   "silver": { "class": "fa fa-cubes", "color": "lightgrey" },

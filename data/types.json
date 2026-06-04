@@ -89,7 +89,8 @@
       "BP_AcidAnemone_C": {"icon": "acid_anemone", "group": "plants"},
       "BP_AngelCombCore_C": { "icon": "angel_comb", "group": "plants"},
       "BP_CG_BulbFlower_C":  { "icon": "plant", "group": "plants"},
-      "BP_CoralPad_01c_C": { "icon": "plant", "group": "plants"},
+      "BP_CoralPad_01c_C": { "icon": "pent", "group": "plants"},
+      "BP_OxygenPlant_C": { "icon": "oxygen", "group": "plants"},
 
       ".*(Flower|Petal|Anemone|Coral|OxygenPlant|Tree|BP_StiltOrb_).*": {"icon": "vegetation", "group": "plants", "category": "misc"},
 
