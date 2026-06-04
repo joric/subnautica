@@ -850,7 +850,7 @@ function popupOnClick(e) {
   if (dir) {
     //note += `<hr><div style="white-space: nowrap; padding-bottom: 0px;" title="${coord}"><a title="Locate Player" href="javascript:locatePlayer()"><i class="fa fa-person"></i></a> &rarr; <a title="Copy To Clipboard (${coord})" href="javascript:copyToClipboard('${coord}')">${dir}</a></div>`;
 
-    note += `<hr><div style="white-space: nowrap; padding-bottom: 0px;" title="${coord}"><a title="Locate Player" href="javascript:locatePlayer()"><i class="fa fa-person"></i></a> &rarr; <a title="${coord}" href="javascript:locatePlayer()">${dir}</a> ${info.height}</div>`;
+    note += `<hr><div style="white-space: nowrap; padding-bottom: 0px;" title="${coord}"><a title="${translate('Player Position')}" href="javascript:locatePlayer()"><i class="fa fa-person"></i></a> &rarr; <a title="${coord}" href="javascript:locatePlayer()">${dir}</a> ${info.height}</div>`;
   }
 
   if (info.items) {

@@ -25,6 +25,20 @@
     "zh": "其他"
   },
 
+  "(draggable)": {
+    "en": "(draggable)",
+    "de": "(verschiebbar)",
+    "es": "(arrastrable)",
+    "fr": "(déplaçable)",
+    "it": "(trascinabile)",
+    "ja": "(ドラッグ可能)",
+    "ko": "(드래그 가능)",
+    "pt": "(arrastável)",
+    "ru": "(перетаскиваемый)",
+    "uk": "(перетягуваний)",
+    "zh": "(可拖拽)"
+  },
+
   "Supply Crate": "ST_InventoryNames/SupplyCrate",
   "Supply Locker": "ST_AutomatedLockerNames/Locker",
   "Blackbox": "ST_Databank/BlackBoxes",
