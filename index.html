@@ -769,6 +769,17 @@ function renderItem(feature, extended=false, t=false) {
     item = translate(blueprintsData[o.type].item);
   }
 
+  if (o.text_id) {
+    info.text = translate(o.text_id);
+
+    /*
+    if (info.text.length < 32) {
+      item = info.text;
+      delete info.text;
+    }
+    */
+  }
+
   let title = translate(item || t.title || t.category || 'something' );
 
   info.title = title;
@@ -797,10 +808,6 @@ function renderItem(feature, extended=false, t=false) {
 
   if (o.unlocks) {
     info.items = o.unlocks.map(translate);
-  }
-
-  if (o.text_id) {
-    info.text = translate(o.text_id);
   }
 
   return info;
