@@ -593,7 +593,7 @@ function getDirections(feature) {
   const cbr = getCardinalBearing(-deltaX, -deltaY);
 
   // Create directions
-  const directions = `<b>${cb}</b> / <b>${distanceMeters} m</b>`;
+  const directions = `${cb} / ${distanceMeters} m`;
 
   return directions;
 }
@@ -852,7 +852,7 @@ function popupOnClick(e) {
 
   let dir = getDirections(marker.feature);
   if (dir) {
-    note += `<hr><div style="white-space: nowrap; padding-bottom: 0px;" title="${loc}"><a href="javascript:locatePlayer()"><i class="fa fa-person"></i></a> &rarr; ${dir}</div>`;
+    note += `<hr><div style="white-space: nowrap; padding-bottom: 0px;" title="${loc}"><a href="javascript:locatePlayer()"><i class="fa fa-person"></i> &rarr; ${dir}</a></div>`;
   }
 
   if (info.items) {
