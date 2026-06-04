@@ -593,7 +593,7 @@ function getDirections(feature) {
   const cbr = getCardinalBearing(-deltaX, -deltaY);
 
   // Create directions
-  const directions = `<b>${cb}</b> / <b>${distanceMeters} m</b> from <a href="javascript:locatePlayer()">Player Position</a>`;
+  const directions = `<b>${cb}</b> / <b>${distanceMeters} m</b>`;
 
   return directions;
 }
@@ -838,7 +838,7 @@ function popupOnClick(e) {
   let o = marker.feature.properties;
   let info = renderItem(marker.feature, true);
   let cc = marker.feature.geometry.coordinates;
-
+  let loc = cc.map(x=>x.toFixed(0)).map(String).join(', ');;
 
   hideTooltipExt(e);
 
@@ -852,8 +852,7 @@ function popupOnClick(e) {
 
   let dir = getDirections(marker.feature);
   if (dir) {
-    let loc = cc.map(x=>x.toFixed(0)).map(String).join(', ');;
-    note += `<hr><div style="white-space: nowrap; padding-bottom: 0px;" title="${loc}">${dir}</div>`;
+    note += `<hr><div style="white-space: nowrap; padding-bottom: 0px;" title="${loc}"><a href="javascript:locatePlayer()"><i class="fa fa-person"></i></a> &rarr; ${dir}</div>`;
   }
 
   if (info.items) {
