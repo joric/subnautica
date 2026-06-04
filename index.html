@@ -593,7 +593,7 @@ function getDirections(feature) {
   const cbr = getCardinalBearing(-deltaX, -deltaY);
 
   // Create directions
-  const directions = `${cb} / ${distanceMeters}m`;
+  const directions = `${distanceMeters}m / ${cb}`;
 
   return directions;
 }
