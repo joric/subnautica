@@ -565,7 +565,7 @@ function getCoordinates(feature) {
 }
 
 function getDirections(feature) {
-  if (feature.properties.type == playerMarkerType) return '';
+  //if (feature.properties.type == playerMarkerType) return '';
 
   const t = feature.geometry.coordinates;
   const c = settings.playerPosition;
@@ -575,7 +575,7 @@ function getDirections(feature) {
   const src = {x:c[0], y:c[1]};
   const dst = {x:t[0], y:t[1], z:t[2]};
 
-  if (src.x==dst.x && src.y==dst.y) return '';
+  //if (src.x==dst.x && src.y==dst.y) return '';
 
   // Calculate differences
   const deltaX = dst.x - src.x;
@@ -838,7 +838,7 @@ function popupOnClick(e) {
   let o = marker.feature.properties;
   let info = renderItem(marker.feature, true);
   let cc = marker.feature.geometry.coordinates;
-  let loc = cc.map(x=>x.toFixed(0)).map(String).join(', ');;
+  let coord = cc.map(x=>x.toFixed(0)).map(String).join(', ');;
 
   hideTooltipExt(e);
 
@@ -852,7 +852,9 @@ function popupOnClick(e) {
 
   let dir = getDirections(marker.feature);
   if (dir) {
-    note += `<hr><div style="white-space: nowrap; padding-bottom: 0px;" title="${loc}"><a href="javascript:locatePlayer()"><i class="fa fa-person"></i> &rarr; ${dir}</a></div>`;
+    //note += `<hr><div style="white-space: nowrap; padding-bottom: 0px;" title="${coord}"><a title="Locate Player" href="javascript:locatePlayer()"><i class="fa fa-person"></i></a> &rarr; <a title="Copy To Clipboard (${coord})" href="javascript:copyToClipboard('${coord}')">${dir}</a></div>`;
+
+    note += `<hr><div style="white-space: nowrap; padding-bottom: 0px;" title="${coord}"><a title="Locate Player" href="javascript:locatePlayer()"><i class="fa fa-person"></i></a> &rarr; <a title="${coord}" href="javascript:locatePlayer()">${dir}</a></div>`;
   }
 
   if (info.items) {
@@ -864,6 +866,8 @@ function popupOnClick(e) {
   }
 
   popup.querySelector('#popup-note').innerHTML = note;
+
+  //popup.querySelector('#popup-data').innerHTML = '<hr/><pre>'+JSON.stringify({...o, _coordinates: cc}, null, 2) + '</pre>';
 
   popup.querySelector('#popup-data').innerHTML = '<hr/><pre>'+JSON.stringify(o, null, 2) + '</pre>';
 
