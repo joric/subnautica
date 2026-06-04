@@ -844,7 +844,7 @@ function popupOnClick(e) {
 
   const popup = document.querySelector('#popup-template').content.cloneNode(true);
 
-  popup.querySelector('#popup-title').innerHTML = `<div style="white-space: nowrap;"><a href="${info.backlink}" onclick="return showItem('${info.type}')">${truncate(info.title)}</a> <span style="font-weight: normal;">${info.height}</span></div>`;
+  popup.querySelector('#popup-title').innerHTML = `<div style="white-space: nowrap;"><a href="${info.backlink}" onclick="return showItem('${info.type}')">${truncate(info.title)}</a> <span style="font-weight: normal;"></span></div>`;
   popup.querySelector('#popup-title').title = info.backlink;
   popup.querySelector('#popup-subtitle').innerHTML = `<div style="white-space: nowrap;"><a href="#group:${info.group}" onclick="return showGroup('${info.group}')">${info.slug}</a></div>`;
 
@@ -854,7 +854,7 @@ function popupOnClick(e) {
   if (dir) {
     //note += `<hr><div style="white-space: nowrap; padding-bottom: 0px;" title="${coord}"><a title="Locate Player" href="javascript:locatePlayer()"><i class="fa fa-person"></i></a> &rarr; <a title="Copy To Clipboard (${coord})" href="javascript:copyToClipboard('${coord}')">${dir}</a></div>`;
 
-    note += `<hr><div style="white-space: nowrap; padding-bottom: 0px;" title="${coord}"><a title="Locate Player" href="javascript:locatePlayer()"><i class="fa fa-person"></i></a> &rarr; <a title="${coord}" href="javascript:locatePlayer()">${dir}</a></div>`;
+    note += `<hr><div style="white-space: nowrap; padding-bottom: 0px;" title="${coord}"><a title="Locate Player" href="javascript:locatePlayer()"><i class="fa fa-person"></i></a> &rarr; <a title="${coord}" href="javascript:locatePlayer()">${dir}</a> ${info.height}</div>`;
   }
 
   if (info.items) {
