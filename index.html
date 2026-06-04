@@ -834,7 +834,7 @@ function popupOnClick(e) {
   let o = marker.feature.properties;
   let info = renderItem(marker.feature, true);
   let cc = marker.feature.geometry.coordinates;
-  let coord = cc.map(x=>x.toFixed(0)).map(String).join(', ');;
+  let coords = cc.map(x=>x.toFixed(0)).map(String).join(', ');;
 
   hideTooltipExt(e);
 
@@ -849,8 +849,8 @@ function popupOnClick(e) {
   let dir = getDirections(marker.feature);
   if (dir) {
     //note += `<hr><div style="white-space: nowrap; padding-bottom: 0px;" title="${coord}"><a title="Locate Player" href="javascript:locatePlayer()"><i class="fa fa-person"></i></a> &rarr; <a title="Copy To Clipboard (${coord})" href="javascript:copyToClipboard('${coord}')">${dir}</a></div>`;
-
-    note += `<hr><div style="white-space: nowrap; padding-bottom: 0px;" title="${coord}"><a title="${translate('Player Position')}" href="javascript:locatePlayer()"><i class="fa fa-person"></i></a> &rarr; <a title="${coord}" href="javascript:locatePlayer()">${dir}</a> ${info.height}</div>`;
+    note += `<hr><div style="white-space: nowrap; padding-bottom: 0px;" title="${coords}"><a title="${translate('Player Position')}" href="javascript:locatePlayer()"><i class="fa fa-person"></i></a> &rarr; <a title="${coords}" href="javascript:locatePlayer()">${dir}</a> ${info.height}</div>`;
+    //note += `${coords}`;
   }
 
   if (info.items) {
