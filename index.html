@@ -780,7 +780,7 @@ function renderItem(feature, extended=false, t=false) {
     */
   }
 
-  let title = translate(item || t.title || t.category || 'something' );
+  let title = translate(item || t.title || t.category || o.type || 'something' );
 
   info.title = title;
 
