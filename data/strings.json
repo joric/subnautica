@@ -1,15 +1,47 @@
 {
-  "Region Marker": "ST_Databank/Biomes",
-  "Alien Console": "ST_Databank/Alien_Data",
-
   "locations": "ST_Databank/Points_of_Interest",
+  "minerals": "ST_AutomatedLockerNames/Minerals",
+  "plants": "ST_BaseMenuCategories/Plants",
+  "blueprints": "ST_Databank/Blueprints",
+  "animals": "ST_Databank/Mobile_Life",
   "resources": "ST_Databank/Resources",
 
-  "vegetation": "ST_BaseMenuCategories/Plants",
+  "regionMarker": "ST_Databank/Biomes",
+  "playerPosition": "ST_BaseFeedback/Player",
+  "basePieces": "ST_BaseMenuCategories/BasePieces",
 
   "fish": "ST_Databank_Motile/Fish",
 
-  "fragment": "ST_Databank/Blueprints",
+  "BP_UpgradeTerminal_C": "ST_ScannerStation/UpgradeTerminals",
+  "BP_ActivateConsoleButton_C": "ST_Databank/Alien_Data",
+  "BP_AbandonedBaseSign_C": "ST_BaseSignal/BaseSignal",
+  "BP_AxumGlyph_C": "ST_Ruins_Databanks/AxumGlyph_title",
+  "BP_AngelCombCore_C": "ST_BlightCore/AngelComb",
+  "BP_SupplyCrate_C": "ST_InventoryNames/SupplyCrate",
+  "BP_WorldSupplyLocker_C": "ST_AutomatedLockerNames/Locker",
+  "BP_BlackBox_Clickable_01a_C": "ST_Databank/BlackBoxes",
+  "BP_RecipeGainDataCard_Button_C": "ST_Databank/Your_Files",
+  "BP_Nrtv_QuartzChip_C": "ST_Databank/Data_Downloads",
+  "BP_ComputerTextInterface_Terminal_C": "ST_Buildables/NoATerminal",
+  "BP_StaticLifepod_Surface_C": "ST_Lifepod/LifepodPingName",
+  "BP_BioBed_Scan_C": "ST_Buildables/Biobed",
+  "BP_BioBed_C": "ST_Buildables/Biobed",
+  "BP_BioLab_Fragment_C": "ST_Buildables/Biolab",
+  "BP_Planetary_C": "ST_Ruins_Databanks/Observatory_title",
+  "BP_WorldBuildable_C": "ST_Ruins_Databanks/PowerPlant_title",
+
+  "silver": "ST_Databank_Resources/Databank_Resources_Silver_Title",
+  "titanium": "ST_Databank_Resources/Databank_Resources_Titanium_Title",
+  "copper": "ST_Databank_Resources/Databank_Resources_Copper_Title",
+  "gold": "ST_Databank_Resources/Databank_Resources_Gold_Title",
+  "salt": "ST_Databank_Resources/Databank_Resources_Salt_Title",
+  "quartz": "ST_Databank_Resources/Databank_Resources_Quartz_Title",
+  "lithium": "ST_Databank_Resources/Databank_Resources_Lithium_Title",
+  "lead": "ST_Databank_Resources/Databank_Resources_Lead_Title",
+  "atacamite": "ST_Databank_Resources/Databank_Resources_Atacamite_Title",
+  "sulfur": "ST_Databank_Resources/Sulfur_title",
+  "celestine": "ST_Celestine/Celestine",
+  "fulgurite": "ST_Databank_Resources/Databank_Resources_Fulgurite_Title",
 
   "misc": {
     "en": "Misc",
@@ -39,54 +71,6 @@
     "zh": "(可拖拽)"
   },
 
-  "Supply Crate": "ST_InventoryNames/SupplyCrate",
-  "Supply Locker": "ST_AutomatedLockerNames/Locker",
-  "Blackbox": "ST_Databank/BlackBoxes",
-  "Resources": "ST_Databank/Resources",
-
-
-  "Data Box": "ST_Databank/Your_Files",
-
-
-  "Quartz Chip": "ST_Databank/Data_Downloads",
-
-
-  "Bloom Node": "ST_BlightNode/BloomNode",
-  "Upgrade Terminal": "ST_ScannerStation/UpgradeTerminals",
-  "Player Position": "ST_BaseFeedback/Player",
-  "NOA Terminal": "ST_Buildables/NoATerminal",
-  "Lifepod": "ST_Lifepod/LifepodPingName",
-  "Angel Comb": "ST_BlightCore/AngelComb",
-  "Clam Thulhu": "ST_Databank_Motile/GreatJaw",
-  "Axum Glyph": "ST_Ruins_Databanks/AxumGlyph_title",
-  "Reprint Point": "ST_Buildables/Biobed",
-  "Planetary": "ST_Ruins_Databanks/Observatory_title",
-
-  "Turbine": "ST_Ruins_Databanks/PowerPlant_title",
-
-  "silver": "ST_Databank_Resources/Databank_Resources_Silver_Title",
-  "titanium": "ST_Databank_Resources/Databank_Resources_Titanium_Title",
-  "copper": "ST_Databank_Resources/Databank_Resources_Copper_Title",
-  "gold": "ST_Databank_Resources/Databank_Resources_Gold_Title",
-  "salt": "ST_Databank_Resources/Databank_Resources_Salt_Title",
-  "quartz": "ST_Databank_Resources/Databank_Resources_Quartz_Title",
-  "lithium": "ST_Databank_Resources/Databank_Resources_Lithium_Title",
-  "lead": "ST_Databank_Resources/Databank_Resources_Lead_Title",
-  "atacamite": "ST_Databank_Resources/Databank_Resources_Atacamite_Title",
-  "sulfur": "ST_Databank_Resources/Sulfur_title",
-  "celestine": "ST_Celestine/Celestine",
-  "fulgurite": "ST_Databank_Resources/Databank_Resources_Fulgurite_Title",
-
-  "Crab Feces": "ST_Resources/CrabFeces",
-  "Deep Root": "ST_Resources/DeepRootResource",
-
-  "Shark Needles": "ST_HardcodedStringReplacementPass_M31/DA_NeedleSharkNeedleDeposit_ResonatableData_Name",
-
-  "Conduit Crystal": "ST_Items/ConduitCrystal",
-  "Feedback Resonator": "ST_Items/SonicResonatorV2",
-
-  "Observatory": "ST_Ruins_Databanks/Observatory_title",
-  "Power Plant": "ST_Ruins_Databanks/PowerPlant_title",
   "Shallows": {
     "en": "Shallows",
     "de": "Flachwasser",

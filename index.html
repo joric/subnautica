@@ -176,7 +176,6 @@ let iconData = {};
 let stringData =  {};
 let regionData = {};
 let itemsData = {};
-let typeTitles = {};
 let blueprintsData = {};
 
 let regionDataLoaded = false;
@@ -204,11 +203,9 @@ function splitCamelCase(s) {
   return s.split(/(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z&&[^s]])/);
 }
 
-function translate(s) {
+function translate(s, caller='default') {
   if (!s || !typeof(s) === 'string') return s;
   if (lang) {
-    if (itemsData && itemsData[s]) return translate([itemsData[s].text_id] || itemsData[s].name);
-    if (typeTitles[s]) return translate(typeTitles[s]);
     const t = String((typeof stringData[s] === 'string' && stringData[s]) || s);
     if (t.includes('/')) {
       const parts = t.split('/');
@@ -222,6 +219,8 @@ function translate(s) {
     } else if (stringData[s] && stringData[s][settings.language]) {
       return stringData[s][settings.language];
     }
+    if (itemsData[s]) return translate([itemsData[s].text_id] || itemsData[s].name, caller);
+    if (blueprintsData[s]) return translate(blueprintsData[s].item, caller);
   }
   //return splitCamelCase(String(s).replace('_C','')).map(capitalize).join(' ');
   return capitalize(String(s));
@@ -761,7 +760,7 @@ function ptInPolyRaw(coordinates, polyPoints) {
   return inside;
 };
 
-function renderItem(feature, extended=false, t=false) {
+function renderItem(feature, extended=false, t=false, caller='default') {
   let o = feature.properties;
   if (!t) t = getType2(o);
   let info = {};
@@ -772,13 +771,13 @@ function renderItem(feature, extended=false, t=false) {
 
   if (o.spawns) {
     if (blueprintsData[o.spawns]) {
-    item = translate(blueprintsData[o.spawns].item);
+    item = translate(blueprintsData[o.spawns].item, caller);
     } else {
       let t1 = getType2({...o, 'type': o.spawns, 'name': o.name + ':spawns' });
-      item = translate(t1.name || t1.category || o.spawns);
+      item = translate(t1.name || t1.category || o.spawns, caller);
     }
   } else if (blueprintsData[o.type]) {
-    item = translate(blueprintsData[o.type].item);
+    item = translate(blueprintsData[o.type].item, caller);
   }
 
   if (o.text_id) {
@@ -792,19 +791,19 @@ function renderItem(feature, extended=false, t=false) {
     */
   }
 
-  let title = translate(item || t.title || t.category || o.type || 'something' );
+  let title = translate(item || t.title || t.category || o.type || 'something', caller);
 
   info.title = title;
 
   info.height = formatZ(cc);
 
-  info.group = translate(t.group);
-  info.category = translate(t.category);
+  info.group = translate(t.group, caller);
+  info.category = translate(t.category, caller);
 
   if (extended) {
     for (poly of regionData.features) {
       if (ptInPolyRaw(cc, poly.geometry.coordinates[0])) {
-        info.region = translate(poly.properties.title);
+        info.region = translate(poly.properties.title, caller);
         break;
       }
     }
@@ -961,11 +960,6 @@ function addMarker(feature, options) {
   let type = getBaseName(t.category);
   let visible = settings.activeItems[type];
 
-  if (t.title) {
-    typeTitles[o.type] = t.title;
-    typeTitles[t.category] = t.title;
-  }
-
   let getSymbol = function(feature,opacity=1) {
 
     var symbol = 
@@ -1042,7 +1036,7 @@ function addMarker(feature, options) {
   .on('contextmenu', e=> { if (!mouseMoved) toggleMarked(e.target.feature.properties.name)})
   //.on('dragend', onDragEnd)
 
-  let info = renderItem(feature, false, t);
+  let info = renderItem(feature, false, t, 'popup');
 
   let note = '';
   if (info.text) {
@@ -1060,7 +1054,6 @@ function addMarker(feature, options) {
   });
 
   tooltip.addTo(marker);
-
 
   function rotatePointsInPlace(points, centerX, centerY, angle) {
       const rad = angle * Math.PI / 180;
@@ -1544,7 +1537,7 @@ function addMarkers(markers, options) {
 
   //tr = s=> capitalize(getType({"type": s}).title || s);
 
-  markersControl = new MarkersControl(counters, {theme: theme, icons: icons, weights:{collectible: 1, misc:-2, actors:-1}, groupCallback: toggleGroup, itemCallback: toggleItem, translate: translate });
+  markersControl = new MarkersControl(counters, {theme: theme, icons: icons, weights:{}, groupCallback: toggleGroup, itemCallback: toggleItem, translate: translate });
 
   updateView();
 
