@@ -796,11 +796,7 @@ function renderItem(feature, extended=false, t=false) {
 
   info.title = title;
 
-  info.height = '';
-
-  if (cc[2]!=0) {
-    info.height += formatZ(cc);
-  }
+  info.height = formatZ(cc);
 
   info.group = translate(t.group);
   info.category = translate(t.category);
@@ -844,9 +840,9 @@ function popupOnClick(e) {
 
   const popup = document.querySelector('#popup-template').content.cloneNode(true);
 
-  popup.querySelector('#popup-title').innerHTML = `<div style="white-space: nowrap;"><a href="${info.backlink}" onclick="return showItem('${info.type}')">${truncate(info.title)}</a> <span style="font-weight: normal;"></span></div>`;
+  popup.querySelector('#popup-title').innerHTML = `<div style="white-space: nowrap;">${truncate(info.title)}</div>`;
   popup.querySelector('#popup-title').title = info.backlink;
-  popup.querySelector('#popup-subtitle').innerHTML = `<div style="white-space: nowrap;"><a href="#group:${info.group}" onclick="return showGroup('${info.group}')">${info.slug}</a></div>`;
+  popup.querySelector('#popup-subtitle').innerHTML = `<div style="white-space: nowrap;">${info.slug}</div>`;
 
   let note = info.region ? info.region : '';
 
