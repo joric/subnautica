@@ -314,19 +314,6 @@ function getCentroidRaw2(points) {
     return [centroidX, centroidY, 0];
 }
 
-function ptInPoly(point, polyPoints) {
-  let [x,y] = [point.x, point.y];
-  let inside = false;
-  for (let i = 0, j = polyPoints.length - 1; i < polyPoints.length; j = i++) {
-    var xi = polyPoints[i].x, yi = polyPoints[i].y;
-    var xj = polyPoints[j].x, yj = polyPoints[j].y;
-    var intersect = ((yi > y) != (yj > y))
-        && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
-    if (intersect) inside = !inside;
-  }
-  return inside;
-};
-
 function getType(o) {
   function getTypeRecursive(data, t={}) {
     const prop = Object.fromEntries(Object.entries(data).filter(([k,v]) => typeof v !== 'object' || k=='replace'));
@@ -749,6 +736,31 @@ function selectPolygon(polygon, selected){
   }
 }
 
+function ptInPoly(point, polyPoints) {
+  let [x,y] = [point.x, point.y];
+  let inside = false;
+  for (let i = 0, j = polyPoints.length - 1; i < polyPoints.length; j = i++) {
+    var xi = polyPoints[i].x, yi = polyPoints[i].y;
+    var xj = polyPoints[j].x, yj = polyPoints[j].y;
+    var intersect = ((yi > y) != (yj > y))
+        && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+    if (intersect) inside = !inside;
+  }
+  return inside;
+};
+
+function ptInPolyRaw(coordinates, polyPoints) {
+  let [x,y,z] = coordinates;
+  let inside = false;
+  for (let i = 0, j = polyPoints.length - 1; i < polyPoints.length; j = i++) {
+    var xi = polyPoints[i][0], yi = polyPoints[i][1];
+    var xj = polyPoints[j][0], yj = polyPoints[j][1];
+    var intersect = ((yi > y) != (yj > y)) && (x < (xj - xi) * (y - yi) / (yj - yi) + xi);
+    if (intersect) inside = !inside;
+  }
+  return inside;
+};
+
 function renderItem(feature, extended=false, t=false) {
   let o = feature.properties;
   if (!t) t = getType2(o);
@@ -793,9 +805,14 @@ function renderItem(feature, extended=false, t=false) {
   info.group = translate(t.group);
   info.category = translate(t.category);
 
-  info.area = cc.map(x=>x.toFixed(0)).map(String).join(', ');
-
-  info.coordinates = cc;
+  if (extended) {
+    for (poly of regionData.features) {
+      if (ptInPolyRaw(cc, poly.geometry.coordinates[0])) {
+        info.region = translate(poly.properties.title);
+        break;
+      }
+    }
+  }
 
   let id = (t.title||'').replaceAll(' ','_');
   info.backlink = getMapURL(id);
@@ -820,6 +837,8 @@ function popupOnClick(e) {
 
   let o = marker.feature.properties;
   let info = renderItem(marker.feature, true);
+  let cc = marker.feature.geometry.coordinates;
+
 
   hideTooltipExt(e);
 
@@ -829,11 +848,12 @@ function popupOnClick(e) {
   popup.querySelector('#popup-title').title = info.backlink;
   popup.querySelector('#popup-subtitle').innerHTML = `<div style="white-space: nowrap;"><a href="#group:${info.group}" onclick="return showGroup('${info.group}')">${info.slug}</a></div>`;
 
-  let note = info.area;
+  let note = info.region ? info.region : '';
 
   let dir = getDirections(marker.feature);
   if (dir) {
     note += `<hr><div style="white-space: nowrap; padding-bottom: 0px;" title="Marker coordinates">${dir}</div>`;
+    note += 'Location: '+ cc.map(x=>x.toFixed(0)).map(String).join(', ');;
   }
 
   if (info.items) {
@@ -858,9 +878,7 @@ function popupOnClick(e) {
 
   popup.querySelector('#popup-close').onclick = function() {  e.target._infoWindow.hide(); };
 
-  let t = info.coordinates;
-
-  let teleport = `XTeleportTo ${t[0]} ${t[1]} ${t[2]+100}` // 1M higher actually
+  let teleport = `XTeleportTo ${cc[0]} ${cc[1]} ${cc[2]+100}` // 1M higher actually
   c = popup.querySelector('#popup-marker-id-link')
   c.href = '#' + teleport;
   c.title = `Copy Coordinates (${teleport}) (z+100)`;
