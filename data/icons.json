@@ -33,6 +33,7 @@
   "base": { "class": "fa fa-house", "color": "slategrey" },
   "medkit": { "class": "fa fa-briefcase-medical", "color": "red" },
   "acid_anemone": { "class": "fa fa-plant-wilt", "color": "magenta" },
+  "plant": { "class": "fa fa-seedling", "color": "darkcyan" },
   "resource": { "class": "fa fa-screwdriver-wrench", "color": "darkcyan" },
   "food": { "class": "fa fa-utensils", "color": "darkcyan" },
   "monster": { "class": "fa fa-dragon", "color": "red" },

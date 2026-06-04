@@ -29,6 +29,7 @@
   "BP_BioLab_Fragment_C": "ST_Buildables/Biolab",
   "BP_Planetary_C": "ST_Ruins_Databanks/Observatory_title",
   "BP_WorldBuildable_C": "ST_Ruins_Databanks/PowerPlant_title",
+  "BP_CoralPad_01c_C": "ST_Databank_Sessile/Pent",
 
   "silver": "ST_Databank_Resources/Databank_Resources_Silver_Title",
   "titanium": "ST_Databank_Resources/Databank_Resources_Titanium_Title",
