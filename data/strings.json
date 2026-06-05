@@ -31,6 +31,10 @@
   "BP_WorldBuildable_C": "ST_Ruins_Databanks/PowerPlant_title",
   "BP_CoralPad_01c_C": "ST_Databank_Sessile/Pent",
 
+  "BP_NarrativeSignal_C": "ST_Databank/Field_Reports",
+  "BP_ScannerStationSignal_C": "ST_ScannerStation/SelectedSignal",
+  "BP_EdgeOfWorldVolume_C": "ST_Notifications/EdgeOfWorldThankyouTitle",
+
   "silver": "ST_Databank_Resources/Databank_Resources_Silver_Title",
   "titanium": "ST_Databank_Resources/Databank_Resources_Titanium_Title",
   "copper": "ST_Databank_Resources/Databank_Resources_Copper_Title",

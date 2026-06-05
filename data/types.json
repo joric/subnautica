@@ -7,9 +7,10 @@
       "playerPosition": {"icon": "player", "group": "locations"},
       "regionMarker": {"icon": "region", "group": "locations" },
 
-      "BookMark": {"icon": "bookmark", "group": "misc", "title": "ST_PDA/Signals" },
-      "BP_StaticLifepod_Surface_C": {"icon": "lifepod", "group": "locations", "title": "Lifepod" },
-      "BP_EdgeOfWorldVolume_C": {"icon": "edge_volume", "group": "misc", "title": "Edge Volume" },
+      "BookMark": {"icon": "bookmark", "group": "misc" },
+      "BP_StaticLifepod_Surface_C": {"icon": "lifepod", "group": "locations" },
+
+      "BP_EdgeOfWorldVolume_C": {"icon": "edge_volume", "group": "misc" },
       "UWEBoxWorldZone": {"icon": "zone_box", "group": "misc" },
       "BP_Nrtv_QuartzChip_C": { "icon": "chip", "group": "locations"},
       "BP_RecipeGainDataCard_Button_C": { "icon": "databox", "group": "locations"},

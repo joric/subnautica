@@ -1307,7 +1307,7 @@ function loadMarkersBatched(features, options) {
       let t = getType(o);
 
       if (o.spawns) {
-        batch.push(addMarker({...feature, properties: {name: o.name +':spawns', type: o.spawns }}, options));
+        //batch.push(addMarker({...feature, properties: {name: o.name +':spawns', type: o.spawns }}, options));
       }
 
       let targets = o.target ? [o.target] : (o.targets ? o.targets : []);
