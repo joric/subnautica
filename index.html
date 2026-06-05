@@ -962,6 +962,13 @@ function addMarker(feature, options) {
 
   let getSymbol = function(feature,opacity=1) {
 
+    if (!iconImages[t.icon]) {
+      const v = iconData[t.icon];
+      if (v) {
+        iconImages[t.icon] = renderFAIconToImageURL(v.class, v.color, v.background, iconSize);
+      }
+    }
+
     var symbol = 
       {
         markerFile   : iconImages[t.icon]||iconImages['misc'],
@@ -1501,11 +1508,17 @@ function updateView() {
       }
     }
   }
-
 }
 
 function addMarkers(markers, options) {
+
   let [layers,counters,icons] = [options.layers, options.counters, options.icons];
+
+  console.time('adding control');
+  markersControl = new MarkersControl(counters, {theme: theme, icons: icons, weights:{}, groupCallback: toggleGroup, itemCallback: toggleItem, translate: translate });
+  console.timeEnd('adding control');
+
+  console.time('adding layers');
 
   let groupLayer = map.getLayer('GroupGLLayer');
 
@@ -1529,14 +1542,13 @@ function addMarkers(markers, options) {
       }).addTo(groupLayer);
     }
   }
+  console.timeEnd('adding layers');
 
   // let tr = s=> typeData[s]?.title || (s[0].toUpperCase()+s.slice(1));
   //let tr = s=> typeData[s]?.title || translate(s);
   //let tr = s=> getType({"type": s}).title || s; //getType({"type": s}).title || translate(s)
 
   //tr = s=> capitalize(getType({"type": s}).title || s);
-
-  markersControl = new MarkersControl(counters, {theme: theme, icons: icons, weights:{}, groupCallback: toggleGroup, itemCallback: toggleItem, translate: translate });
 
   updateView();
 
@@ -2286,9 +2298,6 @@ window.onload = function(event) {
       [typeData, iconData, stringData, regionData, itemsData, blueprintsData, markersData] = data;
 
       iconData['misc'] = {"class": "fa-solid fa-circle-question", "bg": "grey"};
-      console.time('rendering icons');
-      iconImages = Object.fromEntries(Object.entries(iconData).map(([k,v]) => [k, renderFAIconToImageURL(v.class, v.color, v.background, iconSize)]));
-      console.timeEnd('rendering icons');
 
       for (const feature of regionData.features) {
         regionColors[feature.properties.name] = feature.properties.color;
