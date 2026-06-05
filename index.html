@@ -2294,7 +2294,12 @@ window.onload = function(event) {
       'data/markers.json',
     ].map(url=>fetch(url).then(r=>r.json()));
 
+    console.time('loading files');
+
     Promise.all(promises).then(data => {
+
+      console.timeEnd('loading files');
+
       [typeData, iconData, stringData, regionData, itemsData, blueprintsData, markersData] = data;
 
       iconData['misc'] = {"class": "fa-solid fa-circle-question", "bg": "grey"};
