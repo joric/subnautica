@@ -85,7 +85,7 @@
       "BP_ResourceNode_*": { "icon": "nodes", "group": "minerals", "category": "unsorted" },
       "BP_ResourceDeposit_*": { "icon": "deposit", "group": "minerals", "category": "unsorted"},
 
-      "BP_Base*": {"icon": "blueprint", "group": "misc", "category": "basePieces"},
+      "BP_Base*": {"icon": "fragment", "group": "misc", "category": "basePieces"},
 
       "BP_AcidAnemone_C": {"icon": "acid_anemone", "group": "plants"},
       "BP_AngelCombCore_C": { "icon": "angel_comb", "group": "plants"},
