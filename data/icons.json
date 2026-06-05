@@ -39,6 +39,7 @@
   "food": { "class": "fa fa-utensils", "color": "darkcyan" },
   "monster": { "class": "fa fa-dragon", "color": "red" },
   "oxygen": { "class": "fa fa-sun-plant-wilt", "color": "royalblue" },
+  "poison_tube": { "class": "fa fa-biohazard", "color": "darkcyan" },
 
   "titanium": { "class": "fa fa-cubes", "color": "grey" },
   "silver": { "class": "fa fa-cubes", "color": "lightgrey" },

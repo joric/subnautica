@@ -94,6 +94,8 @@
 
       "BP_BlightNode_C": { "icon": "canker", "group": "plants"},
 
+      "BP_MinorThreat_PoisonTubeCluster_C": { "icon": "poison_tube", "group": "plants"},
+
       ".*(Flower|Petal|Anemone|Coral|OxygenPlant|Tree|BP_StiltOrb_).*": {"icon": "vegetation", "group": "plants", "category": "misc"},
 
       "BP_WaterSlugWorldPopProxy_C": { "icon": "water_slug", "group": "animals"},

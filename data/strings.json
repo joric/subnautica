@@ -33,6 +33,7 @@
   "BP_Planetary_C": "ST_Ruins_Databanks/Observatory_title",
   "BP_WorldBuildable_C": "ST_Ruins_Databanks/PowerPlant_title",
   "BP_CoralPad_01c_C": "ST_Databank_Sessile/Pent",
+  "BP_MinorThreat_PoisonTubeCluster_C": "ST_Databank_Sessile/PoisonTubeCluster",
 
   "BP_NarrativeSignal_C": "ST_Databank/Field_Reports",
   "BP_ScannerStationSignal_C": "ST_ScannerStation/SelectedSignal",
