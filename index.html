@@ -1572,6 +1572,9 @@ function addMarkers(markers, options) {
   }
 
   console.timeEnd('filtering markers');
+
+
+  console.timeEnd('total time');
 }
 
 function parseSearchOptions(line) {
@@ -2205,7 +2208,15 @@ function importSaveFile() {
   document.querySelector('#game_file').click();
 }
 
+function prerenderIcons() {
+  console.time('rendering icons');
+  iconImages = Object.fromEntries(Object.entries(iconData).map(([k,v]) => [k, renderFAIconToImageURL(v.class, v.color, v.background, iconSize)]));
+  console.timeEnd('rendering icons');
+}
+
 window.onload = function(event) {
+
+  console.time('total time');
 
   if (location.hash.length>1) {
     let param = decodeURIComponent(location.hash.slice(1));
@@ -2303,6 +2314,8 @@ window.onload = function(event) {
       [typeData, iconData, stringData, regionData, itemsData, blueprintsData, markersData] = data;
 
       iconData['misc'] = {"class": "fa-solid fa-circle-question", "bg": "grey"};
+
+      //prerenderIcons(); // doesn't seem to speed up loading
 
       for (const feature of regionData.features) {
         regionColors[feature.properties.name] = feature.properties.color;
