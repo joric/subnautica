@@ -36,7 +36,6 @@
 
       "BP_CrabFeces_C": { "icon": "poop", "group": "minerals"},
 
-      "BP_BlightNode_C": { "icon": "canker", "group": "locations", "title":"Bloom Node"},
       "BP_ActivateConsoleButton_C": { "icon": "alien_console", "group": "locations"},
 
 
@@ -92,6 +91,8 @@
       "BP_CG_BulbFlower_C":  { "icon": "plant", "group": "plants"},
       "BP_CoralPad_01c_C": { "icon": "pent", "group": "plants"},
       "BP_OxygenPlant_C": { "icon": "oxygen", "group": "plants"},
+
+      "BP_BlightNode_C": { "icon": "canker", "group": "plants"},
 
       ".*(Flower|Petal|Anemone|Coral|OxygenPlant|Tree|BP_StiltOrb_).*": {"icon": "vegetation", "group": "plants", "category": "misc"},
 
