@@ -34,7 +34,6 @@
 
   "BP_NarrativeSignal_C": "ST_Databank/Field_Reports",
   "BP_ScannerStationSignal_C": "ST_ScannerStation/SelectedSignal",
-  "BP_EdgeOfWorldVolume_C": "ST_Notifications/EdgeOfWorldThankyouTitle",
 
   "silver": "ST_Databank_Resources/Databank_Resources_Silver_Title",
   "titanium": "ST_Databank_Resources/Databank_Resources_Titanium_Title",
