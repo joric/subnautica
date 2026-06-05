@@ -10,9 +10,6 @@
   "playerPosition": "ST_BaseFeedback/Player",
   "basePieces": "ST_BaseMenuCategories/BasePieces",
 
-  "Observatory": "ST_Ruins_Databanks/Observatory_title", 
-  "Power Plant": "ST_Ruins_Databanks/PowerPlant_title",
-
   "fish": "ST_Databank_Motile/Fish",
 
   "BP_UpgradeTerminal_C": "ST_ScannerStation/UpgradeTerminals",
@@ -80,7 +77,10 @@
     "zh": "(可拖拽)"
   },
 
-  "Shallows": {
+  "DA_AR-Observatory": "ST_Ruins_Databanks/Observatory_title", 
+  "DA_AR-PowerPlant": "ST_Ruins_Databanks/PowerPlant_title",
+
+  "DA_CGShallows": {
     "en": "Shallows",
     "de": "Flachwasser",
     "es": "Aguas someras",
@@ -93,7 +93,8 @@
     "uk": "Мілина",
     "zh": "浅滩"
   },
-  "Plateaus": {
+
+  "DA_CGPlateaus": {
     "en": "Plateaus",
     "de": "Plateaus",
     "es": "Mesetas",
@@ -106,7 +107,8 @@
     "uk": "Плато",
     "zh": "高原"
   },
-  "Graveyard": {
+
+  "DA_CGGraveyard": {
     "en": "Graveyard",
     "de": "Friedhof",
     "es": "Cementerio",
@@ -119,7 +121,8 @@
     "uk": "Кладовище",
     "zh": "墓地"
   },
-  "Anemone Hills": {
+
+  "DA_CGAnemoneHills": {
     "en": "Anemone Hills",
     "de": "Anemonenhügel",
     "es": "Colinas de anémonas",
@@ -132,7 +135,8 @@
     "uk": "Пагорби анемонів",
     "zh": "海葵山丘"
   },
-  "Tufa Towers": {
+
+  "DA_CGTufaTowers": {
     "en": "Tufa Towers",
     "de": "Tufftürme",
     "es": "Torres de toba",
@@ -145,7 +149,8 @@
     "uk": "Туфові вежі",
     "zh": "凝灰岩塔"
   },
-  "North Raceway": {
+
+  "DA_CGNorthRaceway": {
     "en": "North Raceway",
     "de": "Nordrennbahn",
     "es": "Pista norte",
@@ -158,7 +163,8 @@
     "uk": "Північна траса",
     "zh": "北赛道"
   },
-  "South Raceway": {
+
+  "DA_CGSouthRaceway": {
     "en": "South Raceway",
     "de": "Südrennbahn",
     "es": "Pista sur",
@@ -171,7 +177,8 @@
     "uk": "Південна траса",
     "zh": "南赛道"
   },
-  "Blighted Coral": {
+
+  "DA_CGBlightedCoral": {
     "en": "Blighted Coral",
     "de": "Verderbtes Korallenriff",
     "es": "Coral devastado",
@@ -184,7 +191,8 @@
     "uk": "Зів'ялі корали",
     "zh": "枯萎珊瑚"
   },
-  "Leadzone": {
+
+  "DA_CGLeadzone": {
     "en": "Leadzone",
     "de": "Bleizone",
     "es": "Zona de plomo",
@@ -197,7 +205,8 @@
     "uk": "Свинцева зона",
     "zh": "铅区"
   },
-  "Root Canyon": {
+
+  "DA_AR-RootCanyon": {
     "en": "Root Canyon",
     "de": "Wurzelcanyon",
     "es": "Cañón de las raíces",

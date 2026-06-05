@@ -780,6 +780,10 @@ function renderItem(feature, extended=false, t=false, caller='default') {
     item = translate(blueprintsData[o.type].item, caller);
   }
 
+  if (o.region) {
+    item = translate(o.region);
+  }
+
   if (o.text_id) {
     info.text = translate(o.text_id);
 
@@ -803,7 +807,7 @@ function renderItem(feature, extended=false, t=false, caller='default') {
   if (extended) {
     for (poly of regionData.features) {
       if (ptInPolyRaw(cc, poly.geometry.coordinates[0])) {
-        info.region = translate(poly.properties.title, caller);
+        info.region = translate(poly.properties.name, caller);
         break;
       }
     }
@@ -982,7 +986,7 @@ function addMarker(feature, options) {
 
     if (feature.properties.type=='regionMarker') {
         const textSymbol = {
-            textName : translate(feature.properties.title),
+            textName : translate(feature.properties.name),
             textFaceName : 'sans-serif',
             textFill : '#fff',
             textSize : 16,
@@ -1180,9 +1184,9 @@ function addMarker(feature, options) {
 
   if (o.type == 'regionMarker') {
     for (const layer of map.getLayer('GroupGLLayer').getLayers()) {
+      if (layer._id != 'polygons') continue;
       for (polygon of layer._geoList) {
-        if (!polygon.feature?.properties?.title?.startsWith('poly_')) continue;
-        if (!ptInPoly(marker._coordinates, polygon._coordinates)) continue;
+        if (polygon.properties.name != o.name) continue;
         let color = regionColors[marker.feature.properties.name] || '#fff';
         assignPolygon(marker.feature, polygon, marker, color);
       }
@@ -1245,21 +1249,14 @@ function addRegions(geojson) {
   //geojson = scaleGeoJSON(geojson, 1 / 1, [0,0]);
   //geojson = scaleGeoJSON(geojson, 1 / 1, [0,0]);
 
-
   var polygons = maptalks.GeoJSON.toGeometry(geojson);
 
   polygons = polygons.filter(p => p);
 
   polygons.forEach((polygon, index) => {
     if (polygon.getType() !== 'Polygon') return;
-
     polygon.setSymbol(defaultSymbol);
-
-    let name = 'poly_' + index;
-
-    polygon.properties = {};
-    polygon.properties.svgID = '#' + name;
-    polygon.feature = { properties: { title: name } };
+    polygon.properties.svgID = '#poly_' + index;
   });
 
   let layerId = 'polygons';
@@ -2324,10 +2321,10 @@ window.onload = function(event) {
             "type": "feature",
             "geometry": { "type": "Point", "coordinates": getCentroidRaw2(feature.geometry.coordinates[0]) },
             "properties": {
-              "type": "regionMarker",
-              "color": feature.properties.color,
-              "name": feature.properties.name,
-              "title": feature.properties.title,
+              type: "regionMarker",
+              color: feature.properties.color,
+              name: feature.properties.name,
+              region: feature.properties.name,
             }
           }
         );
