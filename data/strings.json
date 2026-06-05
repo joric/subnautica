@@ -10,6 +10,9 @@
   "playerPosition": "ST_BaseFeedback/Player",
   "basePieces": "ST_BaseMenuCategories/BasePieces",
 
+  "Observatory": "ST_Ruins_Databanks/Observatory_title", 
+  "Power Plant": "ST_Ruins_Databanks/PowerPlant_title",
+
   "fish": "ST_Databank_Motile/Fish",
 
   "BP_UpgradeTerminal_C": "ST_ScannerStation/UpgradeTerminals",
