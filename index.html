@@ -1156,8 +1156,8 @@ function addMarker(feature, options) {
 
     let polygon = new maptalks.Polygon(points, { symbol: defaultSymbol, visible: visible });
 
-    layers.polygons = layers.polygons||[];
-    layers.polygons.push(polygon);
+    layers.rectangles = layers.rectangles||[];
+    layers.rectangles.push(polygon);
 
     return assignPolygon(feature, polygon, marker, color);
   }
@@ -1255,7 +1255,7 @@ function addRegions(geojson) {
     polygon.feature = { properties: { title: name } };
   });
 
-  let layerId = 'areas';
+  let layerId = 'polygons';
   let visible = true;
 
   let layer = new maptalks.PolygonLayer(layerId, polygons, { visible });
@@ -1509,24 +1509,23 @@ function addMarkers(markers, options) {
 
   let groupLayer = map.getLayer('GroupGLLayer');
 
+  // add all helper layers first, then the rest of it, because order matters
   for (const [name, geometries] of Object.entries(layers)) {
     if (name=='lines') {
       new maptalks.LineStringLayer(name, geometries, {
         style: { filter: true, symbol: { lineColor: '#eee', lineWidth: 4, lineOpacity: 0.75 } },
       }).addTo(groupLayer);
-    }else if (name=='polygons') {
+    } else if (name=='rectangles') {
       new maptalks.PolygonLayer(name, geometries, {
         visible: true,
       }).addTo(groupLayer);
-    } else if (name=='gltf') {
-      new maptalks.GLTFLayer('gltf', geometries,{
-        opacity: 0.5,
-      }).addTo(groupLayer);
-    } else {
+    }
+  }
+
+  for (const [name, geometries] of Object.entries(layers)) {
+    if (name!='rectangles' && name!='lines') {
       new maptalks.PointLayer(name, geometries, {
         sceneConfig: { depthFunc: '<='}, // <= fixes text halo
-        //hitColor: [0, 0, 0, 0], // Color used for hit detection
-        //hitTolerance: 1 // Tolerance for hit detection
       }).addTo(groupLayer);
     }
   }
