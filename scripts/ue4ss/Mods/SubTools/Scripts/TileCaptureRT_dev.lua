@@ -1,52 +1,62 @@
 local UEHelpers = require("UEHelpers")
 
 -- local chunkSize = 6400
-
 local chunkSize = 9375 -- 300k bounds / 32
-
-local savePath = "C:\\Temp\\Capture\\"
+local savePath = "E:\\Temp\\Capture\\"
 
 local locations = {
     lifepod = { left = -337193, top = 433406, alt = 1000, size = chunkSize },
     turbine = { left = -160717, top = 436872, alt = 500, size = chunkSize * 2 },
     bigpit = { left = -344231.96875, top = 449815.84375, alt = 1000, size = chunkSize },
     glyph = { left = -232185.984375, top = 431499.40625, alt = 5000, size = chunkSize },
-    clam = { left = -345403, top = 465912, alt = 5000, size = chunkSize},
-    all = { left = -222771, top = 432320, alt = 5000, size = 25600*11 }
+    clam = { left = -345403, top = 465912, alt = 5000, size = chunkSize },
+    all = { left = -222771, top = 432320, alt = 5000, size = 25600 * 11 }
 }
 
-local cc = locations.all
-
+local cc = locations.lifepod
 
 local tileSize = 512
-
 local startDelay = 250
-
 local streamingDelay = 250
-
 local forceOverwrite = true
 
-local bb = {left=cc.left-cc.size/2, top=cc.top-cc.size/2, right=cc.left+cc.size/2, bottom=cc.top+cc.size/2}
-if cc==locations.all then
---  bb = { left = -388342, bottom = 511341, top = 363219, right = -73747 } -- wider
+-- Switch between diffuse color capture and height/depth capture
+-- does not work just yet, still captures color. probably needs height shader
+-- use magick input.exr -colorspace Gray -normalize -negate -depth 8 output.png
+local captureHeight = false
+local saveHDR = false
+
+
+local bb = {
+    left = cc.left - cc.size / 2,
+    top = cc.top - cc.size / 2,
+    right = cc.left + cc.size / 2,
+    bottom = cc.top + cc.size / 2
+}
+
+if cc == locations.all then
+    -- bb = { left = -388342, bottom = 511341, top = 363219, right = -73747 } -- wider
     bb = { left = -378513, bottom = 501704, top = 370297, right = -89602 } -- with chunks 12800 it's about 23x12, 276 chunks
 end
 
-local function fileExists(p)
-    local f = io.open(p, "r")
-    if f then f:close() return true end
+local function fileExists(path)
+    local f = io.open(path, "r")
+    if f then
+        f:close()
+        return true
+    end
 end
 
 local function setScene(bHide)
     local names = {
-        'WaterBodyOceanComponent',
-        'ExponentialHeightFogComponent',
+        "WaterBodyOceanComponent",
+        "ExponentialHeightFogComponent",
     }
 
     for _, name in ipairs(names) do
-        local o = FindFirstOf(name)
-        if o and o:IsValid() and o.SetHiddenInGame then
-            o.SetHiddenInGame(bHide, true)
+        local obj = FindFirstOf(name)
+        if obj and obj:IsValid() and obj.SetHiddenInGame then
+            obj.SetHiddenInGame(bHide, true)
         end
     end
 
@@ -54,13 +64,13 @@ local function setScene(bHide)
     if timeComponent and timeComponent:IsValid() then
         timeComponent:SetTimeOfDay(0.5)
     end
-    
+
     local sky = FindFirstOf("BP_UWESky_C")
     if sky and sky:IsValid() and sky.SunDirectionalLight then
         local light = sky.SunDirectionalLight
         light:SetIntensity(bHide and 100.0 or 10.0)
         if sky.SkyLight then
-            sky.SkyLight:SetIntensity(bHide and 50.0 or 1.0) -- value 100 `gives blue-ish tint
+            sky.SkyLight:SetIntensity(bHide and 50.0 or 1.0)
         end
     end
 
@@ -70,7 +80,6 @@ local function setScene(bHide)
         local ksl = StaticFindObject("/Script/Engine.Default__KismetSystemLibrary")
 
         if world and world:IsValid() and ksl and ksl:IsValid() then
-
             local cmds = {
                 "r.Streaming.FullyLoadUsedTextures 1",
                 "r.Streaming.UseAllMips 1",
@@ -88,8 +97,8 @@ local function setScene(bHide)
                 "r.Tonemapper.Quality 0",
                 "r.TonemapperGamma 3.2",
 
-                "r.Shadow.Virtual.Enable 0",    -- disable vt shadows
-                "r.Shadow.DistanceScale 0.001", -- completely disable fucking csm shadows
+                "r.Shadow.Virtual.Enable 0",
+                "r.Shadow.DistanceScale 0.001",
             }
 
             for _, cmd in ipairs(cmds) do
@@ -122,26 +131,35 @@ local function startCapture()
 
     cap.ProjectionType = 1
     cap.OrthoWidth = chunkSize
-    cap.CaptureSource = 2 -- 2 -- postprocessed, 3 - rawHDR (need to remove vignetting)
     cap.bCaptureEveryFrame = false
 
     local krl = StaticFindObject("/Script/Engine.Default__KismetRenderingLibrary")
-    local rt = krl:CreateRenderTarget2D(world, tileSize, tileSize, 2, { R = 0, G = 0, B = 0, A = 1 }, false, false)
+
+    -- Capture mode switch
+    -- 2 = FinalColor (diffuse-like output)
+    -- 7 = SceneDepth (height/depth output)
+    cap.CaptureSource = captureHeight and 7 or 2
+
+    -- Render target format:
+    -- 2 = LDR for color PNG
+    -- 6 = R16f for depth/height EXR
+    local rtFormat = saveHDR and 6 or 2
+    local rt = krl:CreateRenderTarget2D(world, tileSize, tileSize, rtFormat, { R = 0, G = 0, B = 0, A = 1 }, false, false)
     cap.TextureTarget = rt
 
     local scClass = StaticFindObject("/Script/Engine.WorldPartitionStreamingSourceComponent")
     if scClass then
         local sc = capActor:AddComponentByClass(scClass, false, {}, false)
         if sc then
-            sc.DefaultLoadingRange = chunkSize*2
+            sc.DefaultLoadingRange = chunkSize * 2
             sc.Priority = 256
             sc.bEnableStreaming = true
             sc:EnableStreamingSource()
         end
     end
 
-
-    -- Add PostProcessComponent with default settings (NO vignette by default)
+    -- Keep post process in place for color mode controls;
+    -- disable blend in height mode to avoid altering depth output.
     local ppClass = StaticFindObject("/Script/Engine.PostProcessComponent")
     local postProcComp = capActor:AddComponentByClass(ppClass, false, {}, false)
     postProcComp.bEnabled = true
@@ -150,18 +168,14 @@ local function startCapture()
     postProcSettings.bOverride_VignetteIntensity = true
     postProcSettings.VignetteIntensity = 0.0
 
-    -- Optional: Set blend weight to ensure it overrides global post process
-    cap.PostProcessBlendWeight = 1.0
-
+    cap.PostProcessBlendWeight = captureHeight and 0.0 or 1.0
 
     local minGX = math.floor(bb.left / chunkSize)
     local maxGX = math.floor((bb.right - 1) / chunkSize)
-
     local minGY = math.floor(bb.top / chunkSize)
     local maxGY = math.floor((bb.bottom - 1) / chunkSize)
 
     local chunks = {}
-
     for gy = minGY, maxGY do
         for gx = minGX, maxGX do
             chunks[#chunks + 1] = {
@@ -173,8 +187,7 @@ local function startCapture()
         end
     end
 
-    print("[CAPTURE] Capturing grid", maxGX-minGX+1, maxGY-minGY+1)
-
+    print("[CAPTURE] Capturing grid", maxGX - minGX + 1, maxGY - minGY + 1, "heightMode=", captureHeight)
 
     local total = #chunks
     local i = 1
@@ -187,13 +200,14 @@ local function startCapture()
         end
 
         local c = chunks[i]
-
         local px = c.px
         local py = c.py
         local gx = c.gx
         local gy = c.gy
 
-        local file = string.format("Chunk_%d_%dp_%d_%d.png", chunkSize, tileSize, gx, gy)
+        local ext = saveHDR and "exr" or "png"
+        local prefix = captureHeight and "Height" or "Chunk"
+        local file = string.format("%s_%d_%dp_%d_%d.%s", prefix, chunkSize, tileSize, gx, gy, ext)
 
         if not forceOverwrite and fileExists(savePath .. file) then
             print(string.format("[CAPTURE] %d/%d SKIP %s", i, total, file))
@@ -229,4 +243,3 @@ RegisterKeyBind(Key.F, { ModifierKey.CONTROL }, function()
         end)
     end)
 end)
-
