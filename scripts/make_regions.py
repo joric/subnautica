@@ -66,18 +66,15 @@ with rasterio.open(INPUT) as src:
             [[(x * SCALE_FACTOR) + dx, (y * SCALE_FACTOR) + dy] for x, y in ring]
             for ring in geom['coordinates']
         ]
-        
-        feature = {
-            "type": "Feature",
-            "geometry": { "type": "Polygon", "coordinates": scaled_coords },
-            "properties": { "color": color }
-        }
 
         p = colorMap.get(color)
         if p:
-            feature['properties']['name'] = p['name']
-            feature['properties']['title'] = p['title']
-            features.append(feature)
+            features.append({
+                "type": "Feature",
+                "properties": { "color": color, "name": p['name'], "title": p['title'] },
+                "geometry": { "type": "Polygon", "coordinates": scaled_coords },
+            })
+
 
 # Save GeoJSON
 geojson = {
