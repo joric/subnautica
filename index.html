@@ -2215,6 +2215,36 @@ function prerenderIcons() {
   console.timeEnd('rendering icons');
 }
 
+function pointInPolygonFast(x, y, vertices) {
+    let inside = false;
+    for (let i = 0, j = vertices.length - 1; i < vertices.length; j = i++) {
+        const xi = vertices[i][0], yi = vertices[i][1];
+        const xj = vertices[j][0], yj = vertices[j][1];
+        if (((yi > y) !== (yj > y)) &&
+            (x < (xj - xi) * (y - yi) / (yj - yi) + xi)) {
+            inside = !inside;
+        }
+    }
+    return inside;
+}
+
+function prerenderMarkers() {
+  console.time('rendering markers');
+  for (const feature of markersData.features) {
+    //console.log(feature);
+
+    const o = feature.properties;
+    const t = getType2(o);
+    let info = renderItem(feature, true, t, 'prerender');
+
+    o._info = info;
+
+    //console.log(o);
+
+  }
+  console.timeEnd('rendering markers');
+}
+
 window.onload = function(event) {
 
   console.time('total time');
@@ -2317,6 +2347,7 @@ window.onload = function(event) {
       iconData['misc'] = {"class": "fa-solid fa-circle-question", "bg": "grey"};
 
       //prerenderIcons(); // doesn't seem to speed up loading
+      //prerenderMarkers(); // may be slow
 
       for (const feature of regionData.features) {
         regionColors[feature.properties.name] = feature.properties.color;
