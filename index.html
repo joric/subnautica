@@ -784,6 +784,10 @@ function renderItem(feature, extended=false, t=false, caller='default') {
     item = translate(o.region);
   }
 
+  if (o.type == 'regionMarker') {
+    item = translate(o.name);
+  }
+
   if (o.text_id) {
     info.text = translate(o.text_id);
 
@@ -2324,7 +2328,6 @@ window.onload = function(event) {
               type: "regionMarker",
               color: feature.properties.color,
               name: feature.properties.name,
-              region: feature.properties.name,
             }
           }
         );
