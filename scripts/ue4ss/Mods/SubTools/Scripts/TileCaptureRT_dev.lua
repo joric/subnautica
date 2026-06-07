@@ -87,6 +87,14 @@ local function setScene(bHide)
                 "r.AmbientOcclusionLevels 1",
                 "r.AmbientOcclusionRadiusScale 2",
 
+                --'r.AmbientOcclusionLevels 0',
+                --'r.ContactShadows 0',
+                --'r.DistanceFieldAO 0',
+                --'r.Shadow.FilterMethod 1', -- 3 for PCSS (softer, lighter-looking shadows)
+                --'r.Shadow.MaxCSMResolution 512', --(lower resolution = blurrier = lighter)
+                --'r.Shadow.CSM.MaxCascades 1',
+                --'r.Shadow.RadiusThreshold 0.001', --to 0.5 (higher threshold = fewer shadows cast)
+
                 "r.ViewDistanceScale 5",
                 "r.ScreenPercentage 200",
                 "r.Nanite.ProjectEnabled 1",
