@@ -66,24 +66,19 @@
       ".*(_Scan_|_Scannable_)": {"icon": "blueprint", "group": "blueprints"},
       ".*Fragment*": {"icon": "blueprint", "group": "blueprints"},
 
-      "-BP_CableTool_C": {"icon": "upgrade", "group": "minerals", "title": "Cable Tool" },
 
-      ".*titanium*": { "icon": "titanium", "group": "minerals", "category": "titanium"},
-      ".*copper*": { "icon": "copper", "group": "minerals",  "category": "copper"},
-      ".*silver*": { "icon": "silver", "group": "minerals",  "category": "silver"},
-      ".*gold*": { "icon": "gold", "group": "minerals",  "category": "gold"},
-      ".*salt*": { "icon": "salt", "group": "minerals",  "category": "salt"},
-      ".*quartz*": { "icon": "quartz", "group": "minerals",  "category": "quartz"},
-      ".*sulfur*": { "icon": "sulfur", "group": "minerals",  "category": "sulfur"},
-      ".*lithium*": { "icon": "lithium", "group": "minerals",  "category": "lithium"},
-      ".*celestine*": { "icon": "celestine", "group": "minerals",  "category": "celestine"},
+      ".*atacamite*": { "icon": "atacamite", "group": "minerals", "category": "BP_ResourceDeposit_Atacamite_C"},
+      ".*celestine*": { "icon": "celestine", "group": "minerals",  "category": "BP_ResourceDeposit_Celestine_C"},
+      ".*copper*": { "icon": "copper", "group": "minerals",  "category": "BP_ResourceDeposit_Copper_C"},
       ".*fulgurite*": { "icon": "fulgurite", "group": "minerals",  "category": "fulgurite"},
-      ".*lead_c": { "icon": "lead", "group": "minerals",  "category": "lead"},
-      ".*atacamite*": { "icon": "atacamite", "group": "minerals", "category": "atacamite"},
-
-      "BP_WorldPopSpawned_*": { "icon": "spawn", "group": "minerals", "category": "unsorted" },
-      "BP_ResourceNode_*": { "icon": "nodes", "group": "minerals", "category": "unsorted" },
-      "BP_ResourceDeposit_*": { "icon": "deposit", "group": "minerals", "category": "unsorted"},
+      ".*gold*": { "icon": "gold", "group": "minerals",  "category": "BP_ResourceDeposit_Gold_C"},
+      ".*lead_c": { "icon": "lead", "group": "minerals",  "category": "BP_ResourceDeposit_Lead_C"},
+      ".*lithium*": { "icon": "lithium", "group": "minerals",  "category": "BP_ResourceDeposit_Lithium_C"},
+      ".*quartz*": { "icon": "quartz", "group": "minerals",  "category": "BP_ResourceDeposit_Quartz_C"},
+      ".*salt*": { "icon": "salt", "group": "minerals",  "category": "BP_ResourceDeposit_Salt_C"},
+      ".*silver*": { "icon": "silver", "group": "minerals",  "category": "BP_ResourceDeposit_Silver_C"},
+      ".*sulfur*": { "icon": "sulfur", "group": "minerals",  "category": "BP_ResourceDeposit_Sulfur_C"},
+      ".*titanium*": { "icon": "titanium", "group": "minerals", "category": "BP_ResourceDeposit_Titanium_C"},
 
       "BP_Base*": {"icon": "fragment", "group": "misc", "category": "basePieces"},
 
@@ -107,7 +102,7 @@
 
       ".*(Fish).*": {"icon": "fish", "group": "animals", "category": "fish"},
 
-      "---.*": {"icon": "misc", "group": "misc", "comment": "remove --- to show all blueprints"}
+      "---.*": {"icon": "misc", "group": "misc", "comment": "remove --- to show all blueprints as separate classes"}
 
     }
   }

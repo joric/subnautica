@@ -37,19 +37,6 @@
   "BP_NarrativeSignal_C": "ST_Databank/Field_Reports",
   "BP_ScannerStationSignal_C": "ST_ScannerStation/SelectedSignal",
 
-  "silver": "ST_Databank_Resources/Databank_Resources_Silver_Title",
-  "titanium": "ST_Databank_Resources/Databank_Resources_Titanium_Title",
-  "copper": "ST_Databank_Resources/Databank_Resources_Copper_Title",
-  "gold": "ST_Databank_Resources/Databank_Resources_Gold_Title",
-  "salt": "ST_Databank_Resources/Databank_Resources_Salt_Title",
-  "quartz": "ST_Databank_Resources/Databank_Resources_Quartz_Title",
-  "lithium": "ST_Databank_Resources/Databank_Resources_Lithium_Title",
-  "lead": "ST_Databank_Resources/Databank_Resources_Lead_Title",
-  "atacamite": "ST_Databank_Resources/Databank_Resources_Atacamite_Title",
-  "sulfur": "ST_Databank_Resources/Sulfur_title",
-  "celestine": "ST_Celestine/Celestine",
-  "fulgurite": "ST_Databank_Resources/Databank_Resources_Fulgurite_Title",
-
   "misc": {
     "en": "Misc",
     "de": "Verschiedenes",
