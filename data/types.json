@@ -10,7 +10,8 @@
       "BookMark": {"icon": "bookmark", "group": "misc" },
       "BP_StaticLifepod_Surface_C": {"icon": "lifepod", "group": "locations" },
 
-      "BP_EdgeOfWorldVolume_C": {"icon": "edge_volume", "group": "misc" },
+      "BP_EdgeOfWorldVolume_C": {"icon": "edge_volume", "group": "locations" },
+
       "UWEBoxWorldZone": {"icon": "zone_box", "group": "misc" },
       "BP_Nrtv_QuartzChip_C": { "icon": "chip", "group": "locations"},
       "BP_RecipeGainDataCard_Button_C": { "icon": "databox", "group": "locations"},
