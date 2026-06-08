@@ -2350,9 +2350,6 @@ window.onload = function(event) {
       //prerenderIcons(); // doesn't seem to speed up loading
       //prerenderMarkers(); // may be slow
 
-
-      console.log("settings.language", settings.language);
-
       for (const feature of regionData.features) {
         regionColors[feature.properties.name] = feature.properties.color;
         markersData.features.push(
