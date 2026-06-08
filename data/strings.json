@@ -10,7 +10,7 @@
   "playerPosition": "ST_BaseFeedback/Player",
   "basePieces": "ST_BaseMenuCategories/BasePieces",
 
-  "BP_EdgeOfWorldVolume_C": "ST_Notifications/EdgeOfWorldThankyouMessage",
+  "BP_EdgeOfWorldVolume_C": "ST_Notifications/EdgeOfWorldThankyouTitle",
 
   "fish": "ST_Databank_Motile/Fish",
 
