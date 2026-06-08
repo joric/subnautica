@@ -2294,7 +2294,7 @@ window.onload = function(event) {
 
   loadMap(mapId);
 
-  let cc = settings.language || 'en';
+  settings.language = settings.language || 'en';
 
   let cc_list = {
     "en": "en",
@@ -2311,14 +2311,14 @@ window.onload = function(event) {
   };
 
   let langSelect = document.querySelector('#language-selector select');
-  langSelect.innerHTML = Object.entries(cc_list).map(([key, value])=>`<option value="${key}"${cc==key?' selected':''}>${key}</option>`).join('');
+  langSelect.innerHTML = Object.entries(cc_list).map(([key, value])=>`<option value="${key}"${settings.language==key?' selected':''}>${key}</option>`).join('');
   langSelect.onchange = e=> {
     settings.language = e.target.value;
     saveSettings();
     location.reload();
   };
 
-  fetch(`data/Localization/Game/${cc_list[cc]}/Game.json`).then(r=>r.json()).then(data=>{
+  fetch(`data/Localization/Game/${cc_list[settings.language]}/Game.json`).then(r=>r.json()).then(data=>{
     lang = data;
     //searchControl._input.setAttribute('placeholder', lang['sid_misc_hint_loot'] +'...');
 
@@ -2349,6 +2349,9 @@ window.onload = function(event) {
 
       //prerenderIcons(); // doesn't seem to speed up loading
       //prerenderMarkers(); // may be slow
+
+
+      console.log("settings.language", settings.language);
 
       for (const feature of regionData.features) {
         regionColors[feature.properties.name] = feature.properties.color;
