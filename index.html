@@ -193,7 +193,7 @@ let zoomGroups = {
   'labels':[0, regionZoom],
 };
 
-const truncate = (str, n=64) => str.length < n ? str : str.slice(0, n) + "...";
+const truncate = (str, n=45) => str.length < n ? str : str.slice(0, n) + "...";
 
 function capitalize(s) {
   return s ? s[0].toUpperCase()+s.slice(1) : '';
@@ -848,7 +848,9 @@ function popupOnClick(e) {
   const popup = document.querySelector('#popup-template').content.cloneNode(true);
 
   popup.querySelector('#popup-title').innerHTML = `<div style="white-space: nowrap;">${truncate(info.title)}</div>`;
-  popup.querySelector('#popup-title').title = info.backlink;
+
+  popup.querySelector('#popup-title').title = info.title;
+
   popup.querySelector('#popup-subtitle').innerHTML = `<div style="white-space: nowrap;">${info.slug}</div>`;
 
   let note = info.region ? info.region : '';
