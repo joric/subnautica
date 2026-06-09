@@ -70,7 +70,7 @@
       ".*atacamite*": { "icon": "atacamite", "group": "minerals", "category": "BP_ResourceDeposit_Atacamite_C"},
       ".*celestine*": { "icon": "celestine", "group": "minerals",  "category": "BP_ResourceDeposit_Celestine_C"},
       ".*copper*": { "icon": "copper", "group": "minerals",  "category": "BP_ResourceDeposit_Copper_C"},
-      ".*fulgurite*": { "icon": "fulgurite", "group": "minerals",  "category": "fulgurite"},
+      ".*fulgurite*": { "icon": "fulgurite", "group": "minerals",  "category": "BP_ResourceDeposit_Fulgurite_C"},
       ".*gold*": { "icon": "gold", "group": "minerals",  "category": "BP_ResourceDeposit_Gold_C"},
       ".*lead_c": { "icon": "lead", "group": "minerals",  "category": "BP_ResourceDeposit_Lead_C"},
       ".*lithium*": { "icon": "lithium", "group": "minerals",  "category": "BP_ResourceDeposit_Lithium_C"},
