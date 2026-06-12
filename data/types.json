@@ -57,7 +57,6 @@
       "BP_WiringKit_C": {"icon": "resource", "group": "misc" },
       "BP_MedKit_C": {"icon": "medkit", "group": "misc" },
 
-      "BP_Lead_C": {"icon": "lead", "group": "misc" },
       "BP_Flares_C": {"icon": "resource", "group": "misc" },
       "BP_TitaniumIngot_C": {"icon": "titanium", "group": "misc" },
       "BP_Water_C": {"icon": "food", "resource": "misc" },
