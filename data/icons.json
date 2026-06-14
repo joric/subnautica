@@ -7,6 +7,7 @@
   "chip": { "class": "fa fa-compact-disc", "color": "salmon"},
   "databox": { "class": "fa fa-record-vinyl", "color": "darkcyan"},
   "supply_crate": { "class": "fa fa-box-open", "color": "darkcyan"},
+  "blockout_crate": { "class": "fa fa-box-open", "color": "slategrey"},
   "locker": { "class": "fa fa-box-archive", "color": "darkcyan"},
   "blueprint": { "class": "fa fa-compass-drafting", "color": "steelblue" },
   "fragment": { "class": "fa fa-gear", "color": "darkslategray" },

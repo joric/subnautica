@@ -17,6 +17,8 @@
       "BP_RecipeGainDataCard_Button_C": { "icon": "databox", "group": "locations"},
       "BP_WorldSupplyLocker_C": { "icon": "locker", "group": "locations", "title":"Supply Locker"},
       "BP_SupplyCrate_C": { "icon": "supply_crate", "group": "locations", "title":"Supply Crate"},
+      "BP_Blockout_Crate_01_C": { "icon": "blockout_crate", "group": "misc", "category": "BP_Blockout_Crate_01_C"},
+      "BP_Blockout_Crate_02_C": { "icon": "blockout_crate", "group": "misc", "category": "BP_Blockout_Crate_01_C"},
 
       "BP_AxumGlyph_C": { "icon": "glyph", "group": "locations", "category": "BP_AxumGlyph_C"},
       "BP_AxumGlyph_NoAdaptation_C": { "icon": "glyph", "group": "locations", "category": "BP_AxumGlyph_C"},

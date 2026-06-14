@@ -37,6 +37,8 @@
   "BP_NarrativeSignal_C": "ST_Databank/Field_Reports",
   "BP_ScannerStationSignal_C": "ST_ScannerStation/SelectedSignal",
 
+  "BP_Blockout_Crate_01_C": "ST_InventoryNames/SupplyCrate",
+
   "misc": {
     "en": "Misc",
     "de": "Verschiedenes",
