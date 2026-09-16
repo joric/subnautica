@@ -145,6 +145,8 @@ let cs = 25600;
 let bb = {left: cb.left*cs, top: cb.top*cs, right: cb.right*cs, bottom: cb.bottom*cs};
 let cc = {left: bb.left + (bb.right-bb.left)/2, top: bb.top + (bb.bottom-bb.top)/2, alt: 0};
 
+//console.log(bb,cc);
+
 let bb1=bb; let cc1=cc;
 
 let d = (32-15)/2;
@@ -152,6 +154,8 @@ cb = {left:-41, top:39-d, right: -10+1, bottom: 53+d+1};
 cs = 9375;
 bb = { left: cb.left*cs, top: cb.top*cs, right: cb.right*cs, bottom: cb.bottom*cs };
 cc = { left: bb.left + (bb.right-bb.left)/2, top: bb.top + (bb.bottom-bb.top)/2, alt: 0};
+
+//console.log(bb1,cc1);
 
 let maps = {
   sn2:  { 
