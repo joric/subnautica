@@ -1,28 +1,28 @@
 {
   "sn2": {
     "name": "Subnautica 2",
-    "size": 409600,
+    "size": 300000,
     "center": [],
     "root": "",
-    "tilesetBase": "submodules/subnautica2_tileset",
+    "tilesetBase": "https://joric.github.io/subnautica2_tileset/",
     "worlds": {
       "default": {
         "baseLayers": [
           {
-            "name": "V2",
+            "name": "capture_v2",
             "urlTemplate": "tiles/capture_v2/{z}/{y}/{x}.webp",
             "tileSize": 512,
             "maxAvailableZoom": 8,
-            "bounds": { "left": -435200, "top": 204800, "right": -25600, "bottom": 614400 },
-            "center": { "left": -230400, "top": 409600, "alt": 0 }
+            "center": { "left": -234375, "top": 45937.5, "alt": 0 },
+            "bounds": {"left": -384375, "top": 285937.5, "right": -84375, "bottom": 585937.5 }
           },
           {
-            "name": "V1",
+            "name": "capture_v1",
             "urlTemplate": "tiles/capture_v1/{z}/{x}_{y}.jpg",
             "tileSize": 512,
             "maxAvailableZoom": 6,
-            "bounds": {"left": -384375, "top": 285937.5, "right": -84375, "bottom": 585937.5 },
-            "center": { "left": -230400, "top": 409600, "alt": 0 }
+            "center": { "left": -230400, "top": 409600, "alt": 0 },
+            "bounds": { "left": -435200, "top": 204800, "right": -25600, "bottom": 614400 }
           }
 
         ],
