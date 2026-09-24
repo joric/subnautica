@@ -5,6 +5,15 @@
     "center": [],
     "root": "",
     "tilesetBase": "https://joric.github.io/subnautica2_tileset/",
+    "filter": ["locations"],
+    "localization": {
+      "path": "data/Localization/Game/",
+      "files": {
+        "en": "en/Game.json",
+        "ua": "uk-UA/Game.json",
+        "ru": "ru-RU/Game.json"
+      }
+    },
     "worlds": {
       "default": {
         "baseLayers": [
@@ -29,7 +38,21 @@
         "regions": [
           {
             "name": "scripts/regions.png",
-            "url": "scripts/regions.json"
+            "url": "scripts/regions.json",
+            "colors": {
+              "#eae600": "DA_CGShallows",
+              "#0055c4": "DA_CGPlateaus",
+              "#720b0b": "DA_CGGraveyard",
+              "#c4008f": "DA_CGAnemoneHills",
+              "#d67fff": "DA_CGTufaTowers",
+              "#079140": "DA_CGNorthRaceway",
+              "#3b7000": "DA_CGSouthRaceway",
+              "#c1c199": "DA_CGBlightedCoral",
+              "#c45201": "DA_CGLeadzone",
+              "#009ead": "DA_AR-Observatory",
+              "#ff4e32": "DA_AR-PowerPlant",
+              "#f3ee70": "DA_AR-RootCanyon"
+            }
           }
         ]
       }
