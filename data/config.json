@@ -10,7 +10,7 @@
       "path": "data/Localization/Game/",
       "files": {
         "en": "en/Game.json",
-        "ua": "uk-UA/Game.json",
+        "uk": "uk-UA/Game.json",
         "ru": "ru-RU/Game.json"
       }
     },
@@ -19,19 +19,17 @@
         "baseLayers": [
           {
             "name": "capture_v2",
+            "bounds": {"left": -384375, "top": 285937.5, "right": -84375, "bottom": 585937.5 },
             "urlTemplate": "tiles/capture_v2/{z}/{y}/{x}.webp",
             "tileSize": 512,
-            "maxAvailableZoom": 8,
-            "center": { "left": -234375, "top": 45937.5, "alt": 0 },
-            "bounds": {"left": -384375, "top": 285937.5, "right": -84375, "bottom": 585937.5 }
+            "maxAvailableZoom": 8
           },
           {
             "name": "capture_v1",
+            "bounds": { "left": -435200, "top": 204800, "right": -25600, "bottom": 614400 },
             "urlTemplate": "tiles/capture_v1/{z}/{x}_{y}.jpg",
             "tileSize": 512,
-            "maxAvailableZoom": 6,
-            "center": { "left": -230400, "top": 409600, "alt": 0 },
-            "bounds": { "left": -435200, "top": 204800, "right": -25600, "bottom": 614400 }
+            "maxAvailableZoom": 6
           }
 
         ],
