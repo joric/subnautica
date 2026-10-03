@@ -1,6 +1,6 @@
 {
   "categories": {
-    "regionMarker": { "title": "ST_Databank.Biomes" },
+    "region": { "title": "ST_Databank.Biomes", "default": true },
     "playerPosition": { "title": "ST_BaseFeedback.Player" },
     "basePieces": { "title": "ST_BaseMenuCategories.BasePieces" }
   },
@@ -221,7 +221,7 @@
       "type": {
 
         "playerPosition": {"icon": "player", "group": "locations"},
-        "regionMarker": {"icon": "region", "group": "locations" },
+        "regionMarker": {"icon": "region", "group": "locations", "category": "region" },
 
         "BookMark": {"icon": "bookmark", "group": "misc" },
         "BP_StaticLifepod_Surface_C": {"icon": "lifepod", "group": "locations" },

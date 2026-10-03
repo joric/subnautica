@@ -4,14 +4,20 @@
     "size": 300000,
     "center": [],
     "root": "",
-    "tilesetBase": "https://joric.github.io/subnautica2_tileset/",
-    "filter": ["locations"],
     "localization": {
       "path": "data/Localization/Game/",
       "files": {
         "en": "en/Game.json",
         "uk": "uk-UA/Game.json",
-        "ru": "ru-RU/Game.json"
+        "fr": "fr-FR/Game.json",
+        "ru": "ru-RU/Game.json",
+        "de": "de-DE/Game.json",
+        "es": "es-419/Game.json",
+        "it": "it/Game.json",
+        "ja": "ja-JP/Game.json",
+        "jo": "ko-KR/Game.json",
+        "pt": "pt-BR/Game.json",
+        "zh": "zh-Hans/Game.json"
       }
     },
     "worlds": {
@@ -20,14 +26,14 @@
           {
             "name": "capture_v2",
             "bounds": {"left": -384375, "top": 285937.5, "right": -84375, "bottom": 585937.5 },
-            "urlTemplate": "tiles/capture_v2/{z}/{y}/{x}.webp",
+            "urlTemplate": "https://joric.github.io/subnautica2_tileset/tiles/capture_v2/{z}/{y}/{x}.webp",
             "tileSize": 512,
             "maxAvailableZoom": 8
           },
           {
             "name": "capture_v1",
             "bounds": { "left": -435200, "top": 204800, "right": -25600, "bottom": 614400 },
-            "urlTemplate": "tiles/capture_v1/{z}/{x}_{y}.jpg",
+            "urlTemplate": "https://joric.github.io/subnautica2_tileset/tiles/capture_v1/{z}/{x}_{y}.jpg",
             "tileSize": 512,
             "maxAvailableZoom": 6
           }
