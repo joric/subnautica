@@ -22,7 +22,7 @@
     },
     "worlds": {
       "default": {
-        "baseLayers": [
+        "layers": [
           {
             "name": "capture_v2",
             "bounds": {"left": -384375, "top": 285937.5, "right": -84375, "bottom": 585937.5 },
